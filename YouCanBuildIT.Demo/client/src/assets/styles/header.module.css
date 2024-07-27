@@ -1,0 +1,174 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Poppins", monospace;
+}
+
+header {
+  background-color: rgba(0, 0, 0, 0.536);
+  color: transparent;
+  border-radius: 3.5em 3.3em;
+  padding: 1;
+  margin: 0em 3em 0em 3em;
+}
+
+.logo {
+  width: 8em;
+}
+
+.leftNav,
+.rightNav {
+  list-style: none;
+  display: flex;
+  font: bold 1.5rem sans-serif;
+  text-transform: uppercase;
+  color: rgb(255, 252, 252);
+  padding: 0;
+  margin: 0;
+}
+
+.navigationBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+.leftNav,
+.rightNav {
+  display: flex;
+  align-items: center;
+}
+
+ul li {
+  display: flex;
+  font: bold 1.5rem sans-serif;
+  text-transform: uppercase;
+  position: relative; /* Ensure dropdowns are positioned relative to the list item */
+}
+
+ul li .link {
+  display: block;
+  padding: 20px 25px;
+  color: rgba(252, 252, 252, 0.778);
+  text-decoration: none;
+  text-align: center;
+  font-size: 0.9em;
+}
+.dropdown {
+  z-index: 999;
+}
+.dropdown li {
+  font-size: medium;
+  padding: 0.2em;
+  margin: 0.1em;
+}
+ul li ul.dropdown {
+  width: 200px; /* Set a specific width for the dropdown */
+  font-size: 1em;
+  background: rgba(0, 0, 0, 0.778);
+  position: absolute;
+  top: 100%; /* Position below the parent list item */
+  left: 0; /* Align to the left of the parent list item */
+  display: none; /* Hide by default */
+}
+
+ul li:hover ul.dropdown {
+  display: block; /* Show on hover */
+}
+
+ul li ul.dropdown li {
+  display: block;
+}
+
+ul li ul.dropdown li .link {
+  color: rgba(0, 0, 0, 0.778);
+  text-align: left; /* Align text to the left */
+}
+
+.language:hover {
+  background: rgba(15, 15, 15, 0.16);
+  border-radius: 1.2em;
+  color: black;
+  transition:
+    0.5s,
+    translate 1s 1s;
+}
+
+.language:hover .link {
+  color: rgba(0, 0, 0, 0.946);
+}
+
+.language:hover ul.dropdown {
+  background: rgba(15, 15, 15, 0.16);
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 1px 4px,
+    rgb(51, 51, 51) 0px 0px 0px 3px;
+  padding: 1em;
+  border-radius: 1em;
+}
+
+.language:hover ul.dropdown li {
+  color: black;
+  padding: 0.5em;
+  transition:
+    0.5s,
+    translate 0.2s 0.5s;
+}
+
+.language:hover ul.dropdown li:hover {
+  background: #7f7f7f;
+  border-radius: 1em;
+  color: rgb(21, 15, 42);
+}
+
+ul li:not(.language):before,
+.leftNav li:nth-child(1):not(img .logo):before,
+.language ul.dropdown li:before {
+  content: "";
+  position: absolute;
+  inset: calc(100% - 3px) 0 0 0; /* 3px = the thickness */
+  background: rgba(15, 15, 15, 0.16); /* The color */
+  scale: 0 1;
+  transition:
+    0.3s,
+    translate 0s 0.3s;
+}
+
+ul li:hover:before {
+  scale: 1;
+  transition: 0.3s;
+}
+
+.leftNav,
+.rightNav {
+  -webkit-animation-name: zoomIn;
+  animation-name: zoomIn;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}

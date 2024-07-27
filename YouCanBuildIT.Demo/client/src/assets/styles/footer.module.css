@@ -1,0 +1,98 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.536); /* Background color for the footer */
+  padding: 1em; /* Padding inside the footer */
+  text-align: center; /* Center-align text */
+  border-radius: 3em 3em;
+  margin: 3em 3em 0em 3em;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  min-height: 20vh;
+}
+
+.icon {
+  text-decoration: none;
+  width: 5.625rem;
+  height: 5.625rem;
+  border-radius: 1.5em 1em;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.icon > i {
+  color: #000000;
+  font-size: 1.5rem;
+  transition: all 0.2s;
+}
+
+.icon:hover > i {
+  transform: scale(1.2);
+  color: #f1f1f1;
+}
+
+.icon:before {
+  content: "";
+  position: absolute;
+  width: 130%;
+  height: 130%;
+  left: -110%;
+  top: 80%;
+  transform: rotate(45deg);
+}
+
+.icon:hover:before {
+  animation: slide 0.7s forwards;
+}
+
+@keyframes slide {
+  50% {
+    left: 10%;
+    top: -40%;
+  }
+  100% {
+    left: -15%;
+    top: -15%;
+  }
+}
+
+.instagram:before {
+  background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+}
+.linkedin:before {
+  background: #0077b5;
+}
+.youtube:before {
+  background: #ff0000;
+}
+.twitter:before {
+  background: #1da1f2;
+}
+.github:before {
+  background: #333;
+}
+
+.info {
+  width: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-bottom: 8em;
+  justify-content: space-evenly;
+}

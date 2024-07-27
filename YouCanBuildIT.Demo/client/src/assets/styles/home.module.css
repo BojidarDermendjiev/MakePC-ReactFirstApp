@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 3em;
+}
+.intro {
+  max-width: 40%;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+}
+.imgSection {
+  max-width: 60%;
+  height: auto;
+}
+.introImg {
+  width: 35em;
+}
+/* home.module.css */
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.learnMore {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.536);
+  text-decoration: none;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.learnMore:hover {
+  background-color: #e1e1e1;
+  color: black;
+  transform: scale(1.05);
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 1px 4px,
+    rgb(51, 51, 51) 0px 0px 0px 3px;
+}
+.title {
+  font-size: large;
+  margin-bottom: 1em;
+  text-align: center;
+  flex: 1;
+}
+
+.text {
+  font-size: large;
+}

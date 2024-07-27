@@ -1,0 +1,300 @@
+.payment-title {
+  width: 100%;
+  height: 10vh;
+  text-align: center;
+}
+.donation {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.form-container {
+  border-radius: 2em;
+  background: #89898978;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10em 2em 2em 2em;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+}
+
+.field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-container label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.field-container input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  grid-column: 1 / -1;
+  padding: 10px 15px;
+  background-color: #37373782;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #565656b7;
+}
+
+.field-container input {
+  box-sizing: border-box;
+  padding: 15px;
+  font-size: 16px;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #dcdcdc;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.field-container input:focus {
+  border-color: #03a9f4;
+  box-shadow: 0 0 8px rgba(3, 169, 244, 0.5);
+}
+.creditcard {
+  margin-bottom: 5em;
+}
+.creditcard .front,
+.creditcard .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  padding: 20px;
+  perspective: 1000px;
+}
+
+.creditcard {
+  width: 100%;
+  max-width: 400px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+.creditcard .front,
+.creditcard .back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.creditcard .back {
+  transform: rotateY(180deg);
+}
+
+.creditcard.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Update the card based on input changes */
+input#securitycode:focus ~ .container .creditcard {
+  transform: rotateY(180deg);
+}
+
+/* Card Image Styling */
+.creditcard svg#cardfront,
+.creditcard svg#cardback {
+  width: 100%;
+  box-shadow: 1px 5px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 22px;
+  transition: fill 0.5s ease;
+}
+
+/* Changeable Card Elements */
+.creditcard .lightcolor,
+.creditcard .darkcolor {
+  transition: fill 0.5s ease;
+}
+
+/* Example card color classes */
+.creditcard .lightblue {
+  fill: #03a9f4;
+}
+.creditcard .lightbluedark {
+  fill: #0288d1;
+}
+.creditcard .red {
+  fill: #ef5350;
+}
+.creditcard .reddark {
+  fill: #d32f2f;
+}
+.creditcard .purple {
+  fill: #ab47bc;
+}
+.creditcard .purpledark {
+  fill: #7b1fa2;
+}
+.creditcard .cyan {
+  fill: #26c6da;
+}
+.creditcard .cyandark {
+  fill: #0097a7;
+}
+.creditcard .green {
+  fill: #66bb6a;
+}
+.creditcard .greendark {
+  fill: #388e3c;
+}
+.creditcard .lime {
+  fill: #d4e157;
+}
+.creditcard .limedark {
+  fill: #afb42b;
+}
+.creditcard .yellow {
+  fill: #ffeb3b;
+}
+.creditcard .yellowdark {
+  fill: #f9a825;
+}
+.creditcard .orange {
+  fill: #ff9800;
+}
+.creditcard .orangedark {
+  fill: #ef6c00;
+}
+.creditcard .grey {
+  fill: #bdbdbd;
+}
+.creditcard .greydark {
+  fill: #616161;
+}
+
+/* Front of Card */
+#svgname {
+  text-transform: uppercase;
+}
+
+#cardfront .st2 {
+  fill: #ffffff;
+}
+
+#cardfront .st3 {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 600;
+}
+
+#cardfront .st4 {
+  font-size: 54.7817px;
+}
+
+#cardfront .st5 {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+}
+
+#cardfront .st6 {
+  font-size: 33.1112px;
+}
+
+#cardfront .st7 {
+  opacity: 0.6;
+  fill: #ffffff;
+}
+
+#cardfront .st8 {
+  font-size: 24px;
+}
+
+#cardfront .st9 {
+  font-size: 36.5498px;
+}
+
+#cardfront .st10 {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 300;
+}
+
+#cardfront .st11 {
+  font-size: 16.1716px;
+}
+
+#cardfront .st12 {
+  fill: #4c4c4c;
+}
+
+/* Back of Card */
+#cardback .st0 {
+  fill: none;
+  stroke: #0f0f0f;
+  stroke-miterlimit: 10;
+}
+
+#cardback .st2 {
+  fill: #111111;
+}
+
+#cardback .st3 {
+  fill: #f2f2f2;
+}
+
+#cardback .st4 {
+  fill: #d8d2db;
+}
+
+#cardback .st5 {
+  fill: #c4c4c4;
+}
+
+#cardback .st6 {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+}
+
+#cardback .st7 {
+  font-size: 27px;
+}
+
+#cardback .st8 {
+  opacity: 0.6;
+}
+
+#cardback .st9 {
+  fill: #ffffff;
+}
+
+#cardback .st10 {
+  font-size: 24px;
+}
+
+#cardback .st11 {
+  fill: #eaeaea;
+}
+
+#cardback .st12 {
+  font-family: "Rock Salt", cursive;
+}
+
+#cardback .st13 {
+  font-size: 37.769px;
+}
