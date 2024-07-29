@@ -7,7 +7,6 @@ import { LanguageContext } from "../../context/LanguageContext";
 
 export default function Home() {
   const { t } = useTranslation();
-  const { language } = useContext(LanguageContext);
   return (
     <>
       <article className={styles.container}>

@@ -71,12 +71,12 @@ export default function Header() {
         </ul>
         <ul className={styles.rightNav}>
           <li>
-            <Link className={styles.link} to={navigation.getSignInUrl()}>
+            <Link className={styles.link} to={navigation.getLoginUrl()}>
               {t("signIn")}
             </Link>
           </li>
           <li className={styles.sign}>
-            <Link className={styles.link} to={navigation.getSignUpUrl()}>
+            <Link className={styles.link} to={navigation.getRegisterUrl()}>
               {t("signUp")}
             </Link>
           </li>
