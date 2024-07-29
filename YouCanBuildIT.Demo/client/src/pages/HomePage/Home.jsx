@@ -1,22 +1,19 @@
-import styles from "../../assets/styles/home.module.css";
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
+import styles from "../../assets/styles/home.module.css";
 import { navigation } from "../../context/common/navigations";
-navigation;
+import { LanguageContext } from "../../context/LanguageContext";
+
 export default function Home() {
+  const { t } = useTranslation();
+  const { language } = useContext(LanguageContext);
   return (
     <>
       <article className={styles.container}>
         <section className={styles.intro}>
-          <h1 className={styles.title}>Welcome to the MakeIT!</h1>
-          <p className={styles.text}>
-            Welcome to the world of computer building! This guide is designed to
-            take you on an exciting journey, transforming you from a novice to a
-            knowledgeable builder, capable of assembling your very own computer
-            from the ground up. Whether you're looking to create a
-            high-performance gaming rig, a powerful workstation, or a simple
-            home PC, this comprehensive guide will provide you with the
-            knowledge and confidence needed to achieve your goal.
-          </p>
+          <h1 className={styles.title}>{t("welcomeTitle")}</h1>
+          <p className={styles.text}>{t("welcomeText")}</p>
         </section>
         <section className={styles.imgSection}>
           <img
@@ -28,7 +25,7 @@ export default function Home() {
       </article>
       <div className={styles.btn}>
         <Link className={styles.learnMore} to={navigation.getAboutUrl()}>
-          Learn More
+          {t("learnMore")}
         </Link>
       </div>
     </>
