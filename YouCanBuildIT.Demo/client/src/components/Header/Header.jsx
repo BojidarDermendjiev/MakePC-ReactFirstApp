@@ -1,13 +1,15 @@
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/header.module.css";
 import { navigation } from "../../context/common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Header() {
   const { t } = useTranslation();
   const { language, changeLanguage } = useContext(LanguageContext);
+  const { isSignUp, toggleForm } = useContext(AuthContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const showDropdown = () => {
@@ -21,6 +23,7 @@ export default function Header() {
   const handleLanguageChange = (lng) => {
     changeLanguage(lng, hideDropdown);
   };
+
   return (
     <header>
       <nav className={styles.navigationBar}>
@@ -36,17 +39,17 @@ export default function Header() {
           </li>
           <li>
             <Link className={styles.link} to={navigation.getAboutUrl()}>
-              {t("about")}
+              {t("header.about")}
             </Link>
           </li>
           <li>
             <Link className={styles.link} to={navigation.getHardwareBlogUrl()}>
-              {t("forum")}
+              {t("header.forum")}
             </Link>
           </li>
           <li>
             <Link className={styles.link} to={navigation.getFeedBackUrl()}>
-              {t("reviews")}
+              {t("header.reviews")}
             </Link>
           </li>
           <li
@@ -55,7 +58,7 @@ export default function Header() {
             onMouseLeave={hideDropdown}
           >
             <Link className={styles.link} to="#">
-              {t("language")}
+              {t("header.language")}
             </Link>
             {dropdownOpen && (
               <ul className={styles.dropdown}>
@@ -71,13 +74,21 @@ export default function Header() {
         </ul>
         <ul className={styles.rightNav}>
           <li>
-            <Link className={styles.link} to={navigation.getSignInUrl()}>
-              {t("signIn")}
+            <Link
+              className={styles.link}
+              to={navigation.getLoginUrl()}
+              onClick={() => toggleForm(false)}
+            >
+              {t("header.signIn")}
             </Link>
           </li>
           <li className={styles.sign}>
-            <Link className={styles.link} to={navigation.getSignUpUrl()}>
-              {t("signUp")}
+            <Link
+              className={styles.link}
+              to={navigation.getLoginUrl()}
+              onClick={() => toggleForm(true)}
+            >
+              {t("header.signUp")}
             </Link>
           </li>
         </ul>

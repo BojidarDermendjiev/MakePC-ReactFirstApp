@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/footer.module.css";
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer>
       <div className={styles.wrapper}>
@@ -23,14 +25,14 @@ export default function Footer() {
       </div>
       <div className={styles.info}>
         <div className={styles["info-btn"]}>
-          <h1>Contacts</h1>
-          <h4 className={styles.button}>Support</h4>
-          <p className={styles.button}>support@makeIT.com</p>
+          <h1>{t("footer.contacts")}</h1>
+          <h4 className={styles.button}>{t("footer.support")}</h4>
+          <p className={styles.button}>{t("footer.supportEmail")}</p>
         </div>
         <div className={styles["info-btn"]}>
-          <h1>Sales</h1>
-          <p className={styles.button}>sales@makeIT.com</p>
-          <p className={styles.button}>+359888788804</p>
+          <h1>{t("footer.sales")}</h1>
+          <p className={styles.button}>{t("footer.salesEmail")}</p>
+          <p className={styles.button}>{t("footer.salesPhone")}</p>
         </div>
       </div>
     </footer>

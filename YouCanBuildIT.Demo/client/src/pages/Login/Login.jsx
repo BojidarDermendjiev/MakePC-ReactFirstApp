@@ -1,29 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "../../assets/styles/authForm.module.css";
 import { useFormik } from "formik";
+import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { basicSchema } from "../../schemas";
+import { AuthContext } from "../../context/AuthContext";
+import styles from "../../assets/styles/authForm.module.css";
 
-const SignUp = () => {
-  // State to toggle between Sign Up and Sign In forms
-  const [isSignUp, setIsSignUp] = useState(true);
+const Login = () => {
+  const { t } = useTranslation();
+  const { isSignUp, toggleForm } = useContext(AuthContext);
 
-  // State to determine if the user has an account
-  const [hasAccount, setHasAccount] = useState(false);
-
-  // Function to toggle between Sign Up and Sign In
-  const toggleForm = () => {
-    setIsSignUp(!isSignUp);
-  };
-
-  // Handle form submission
   const onSubmit = async (values, actions) => {
-    console.log("sumbitted");
+    console.log("submitted");
     console.log(values);
     console.log(actions);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
+
   const {
     values,
     errors,
@@ -52,12 +46,16 @@ const SignUp = () => {
           }`}
         >
           <form autoComplete="off" onSubmit={handleSubmit}>
-            <h1>{isSignUp ? "Create Account" : "Sign In"}</h1>
+            <h1>
+              {isSignUp
+                ? t("authenticator.createAccount")
+                : t("authenticator.signIn")}
+            </h1>
 
             <span>
               {isSignUp
-                ? "or use your email for registration"
-                : "or use your email account"}
+                ? t("authenticator.useEmailForRegistration")
+                : t("authenticator.useEmailAccount")}
             </span>
 
             {isSignUp ? (
@@ -67,7 +65,7 @@ const SignUp = () => {
                   value={values.name}
                   onChange={handleChange}
                   type="text"
-                  placeholder="Name"
+                  placeholder={t("authenticator.name")}
                   onBlur={handleBlur}
                   className={
                     errors.name && touched.name ? styles["input-error"] : ""
@@ -81,7 +79,7 @@ const SignUp = () => {
                   value={values.email}
                   onChange={handleChange}
                   type="email"
-                  placeholder="Email"
+                  placeholder={t("authenticator.email")}
                   onBlur={handleBlur}
                   className={
                     errors.email && touched.email ? styles["input-error"] : ""
@@ -95,7 +93,7 @@ const SignUp = () => {
                   value={values.password}
                   onChange={handleChange}
                   type="password"
-                  placeholder="Password"
+                  placeholder={t("authenticator.password")}
                   onBlur={handleBlur}
                   className={
                     errors.password && touched.password
@@ -111,7 +109,7 @@ const SignUp = () => {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   type="password"
-                  placeholder="Confirm Password"
+                  placeholder={t("authenticator.confirmPassword")}
                   onBlur={handleBlur}
                   className={
                     errors.confirmPassword && touched.confirmPassword
@@ -127,7 +125,7 @@ const SignUp = () => {
                   disabled={isSubmitting}
                   type="submit"
                 >
-                  Sign Up
+                  {t("authenticator.signUp")}
                 </button>
               </>
             ) : (
@@ -137,7 +135,7 @@ const SignUp = () => {
                   value={values.email}
                   onChange={handleChange}
                   type="email"
-                  placeholder="Email"
+                  placeholder={t("authenticator.email")}
                   onBlur={handleBlur}
                   required
                 />
@@ -146,12 +144,12 @@ const SignUp = () => {
                   value={values.password}
                   onChange={handleChange}
                   type="password"
-                  placeholder="Password"
+                  placeholder={t("authenticator.password")}
                   onBlur={handleBlur}
                   required
                 />
-                <Link to="#">Forget Your Password?</Link>
-                <button type="submit">Sign In</button>
+                <Link to="#">{t("authenticator.forgetPassword")}</Link>
+                <button type="submit">{t("authenticator.signIn")}</button>
               </>
             )}
           </form>
@@ -163,40 +161,46 @@ const SignUp = () => {
               className={`${styles["toggle-panel"]} ${
                 isSignUp ? styles["toggle-left"] : styles["toggle-right"]
               }`}
-              onClick={toggleForm}
+              onClick={() => toggleForm(!isSignUp)}
             >
-              <h1>{isSignUp ? "Welcome Back!" : "Hello, Friend!"}</h1>
+              <h1>
+                {isSignUp
+                  ? t("authenticator.welcomeBack")
+                  : t("authenticator.helloFriend")}
+              </h1>
               <p>
                 {isSignUp
-                  ? "Enter your personal details to use all of site features"
-                  : "Register with your personal details to use all of site features"}
+                  ? t("authenticator.enterDetails")
+                  : t("authenticator.registerDetails")}
               </p>
               <button
                 className={styles.hidden}
                 id={isSignUp ? "login" : "register"}
-                onClick={toggleForm}
+                onClick={() => toggleForm(!isSignUp)}
               >
-                {isSignUp ? "Sign In" : "Sign Up"}
+                {isSignUp
+                  ? t("authenticator.signIn")
+                  : t("authenticator.signUp")}
               </button>
             </div>
           </div>
         </div>
 
         <div className={styles["account-info"]}>
-          {hasAccount ? (
+          {isSignUp ? (
             <p>
-              Already have an account?{" "}
-              <a href="#" onClick={() => setIsSignUp(false)}>
-                Sign In here
-              </a>
+              {t("authenticator.alreadyHaveAccount")}{" "}
+              <Link to="#" onClick={() => toggleForm(false)}>
+                {t("authenticator.signInHere")}
+              </Link>
               .
             </p>
           ) : (
             <p>
-              Don't have an account?{" "}
-              <a href="#" onClick={() => setIsSignUp(true)}>
-                Sign Up here
-              </a>
+              {t("authenticator.dontHaveAccount")}{" "}
+              <Link to="#" onClick={() => toggleForm(true)}>
+                {t("authenticator.signUpHere")}
+              </Link>
               .
             </p>
           )}
@@ -206,4 +210,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
