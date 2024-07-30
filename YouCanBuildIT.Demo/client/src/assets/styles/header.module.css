@@ -136,7 +136,9 @@ ul li:not(.language):before,
     translate 0s 0.3s;
 }
 
-ul li:hover:before {
+ul li.navigations:hover:before,
+ul li.signIn:hover:before,
+ul li.signUp:hover:before {
   scale: 1;
   transition: 0.3s;
 }

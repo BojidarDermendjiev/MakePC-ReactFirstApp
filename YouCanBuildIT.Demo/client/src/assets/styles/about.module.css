@@ -1,0 +1,60 @@
+.about {
+  margin: 2em;
+  padding: 2em;
+}
+.mainTitle {
+  text-align: center;
+  font-size: 3.5em;
+  color: #14213d;
+}
+
+.reasons {
+  list-style: none;
+}
+.reason {
+}
+
+.introduction,
+.intro,
+.cpu,
+.ram,
+.motherboard,
+.powerSupply,
+.storage,
+.graphicsCard,
+.cables,
+.cooling,
+.powerOn,
+.os {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 2em;
+  padding: 2em;
+  justify-content: space-between;
+}
+.intro img,
+.cables img,
+.powerOn img {
+  width: 780px;
+  height: 450px;
+}
+.osInfo {
+  width: 50%;
+}
+.osLogo {
+  display: flex;
+  width: 40%;
+  justify-content: space-evenly;
+}
+.osLogo img {
+  width: 100px;
+  height: 100px;
+}
+.info {
+  width: 50%;
+}
+
+img {
+  border-radius: 2em;
+}

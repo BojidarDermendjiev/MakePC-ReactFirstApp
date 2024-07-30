@@ -28,7 +28,7 @@ export default function Header() {
     <header>
       <nav className={styles.navigationBar}>
         <ul className={styles.leftNav}>
-          <li>
+          <li className={styles.navigations}>
             <Link className={styles.link} to={navigation.getHomeUrl()}>
               <img
                 className={styles.logo}
@@ -37,17 +37,17 @@ export default function Header() {
               />
             </Link>
           </li>
-          <li>
+          <li className={styles.navigations}>
             <Link className={styles.link} to={navigation.getAboutUrl()}>
               {t("header.about")}
             </Link>
           </li>
-          <li>
+          <li className={styles.navigations}>
             <Link className={styles.link} to={navigation.getHardwareBlogUrl()}>
               {t("header.forum")}
             </Link>
           </li>
-          <li>
+          <li className={styles.navigations}>
             <Link className={styles.link} to={navigation.getFeedBackUrl()}>
               {t("header.reviews")}
             </Link>
@@ -73,7 +73,7 @@ export default function Header() {
           </li>
         </ul>
         <ul className={styles.rightNav}>
-          <li>
+          <li className={styles.signUp}>
             <Link
               className={styles.link}
               to={navigation.getLoginUrl()}
@@ -82,7 +82,7 @@ export default function Header() {
               {t("header.signIn")}
             </Link>
           </li>
-          <li className={styles.sign}>
+          <li className={styles.signIn}>
             <Link
               className={styles.link}
               to={navigation.getLoginUrl()}

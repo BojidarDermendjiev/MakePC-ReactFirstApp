@@ -55,4 +55,14 @@ export const navigation = {
   getUserProfileUrl(userId) {
     return `/user/${userId}`;
   },
+
+  getMicrosoftUrl() {
+    return "https://www.microsoft.com/";
+  },
+  getLinuxUrl() {
+    return "https://www.linux.org/";
+  },
+  getIOSUrl() {
+    return "https://www.apple.com/ios/";
+  },
 };
