@@ -155,7 +155,7 @@ export default function About() {
             />
           </li>
           <li className={styles.os}>
-            <article className={styles.osLogo}>
+            <div className={styles.osLogo}>
               <Link
                 className={styles.link}
                 to={navigation.getMicrosoftUrl()}
@@ -186,7 +186,7 @@ export default function About() {
                   alt="ios logo"
                 />
               </Link>
-            </article>
+            </div>
             <article className={styles.osInfo}>
               <h2 className={styles.title}>{t("about.installOS.title")}</h2>
               <p>{t("about.installOS.description")}</p>

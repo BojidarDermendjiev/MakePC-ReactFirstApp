@@ -148,8 +148,12 @@ const Login = () => {
                   onBlur={handleBlur}
                   required
                 />
-                <Link to="#">{t("authenticator.forgetPassword")}</Link>
-                <button type="submit">{t("authenticator.signIn")}</button>
+                <Link className={styles.forgPassword} to="#">
+                  {t("authenticator.forgetPassword")}
+                </Link>
+                <button className={styles.signIn} type="submit">
+                  {t("authenticator.signIn")}
+                </button>
               </>
             )}
           </form>

@@ -5,7 +5,6 @@
 }
 
 header {
-  background-color: rgba(0, 0, 0, 0.536);
   color: transparent;
   border-radius: 3.5em 3.3em;
   padding: 1;
@@ -22,7 +21,7 @@ header {
   display: flex;
   font: bold 1.5rem sans-serif;
   text-transform: uppercase;
-  color: rgb(255, 252, 252);
+  color: rgb(0, 0, 0);
   padding: 0;
   margin: 0;
 }
@@ -51,7 +50,7 @@ ul li {
 ul li .link {
   display: block;
   padding: 20px 25px;
-  color: rgba(252, 252, 252, 0.778);
+  color: rgb(0, 0, 0);
   text-decoration: none;
   text-align: center;
   font-size: 0.9em;
@@ -88,7 +87,7 @@ ul li ul.dropdown li .link {
 }
 
 .language:hover {
-  background: rgba(15, 15, 15, 0.16);
+  background: rgba(0, 0, 0, 0.16);
   border-radius: 1.2em;
   color: black;
   transition:
@@ -97,14 +96,14 @@ ul li ul.dropdown li .link {
 }
 
 .language:hover .link {
-  color: rgba(0, 0, 0, 0.946);
+  color: #c7f022;
 }
 
 .language:hover ul.dropdown {
-  background: rgba(15, 15, 15, 0.16);
+  background: rgba(0, 0, 0, 0.16);
   box-shadow:
     rgba(0, 0, 0, 0.16) 0px 1px 4px,
-    rgb(51, 51, 51) 0px 0px 0px 3px;
+    rgb(0, 0, 0) 0px 0px 0px 3px;
   padding: 1em;
   border-radius: 1em;
 }
@@ -118,9 +117,9 @@ ul li ul.dropdown li .link {
 }
 
 .language:hover ul.dropdown li:hover {
-  background: #7f7f7f;
+  background: #7f7f7f00;
   border-radius: 1em;
-  color: rgb(21, 15, 42);
+  color: #c7f022;
 }
 
 ul li:not(.language):before,
@@ -129,7 +128,7 @@ ul li:not(.language):before,
   content: "";
   position: absolute;
   inset: calc(100% - 3px) 0 0 0; /* 3px = the thickness */
-  background: rgba(15, 15, 15, 0.16); /* The color */
+  background: #c7f022; /* The color */
   scale: 0 1;
   transition:
     0.3s,

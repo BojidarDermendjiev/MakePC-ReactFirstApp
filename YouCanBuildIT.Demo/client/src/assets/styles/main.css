@@ -2,7 +2,7 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: rgb(255, 255, 255);
+  background: #7789ab;
 }
 main {
   flex: 1;
@@ -12,4 +12,16 @@ main {
   margin: 0;
   box-sizing: border-box; /* Include padding and border in element's total width and height */
   font-family: "Poppins", sans-serif;
+}
+
+html::-webkit-scrollbar {
+  display: none; /* WebKit browsers */
+}
+
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* IE and Edge */
 }

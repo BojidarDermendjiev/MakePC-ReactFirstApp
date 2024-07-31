@@ -1,9 +1,5 @@
-.payment-title {
-  width: 100%;
-  height: 10vh;
-  text-align: center;
-}
 .donation {
+  margin-top: 4em;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -11,18 +7,18 @@
 }
 .form-container {
   border-radius: 2em;
-  background: #89898978;
+  background: #89898900;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   max-width: 600px;
   margin: 0 auto;
   padding: 10em 2em 2em 2em;
-  background-color: #f7f7f7;
+  background-color: rgba(20, 33, 61, 0.498);
   border-radius: 8px;
-  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -webkit-box-shadow: 8px 8px 24px 0px #c7f022;
+  -moz-box-shadow: 8px 8px 24px 0px #c7f022;
+  box-shadow: 8px 8px 24px 0px #c7f022;
 }
 
 .field-container {
@@ -37,15 +33,16 @@
 
 .field-container input {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #c7f022;
   border-radius: 4px;
 }
 
 button[type="submit"] {
   grid-column: 1 / -1;
   padding: 10px 15px;
-  background-color: #37373782;
-  color: #fff;
+  color: #c7f022;
+  background: rgb(10, 17, 31);
+  font-size: 1.2em;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -53,7 +50,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #565656b7;
+  background-color: black;
 }
 
 .field-container input {
@@ -62,18 +59,18 @@ button[type="submit"]:hover {
   font-size: 16px;
   width: 100%;
   border-radius: 3px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid rgb(20 33 61);
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .field-container input:focus {
-  border-color: #03a9f4;
+  border-color: #c7f022;
   box-shadow: 0 0 8px rgba(3, 169, 244, 0.5);
 }
 .creditcard {
-  margin-bottom: 5em;
+  margin-bottom: 6em;
 }
 .creditcard .front,
 .creditcard .back {
@@ -123,7 +120,7 @@ input#securitycode:focus ~ .container .creditcard {
 .creditcard svg#cardfront,
 .creditcard svg#cardback {
   width: 100%;
-  box-shadow: 1px 5px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 5px 6px rgb(0, 0, 0);
   border-radius: 22px;
   transition: fill 0.5s ease;
 }
@@ -136,58 +133,58 @@ input#securitycode:focus ~ .container .creditcard {
 
 /* Example card color classes */
 .creditcard .lightblue {
-  fill: #03a9f4;
+  fill: #c7f022;
 }
 .creditcard .lightbluedark {
-  fill: #0288d1;
+  fill: #c7f022;
 }
 .creditcard .red {
-  fill: #ef5350;
+  fill: #c7f022;
 }
 .creditcard .reddark {
-  fill: #d32f2f;
+  fill: #c7f022;
 }
 .creditcard .purple {
-  fill: #ab47bc;
+  fill: #c7f022;
 }
 .creditcard .purpledark {
-  fill: #7b1fa2;
+  fill: #c7f022;
 }
 .creditcard .cyan {
-  fill: #26c6da;
+  fill: #c7f022;
 }
 .creditcard .cyandark {
-  fill: #0097a7;
+  fill: #c7f022;
 }
 .creditcard .green {
-  fill: #66bb6a;
+  fill: #c7f022;
 }
 .creditcard .greendark {
-  fill: #388e3c;
+  fill: #c7f022;
 }
 .creditcard .lime {
-  fill: #d4e157;
+  fill: #c7f022;
 }
 .creditcard .limedark {
-  fill: #afb42b;
+  fill: #c7f022;
 }
 .creditcard .yellow {
-  fill: #ffeb3b;
+  fill: #c7f022;
 }
 .creditcard .yellowdark {
-  fill: #f9a825;
+  fill: #c7f022;
 }
 .creditcard .orange {
-  fill: #ff9800;
+  fill: #c7f022;
 }
 .creditcard .orangedark {
-  fill: #ef6c00;
+  fill: rgba(20, 33, 61, 0.98);
 }
 .creditcard .grey {
-  fill: #bdbdbd;
+  fill: rgba(20, 33, 61, 0.498);
 }
 .creditcard .greydark {
-  fill: #616161;
+  fill: #c7f022;
 }
 
 /* Front of Card */
@@ -196,7 +193,7 @@ input#securitycode:focus ~ .container .creditcard {
 }
 
 #cardfront .st2 {
-  fill: #ffffff;
+  fill: black;
 }
 
 #cardfront .st3 {
@@ -219,7 +216,7 @@ input#securitycode:focus ~ .container .creditcard {
 
 #cardfront .st7 {
   opacity: 0.6;
-  fill: #ffffff;
+  fill: rgb(20, 33, 61);
 }
 
 #cardfront .st8 {
@@ -240,7 +237,7 @@ input#securitycode:focus ~ .container .creditcard {
 }
 
 #cardfront .st12 {
-  fill: #4c4c4c;
+  fill: rgb(20, 33, 61);
 }
 
 /* Back of Card */
@@ -251,19 +248,19 @@ input#securitycode:focus ~ .container .creditcard {
 }
 
 #cardback .st2 {
-  fill: #111111;
+  fill: rgba(20, 33, 61, 0.498);
 }
 
 #cardback .st3 {
-  fill: #f2f2f2;
+  fill: rgba(20, 33, 61, 0.498);
 }
 
 #cardback .st4 {
-  fill: #d8d2db;
+  fill: #00000032;
 }
 
 #cardback .st5 {
-  fill: #c4c4c4;
+  fill: #1818184e;
 }
 
 #cardback .st6 {
@@ -280,7 +277,7 @@ input#securitycode:focus ~ .container .creditcard {
 }
 
 #cardback .st9 {
-  fill: #ffffff;
+  fill: rgb(20 33 61);
 }
 
 #cardback .st10 {
@@ -288,7 +285,7 @@ input#securitycode:focus ~ .container .creditcard {
 }
 
 #cardback .st11 {
-  fill: #eaeaea;
+  fill: #000000;
 }
 
 #cardback .st12 {

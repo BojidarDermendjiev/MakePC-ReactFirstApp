@@ -28,9 +28,6 @@ function Donation() {
 
   return (
     <>
-      <div className="payment-title">
-        <h1>Buy me a coffee 😊</h1>
-      </div>
       <div className="donation">
         <div className="container preload">
           <div className={`creditcard ${isFlipped ? "flipped" : ""}`}>
