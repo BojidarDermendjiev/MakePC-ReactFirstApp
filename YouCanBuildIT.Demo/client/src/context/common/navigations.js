@@ -56,6 +56,12 @@ export const navigation = {
     return `/user/${userId}`;
   },
 
+  getCommentFromUrl() {
+    return "/comment";
+  },
+  getFeedBackUrl() {
+    return `/comments`;
+  },
   getMicrosoftUrl() {
     return "https://www.microsoft.com/";
   },

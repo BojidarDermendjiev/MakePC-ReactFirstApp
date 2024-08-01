@@ -1,14 +1,15 @@
+import React, { useState } from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
-import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { basicSchema } from "../../schemas";
-import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 import styles from "../../assets/styles/authForm.module.css";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const Login = () => {
   const { t } = useTranslation();
-  const { isSignUp, toggleForm } = useContext(AuthContext);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const onSubmit = async (values, actions) => {
     console.log("submitted");
@@ -59,102 +60,25 @@ const Login = () => {
             </span>
 
             {isSignUp ? (
-              <>
-                <input
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                  type="text"
-                  placeholder={t("authenticator.name")}
-                  onBlur={handleBlur}
-                  className={
-                    errors.name && touched.name ? styles["input-error"] : ""
-                  }
-                />
-                {errors.name && touched.name && (
-                  <p className={styles.error}>{errors.name}</p>
-                )}
-                <input
-                  name="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  type="email"
-                  placeholder={t("authenticator.email")}
-                  onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email ? styles["input-error"] : ""
-                  }
-                />
-                {errors.email && touched.email && (
-                  <p className={styles.error}>{errors.email}</p>
-                )}
-                <input
-                  name="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  type="password"
-                  placeholder={t("authenticator.password")}
-                  onBlur={handleBlur}
-                  className={
-                    errors.password && touched.password
-                      ? styles["input-error"]
-                      : ""
-                  }
-                />
-                {errors.password && touched.password && (
-                  <p className={styles.error}>{errors.password}</p>
-                )}
-                <input
-                  name="confirmPassword"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  type="password"
-                  placeholder={t("authenticator.confirmPassword")}
-                  onBlur={handleBlur}
-                  className={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? styles["input-error"]
-                      : ""
-                  }
-                />
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <p className={styles.error}>{errors.confirmPassword}</p>
-                )}
-                <button
-                  className={styles.signUp}
-                  disabled={isSubmitting}
-                  type="submit"
-                >
-                  {t("authenticator.signUp")}
-                </button>
-              </>
+              <SignUp
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+              />
             ) : (
-              <>
-                <input
-                  name="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  type="email"
-                  placeholder={t("authenticator.email")}
-                  onBlur={handleBlur}
-                  required
-                />
-                <input
-                  name="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  type="password"
-                  placeholder={t("authenticator.password")}
-                  onBlur={handleBlur}
-                  required
-                />
-                <Link className={styles.forgPassword} to="#">
-                  {t("authenticator.forgetPassword")}
-                </Link>
-                <button className={styles.signIn} type="submit">
-                  {t("authenticator.signIn")}
-                </button>
-              </>
+              <SignIn
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+              />
             )}
           </form>
         </div>
@@ -165,7 +89,7 @@ const Login = () => {
               className={`${styles["toggle-panel"]} ${
                 isSignUp ? styles["toggle-left"] : styles["toggle-right"]
               }`}
-              onClick={() => toggleForm(!isSignUp)}
+              onClick={() => setIsSignUp(!isSignUp)}
             >
               <h1>
                 {isSignUp
@@ -180,7 +104,7 @@ const Login = () => {
               <button
                 className={styles.hidden}
                 id={isSignUp ? "login" : "register"}
-                onClick={() => toggleForm(!isSignUp)}
+                onClick={() => setIsSignUp(!isSignUp)}
               >
                 {isSignUp
                   ? t("authenticator.signIn")
@@ -194,7 +118,7 @@ const Login = () => {
           {isSignUp ? (
             <p>
               {t("authenticator.alreadyHaveAccount")}{" "}
-              <Link to="#" onClick={() => toggleForm(false)}>
+              <Link to="#" onClick={() => setIsSignUp(false)}>
                 {t("authenticator.signInHere")}
               </Link>
               .
@@ -202,7 +126,7 @@ const Login = () => {
           ) : (
             <p>
               {t("authenticator.dontHaveAccount")}{" "}
-              <Link to="#" onClick={() => toggleForm(true)}>
+              <Link to="#" onClick={() => setIsSignUp(true)}>
                 {t("authenticator.signUpHere")}
               </Link>
               .

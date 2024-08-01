@@ -1,16 +1,16 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/header.module.css";
 import { navigation } from "../../context/common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
-import { AuthContext } from "../../context/AuthContext";
 
 export default function Header() {
   const { t } = useTranslation();
   const { language, changeLanguage } = useContext(LanguageContext);
-  const { isSignUp, toggleForm } = useContext(AuthContext);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const showDropdown = () => {
     setDropdownOpen(true);
@@ -74,20 +74,12 @@ export default function Header() {
         </ul>
         <ul className={styles.rightNav}>
           <li className={styles.signUp}>
-            <Link
-              className={styles.link}
-              to={navigation.getLoginUrl()}
-              onClick={() => toggleForm(false)}
-            >
+            <Link className={styles.link} to={navigation.getLoginUrl()}>
               {t("header.signIn")}
             </Link>
           </li>
           <li className={styles.signIn}>
-            <Link
-              className={styles.link}
-              to={navigation.getLoginUrl()}
-              onClick={() => toggleForm(true)}
-            >
+            <Link className={styles.link} to={navigation.getLoginUrl()}>
               {t("header.signUp")}
             </Link>
           </li>

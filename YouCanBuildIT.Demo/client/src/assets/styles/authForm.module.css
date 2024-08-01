@@ -157,10 +157,10 @@ button.hidden {
 }
 
 .input-error {
-  background-color: #00000081;
+  background-color: red;
 }
 .error {
-  color: #00000081;
+  color: red;
   font-size: 1.2em;
 }
 

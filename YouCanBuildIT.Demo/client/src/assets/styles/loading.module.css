@@ -1,0 +1,49 @@
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.gear {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+}
+
+.gear1 {
+  left: 44%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  animation: rotate-clockwise 4s linear infinite;
+}
+
+.gear2 {
+  left: 49%;
+  transform: translate(-50%, -50%) rotate(10deg); /* Start with a 10-degree rotation */
+  transform-origin: center;
+  animation: rotate-counterclockwise 4s linear infinite;
+}
+
+.gear img {
+  filter: brightness(0) saturate(100%) invert(44%) sepia(92%) saturate(3154%)
+    hue-rotate(353deg) brightness(101%) contrast(101%);
+}
+
+@keyframes rotate-clockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotate-counterclockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(10deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-346deg);
+  }
+}

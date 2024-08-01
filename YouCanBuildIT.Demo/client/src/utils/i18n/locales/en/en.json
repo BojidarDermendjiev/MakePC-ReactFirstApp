@@ -15,7 +15,7 @@
   "authenticator": {
     "createAccount": "Create Account",
     "useEmailForRegistration": "or use your email for registration",
-    "useEmailAccount": "or use your email account",
+    "useEmailAccount": "or use your ema il account",
     "name": "Name",
     "email": "Email",
     "password": "Password",
@@ -100,9 +100,9 @@
   "footer": {
     "contacts": "Contacts",
     "support": "Support",
-    "supportEmail": "support@makeIT.com",
+    "supportEmail": "support@makePC.com",
     "sales": "Sales",
-    "salesEmail": "sales@makeIT.com",
+    "salesEmail": "sales@makePC.com",
     "salesPhone": "+359888788804"
   }
 }

@@ -1,16 +1,18 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { navigation } from "../../context/common/navigations";
+
 import About from "../../pages/About/About";
 import Login from "../../pages/Login/Login";
 import Home from "../../pages/HomePage/Home";
 import Logout from "../../pages/Logout/Logout";
+import Comment from "../../pages/Feedback/Comment";
 import Feedback from "../../pages/Feedback/Feedback";
 import Donation from "../../pages/Donation/Donation";
 import NotFound from "../../pages/PageNotFound/NotFound";
 import ShopBasket from "../../pages/ShopBasket/ShopBasket";
 import HardwareBlog from "../../pages/HardwareBlog/HardwareBlog";
 import BuildComposition from "../../pages/BuildComposition/BuildComposition";
-import { navigation } from "../../context/common/navigations";
 
 export default function Main() {
   return (
@@ -28,7 +30,7 @@ export default function Main() {
           path={navigation.getHardwareBlogUrl()}
           element={<HardwareBlog />}
         />
-
+        <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />
         <Route path={navigation.getShopBasketUrl()} element={<ShopBasket />} />
