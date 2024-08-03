@@ -1,38 +1,37 @@
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { useFormik } from "formik";
-import { basicSchema } from "../../schemas";
+import { signUpSchema, signInSchema } from "../../schemas/index.js";
 import { useTranslation } from "react-i18next";
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../context/common/navigations";
+import { login, register } from "../../API/authentication";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const Login = () => {
   const { t } = useTranslation();
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+  const { setUser } = useContext(AuthContext);
 
-  const onSubmit = async (values, actions) => {
-    console.log("submitted");
-    console.log(values);
-    console.log(actions);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  const signUpHandler = async (values, actions) => {
     actions.resetForm();
 
-    if (isSignUp) {
-      console.log("User signed up:", values);
+    console.log("User signed up:", values);
+    await register(values, setUser);
 
-      login(values);
-      navigate(navigation.getHomeUrl());
-    } else {
-      console.log("User logged in:", values);
+    navigate(navigation.getHomeUrl());
+  };
 
-      login(values);
-      navigate(navigation.getHomeUrl());
-    }
+  const signInHandler = async (values, actions) => {
+    actions.resetForm();
+
+    console.log("User logged in:", values);
+    await login({ email: values.email, password: values.password }, setUser);
+
+    navigate(navigation.getHomeUrl());
   };
 
   const {
@@ -50,8 +49,16 @@ const Login = () => {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: basicSchema,
-    onSubmit,
+    validationSchema: isSignUp ? signUpSchema : signInSchema,
+    onSubmit: (values,actions) => {
+      if (isSignUp) {
+        signUpHandler(values, actions);
+        console.log("Sign Up:", values);
+      } else {
+        signInHandler(values, actions);
+        console.log("Sign In:", values);
+      }
+    },
   });
 
   return (

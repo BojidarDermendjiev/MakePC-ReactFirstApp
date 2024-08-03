@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/home.module.css";
 import { navigation } from "../../context/common/navigations";
