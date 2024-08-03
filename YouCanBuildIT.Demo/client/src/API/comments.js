@@ -24,17 +24,23 @@ export const deleteComment = async (reviewId) => {
 };
 
 export const editComment = async (reviewId, values) => {
-  await fetch(`${serverUrl}${serverEndpoints.createComment}/${reviewId}`, {
-    method: "PATCH",
-    body: JSON.stringify(values),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return { message: "Успешно премаханте коментар" };
+  try {
+    await fetch(`${serverUrl}${serverEndpoints.createComment}/${reviewId}`, {
+      method: "PATCH",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { message: "Успешно премаханте коментар" };
+  } catch (e) {
+    return { error: "Нещо се обърка..." };
+  }
 };
 
-export const getCommentById = async (reviewId) =>{
-  const res = await fetch(`${serverUrl}${serverEndpoints.createComment}/${reviewId}`);
-  return res.json()
-}
+export const getCommentById = async (reviewId) => {
+  const res = await fetch(
+    `${serverUrl}${serverEndpoints.createComment}/${reviewId}`
+  );
+  return res.json();
+};
