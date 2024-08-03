@@ -36,7 +36,7 @@ const SignIn = ({
       <Link className={styles.forgPassword} to="#">
         {t("authenticator.forgetPassword")}
       </Link>
-      <button className={styles.signIn} type="submit" disabled={isSubmitting}>
+      <button className={styles.signIn} type="submit" >
         {t("authenticator.signIn")}
       </button>
     </>

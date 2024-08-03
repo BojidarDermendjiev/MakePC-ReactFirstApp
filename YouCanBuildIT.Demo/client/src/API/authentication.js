@@ -37,8 +37,12 @@ export const login = async (values, setUser) => {
   );
 };
 
-export const logout = async (setUser) => {
-  await fetch(`${serverUrl}${serverEndpoints.logout}`);
+export const logout = async (setUser, _id) => {
+  await fetch(`${serverUrl}${serverEndpoints.logout}`, {
+    headers: {
+      "X-Authorization": _id
+    }
+  });
 
   setUser(null);
 

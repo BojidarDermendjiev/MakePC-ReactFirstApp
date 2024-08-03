@@ -51,6 +51,7 @@ const Login = () => {
     },
     validationSchema: isSignUp ? signUpSchema : signInSchema,
     onSubmit: (values,actions) => {
+      console.log("test+++")
       if (isSignUp) {
         signUpHandler(values, actions);
         console.log("Sign Up:", values);

@@ -29,7 +29,7 @@ export default function Header() {
   };
 
   const handleLogout = async () => {
-    await logout(setUser);
+    await logout(setUser, user?._id);
     navigate(navigation.getHomeUrl());
   };
 
