@@ -4,11 +4,6 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
 function App() {
-  const history = useLocation();
-
-  const onRedirectCallback = (appState) => {
-    history.push(appState?.returnTo || window.location.pathname);
-  };
   return (
     <>
       <Header />
