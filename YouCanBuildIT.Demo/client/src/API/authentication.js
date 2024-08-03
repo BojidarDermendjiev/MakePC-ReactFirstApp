@@ -8,7 +8,7 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
       "Content-Type": "application/json",
     },
   });
-
+  console.log(endpoint)
   const user = await res.json();
   
   const userFilteredData = {
@@ -37,12 +37,8 @@ export const login = async (values, setUser) => {
   );
 };
 
-export const logout = async (setUser, _id) => {
-  await fetch(`${serverUrl}${serverEndpoints.logout}`, {
-    headers: {
-      "X-Authorization": _id
-    }
-  });
+export const logout = async (setUser) => {
+  await fetch(`${serverUrl}${serverEndpoints.logout}`);
 
   setUser(null);
 
