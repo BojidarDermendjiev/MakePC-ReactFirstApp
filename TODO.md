@@ -1,8 +1,6 @@
 [x] Login
 - Save data in the client side and redirect to home page
 [x] Register
-[ ] Change Password
-[ ] Reset Password
 [ ] Account Page
 - When user is registered to login automatically and redirect to home page
 [ ] Reviews
