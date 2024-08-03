@@ -1,6 +1,6 @@
-[ ] Login
+[x] Login
 - Save data in the client side and redirect to home page
-[ ] Register
+[x] Register
 [ ] Change Password
 [ ] Reset Password
 [ ] Account Page
