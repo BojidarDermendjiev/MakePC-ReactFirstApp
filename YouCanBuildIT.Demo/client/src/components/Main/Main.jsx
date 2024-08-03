@@ -33,6 +33,7 @@ export default function Main() {
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />
         <Route path={navigation.getShopBasketUrl()} element={<ShopBasket />} />
+        <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
         <Route path={navigation.getPageNotFoundUrl()} element={<NotFound />} />
       </Routes>
     </main>
