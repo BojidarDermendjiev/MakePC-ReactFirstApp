@@ -8,9 +8,9 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
       "Content-Type": "application/json",
     },
   });
-  console.log(res)
-  const user = await res.json();
 
+  const user = await res.json();
+  
   const userFilteredData = {
     email: user.email,
     name: user.name,
@@ -23,7 +23,7 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
 };
 export const register = async (values, setUser) => {
   await fetchAuthentication(
-    `${serverUrl}/${serverEndpoints.register}`,
+    `${serverUrl}${serverEndpoints.register}`,
     values,
     setUser
   );
@@ -31,14 +31,14 @@ export const register = async (values, setUser) => {
 
 export const login = async (values, setUser) => {
   await fetchAuthentication(
-    `${serverUrl}/${serverEndpoints.login}`,
+    `${serverUrl}${serverEndpoints.login}`,
     values,
     setUser
   );
 };
 
 export const logout = async (setUser) => {
-  await fetch(`${serverUrl}/${serverEndpoints.logout}`);
+  await fetch(`${serverUrl}${serverEndpoints.logout}`);
 
   setUser(null);
 
