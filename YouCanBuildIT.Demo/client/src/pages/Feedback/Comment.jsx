@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import { useContext, useState } from "react";
 import styles from "../../assets/styles/comment.module.css";
 import { createComment } from "../../API/comments";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
-=======
-import  { useContext, useState } from "react";
-import styles from "../../assets/styles/comment.module.css";
-import { createComment } from "../../API/comments";
-import { AuthContext } from "../../context/AuthContextProvider";
-import {  useNavigate } from "react-router-dom";
->>>>>>> b3470789c0d787cb12db63a8e31423c824286b52
 import { navigation } from "../../context/common/navigations";
 
 const Comment = () => {
@@ -29,17 +21,14 @@ const Comment = () => {
     setComment(""); // Reset comment input after submission
     setRating(0); // Reset rating after submission
     navigate(navigation.getFeedBackUrl());
-    
   };
 
   return (
     <div className={styles["comment-form-container"]}>
       <form className={styles["comment-form"]} onSubmit={handleSubmit}>
-        <h2 className={styles.LeaveCom}>Leave a Comment</h2>
+        <h2>Leave a Comment</h2>
         <div className={styles["form-group"]}>
-          <label htmlFor="comment" className={styles.Info}>
-            Comment
-          </label>
+          <label htmlFor="comment">Comment</label>
           <textarea
             id="comment"
             className={styles["form-group"]}
