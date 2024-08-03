@@ -1,0 +1,25 @@
+{
+  "comments": {
+    "2d5ae478-38e1-4660-acf9-f04aa4724421": {
+      "userId": "2d5ae478-87c7-45fa-acf9-f04aa4724421",
+      "comment": "Great service!",
+      "review": "5 stars",
+      "name": "Alice",
+      "email": "alice@example.com"
+    },
+    "6012c542-38e1-4660-ba40-1b109c40cb2f": {
+      "userId": "6012c542-38e1-4660-ba40-1b109c40cb2f",
+      "comment": "Good quality products.",
+      "review": "4 stars",
+      "name": "Bob",
+      "email": "bob@example.com"
+    },
+    "2d5ae478-1e41-4c65-9ce2-1b109c40cb2f": {
+      "userId": "d749a819-1e41-4c65-9ce2-7b429c4ebd0d",
+      "comment": "Fast delivery!",
+      "review": "5 stars",
+      "name": "Charlie",
+      "email": "charlie@example.com"
+    }
+  }
+}
