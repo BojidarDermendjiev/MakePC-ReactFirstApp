@@ -655,7 +655,7 @@
         }
 
         context.canAccess(existing, body);
-
+        
         try {
             responseData = context.storage.set(context.params.collection, tokens[0], body);
         } catch (err) {
