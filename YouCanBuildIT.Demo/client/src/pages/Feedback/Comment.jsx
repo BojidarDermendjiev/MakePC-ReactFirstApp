@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { useContext, useState } from "react";
 import styles from "../../assets/styles/comment.module.css";
 import { createComment } from "../../API/comments";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
+=======
+import  { useContext, useState } from "react";
+import styles from "../../assets/styles/comment.module.css";
+import { createComment } from "../../API/comments";
+import { AuthContext } from "../../context/AuthContextProvider";
+import {  useNavigate } from "react-router-dom";
+>>>>>>> b3470789c0d787cb12db63a8e31423c824286b52
 import { navigation } from "../../context/common/navigations";
 
 const Comment = () => {
@@ -18,9 +26,10 @@ const Comment = () => {
       comment,
       review: rating,
     });
-    setComment("");
-    setRating(0);
+    setComment(""); // Reset comment input after submission
+    setRating(0); // Reset rating after submission
     navigate(navigation.getFeedBackUrl());
+    
   };
 
   return (
@@ -52,7 +61,8 @@ const Comment = () => {
                 }
                 onClick={() => setRating(index)}
               >
-                <span className={styles.star}>&#9733;</span>
+                <span className={styles.star}>&#9733;</span>{" "}
+                {/* Star character */}
               </button>
             );
           })}

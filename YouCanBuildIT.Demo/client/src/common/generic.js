@@ -4,5 +4,5 @@ export const serverEndpoints = {
     login: "/users/login",
     logout: "/users/logout",
     usersDetails: "/users/me",
-    createComment: "/jsonstore/comments"
+    createComment: "/comments"
 }
