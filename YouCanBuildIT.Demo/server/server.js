@@ -362,6 +362,7 @@
             return responseData[tokens.slice(-1)];
         },
         patch: (context, tokens, query, body) => {
+            console.log("test+++")
             tokens = [context.params.collection, ...tokens];
             console.log('Request body:\n', body);
 

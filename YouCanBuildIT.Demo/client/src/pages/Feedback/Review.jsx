@@ -1,7 +1,11 @@
 import styles from "../../assets/styles/feedback.module.css";
 import { deleteComment } from "../../API/comments";
+import { useNavigate } from "react-router-dom";
+import { navigation } from "../../context/common/navigations";
 
 export default function Review({loggedInUser, email, comment, review, _id, triggerRefreshHandler}) {
+  const navigate = useNavigate()
+
   const isOwner = loggedInUser && loggedInUser.email === email;
 
   const deleteHandler = async () =>{ 
@@ -9,6 +13,9 @@ export default function Review({loggedInUser, email, comment, review, _id, trigg
     triggerRefreshHandler()
   }
 
+  const editComment = async () => {
+    navigate(`${navigation.getCommentFromUrl()}/${_id}`)
+  }
   return (
     <div className={styles.card}>
       <p className={styles.content}>{email}</p>
@@ -17,7 +24,7 @@ export default function Review({loggedInUser, email, comment, review, _id, trigg
 
       {isOwner && (
         <>
-          <button>Edit</button>
+          <button onClick={editComment}>Edit</button>
           <button onClick={deleteHandler}>Delete</button>
         </>
       )}
