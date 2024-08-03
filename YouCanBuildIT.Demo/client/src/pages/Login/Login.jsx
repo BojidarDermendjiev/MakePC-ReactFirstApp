@@ -19,7 +19,6 @@ const Login = () => {
   const signUpHandler = async (values, actions) => {
     actions.resetForm();
 
-    console.log("User signed up:", values);
     await register(values, setUser);
 
     navigate(navigation.getHomeUrl());
@@ -28,7 +27,6 @@ const Login = () => {
   const signInHandler = async (values, actions) => {
     actions.resetForm();
 
-    console.log("User logged in:", values);
     await login({ email: values.email, password: values.password }, setUser);
 
     navigate(navigation.getHomeUrl());
@@ -51,13 +49,10 @@ const Login = () => {
     },
     validationSchema: isSignUp ? signUpSchema : signInSchema,
     onSubmit: (values,actions) => {
-      console.log("test+++")
       if (isSignUp) {
         signUpHandler(values, actions);
-        console.log("Sign Up:", values);
       } else {
         signInHandler(values, actions);
-        console.log("Sign In:", values);
       }
     },
   });
