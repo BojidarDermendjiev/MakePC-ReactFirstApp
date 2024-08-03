@@ -30,7 +30,7 @@ export default function Header() {
 
   const handleLogout = async () => {
     await logout(setUser);
-    navigate(navigation.getHomeUrl());
+    navigate(navigation.getLogoutUrl());
   };
 
   return (
