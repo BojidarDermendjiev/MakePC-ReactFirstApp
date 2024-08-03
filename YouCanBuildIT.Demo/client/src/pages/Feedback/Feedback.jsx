@@ -13,10 +13,10 @@ export default function Feedback() {
     data: comments,
     loading,
     error,
-  } = useFetch("http://localhost:3030/jsonstore/advanced/users");
+  } = useFetch("http://localhost:3030/jsonstore/comments");
+
 
   const { user } = useContext(AuthContext);
-  const loggedInUser = JSON.parse(localStorage.getItem("user"));
 
   if (error) return <ErrorLoading />;
 
@@ -30,11 +30,11 @@ export default function Feedback() {
           <Spiner />
         ) : (
           comments &&
-          Object.values(comments).map((comment) => (
+          Object.values(comments.comments).map((comment) => (
             <Review
               key={comment._id}
               {...comment}
-              loggedInUser={loggedInUser}
+              loggedInUser={user}
             />
           ))
         )}
