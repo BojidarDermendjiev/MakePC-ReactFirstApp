@@ -55,20 +55,23 @@ textarea .form-group input:focus,
   gap: 5px;
 }
 
-.rating input {
-  display: none;
-}
-
-.rating label {
-  font-size: 2em;
-  color: #ff0;
+.star-button,
+.star-button-blank {
+  background: none;
+  border: none;
   cursor: pointer;
 }
 
-.rating input:checked ~ label,
-.rating label:hover,
-.rating label:hover ~ label {
-  color: rgb(0, 0, 0);
+.star {
+  color: #ff0; /* Yellow stars */
+  font-size: 4em;
+  padding: 0 !important;
+}
+
+.star-button-blank .star {
+  color: #ccc; /* Light grey for unselected stars */
+  padding: 0 !important;
+
 }
 
 .btnSumit {

@@ -121,7 +121,7 @@ const Login = () => {
                   : t("authenticator.registerDetails")}
               </p>
               <button
-                className={styles.hidden}
+                className={ `${styles.hidden} ${styles["auth-button"]}`}
                 id={isSignUp ? "login" : "register"}
                 onClick={() => setIsSignUp(!isSignUp)}
               >
