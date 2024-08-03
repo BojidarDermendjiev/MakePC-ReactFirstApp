@@ -31,6 +31,7 @@ To get started with the project, follow these steps:
    -npm i formik
    Run the development server:
    -npm start
+   -npm run dev
 
 Open your browser and navigate to http://localhost:3000 to see the application in action.
 
