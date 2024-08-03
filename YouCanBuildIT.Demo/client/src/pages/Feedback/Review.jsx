@@ -1,8 +1,14 @@
-import React from "react";
 import styles from "../../assets/styles/feedback.module.css";
+import { deleteComment } from "../../API/comments";
 
-export default function Review({loggedInUser, email, comment, review}) {
+export default function Review({loggedInUser, email, comment, review, _id, triggerRefreshHandler}) {
   const isOwner = loggedInUser && loggedInUser.email === email;
+
+  const deleteHandler = async () =>{ 
+    await deleteComment(_id)
+    triggerRefreshHandler()
+  }
+
   return (
     <div className={styles.card}>
       <p className={styles.content}>{email}</p>
@@ -12,7 +18,7 @@ export default function Review({loggedInUser, email, comment, review}) {
       {isOwner && (
         <>
           <button>Edit</button>
-          <button>Delete</button>
+          <button onClick={deleteHandler}>Delete</button>
         </>
       )}
     </div>

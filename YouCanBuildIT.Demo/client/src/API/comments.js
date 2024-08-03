@@ -15,3 +15,11 @@ export const createComment = async (user, data) => {
     console.log(dataJson)
     return {message: "Успешно създадохте коментар"}
 };
+
+export const deleteComment = async (reviewId) => {
+    await fetch(`${serverUrl}${serverEndpoints.createComment}/${reviewId}`, {
+        method: "DELETE",
+        
+    })
+    return {message: "Успешно премаханте коментар"}
+};

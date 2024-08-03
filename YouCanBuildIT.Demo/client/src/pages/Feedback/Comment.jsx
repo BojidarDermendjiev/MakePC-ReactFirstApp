@@ -1,9 +1,10 @@
-import  { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "../../assets/styles/comment.module.css";
 import { createComment } from "../../API/comments";
 import { AuthContext } from "../../context/AuthContextProvider";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { navigation } from "../../context/common/navigations";
+import Stars from "./Stars";
 
 const Comment = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +12,6 @@ const Comment = () => {
   const [rating, setRating] = useState(0);
 
   const navigate = useNavigate();
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,6 @@ const Comment = () => {
     setComment(""); // Reset comment input after submission
     setRating(0); // Reset rating after submission
     navigate(navigation.getFeedBackUrl());
-    
   };
 
   return (
@@ -38,26 +37,7 @@ const Comment = () => {
             onChange={(e) => setComment(e.target.value)}
           />
         </div>
-        <div className={styles.rating}>
-          {[...Array(5)].map((star, index) => {
-            index += 1;
-            return (
-              <button
-                type="button"
-                key={index}
-                className={
-                  index <= rating
-                    ? styles["star-button"]
-                    : styles["star-button-blank"]
-                }
-                onClick={() => setRating(index)}
-              >
-                <span className={styles.star}>&#9733;</span>{" "}
-                {/* Star character */}
-              </button>
-            );
-          })}
-        </div>
+        <Stars rating={rating} setRating={setRating} />
         <button type="submit" className={styles["btnSumit"]}>
           Submit
         </button>

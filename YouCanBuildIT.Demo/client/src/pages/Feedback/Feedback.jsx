@@ -13,6 +13,7 @@ export default function Feedback() {
     data: comments,
     loading,
     error,
+    triggerRefreshHandler
   } = useFetch("http://localhost:3030/jsonstore/comments");
 
 
@@ -35,6 +36,7 @@ export default function Feedback() {
               key={comment._id}
               {...comment}
               loggedInUser={user}
+              triggerRefreshHandler={triggerRefreshHandler}
             />
           ))
         )}
