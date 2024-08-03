@@ -1,6 +1,9 @@
 [ ] Login
 - Save data in the client side and redirect to home page
 [ ] Register
+[ ] Change Password
+[ ] Reset Password
+[ ] Account Page
 - When user is registered to login automatically and redirect to home page
 [ ] Reviews
 - On my comments / feedbacks to show edit and delete only on the user comment/feedback
