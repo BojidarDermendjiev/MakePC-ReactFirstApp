@@ -50,7 +50,7 @@ const Login = () => {
       confirmPassword: "",
     },
     validationSchema: isSignUp ? signUpSchema : signInSchema,
-    onSubmit: (values) => {
+    onSubmit: (values,actions) => {
       if (isSignUp) {
         signUpHandler(values, actions);
         console.log("Sign Up:", values);
