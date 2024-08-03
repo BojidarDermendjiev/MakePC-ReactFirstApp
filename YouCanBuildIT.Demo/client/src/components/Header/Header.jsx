@@ -4,12 +4,13 @@ import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/header.module.css";
 import { navigation } from "../../context/common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
-import { UserContext } from "../../context/userContext";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 export default function Header() {
   const { t } = useTranslation();
+
+  const { user } = useContext(AuthContext);
   const { language, changeLanguage } = useContext(LanguageContext);
-  const { user, logout } = useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -26,7 +27,6 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    logout();
     navigate(navigation.getHomeUrl());
   };
 
