@@ -82,30 +82,16 @@ export default function Header() {
           </li>
         </ul>
         <ul className={styles.rightNav}>
-          {user ? (
-            <li className={styles.logout}>
-              <Link
-                className={styles.link}
-                to={navigation.getLogoutUrl()}
-                onClick={handleLogout}
-              >
-                {t("header.signOut")}
-              </Link>
-            </li>
-          ) : (
-            <>
-              <li className={styles.signUp}>
-                <Link className={styles.link} to={navigation.getLoginUrl()}>
-                  {t("header.signIn")}
-                </Link>
-              </li>
-              <li className={styles.signIn}>
-                <Link className={styles.link} to={navigation.getLoginUrl()}>
-                  {t("header.signUp")}
-                </Link>
-              </li>
-            </>
-          )}
+          <li>
+            <Link className={styles.link} to={navigation.getLoginUrl()}>
+              {t("signIn")}
+            </Link>
+          </li>
+          <li className={styles.sign}>
+            <Link className={styles.link} to={navigation.getRegisterUrl()}>
+              {t("signUp")}
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

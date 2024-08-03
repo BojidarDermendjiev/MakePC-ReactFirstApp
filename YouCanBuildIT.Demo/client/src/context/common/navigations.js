@@ -37,10 +37,15 @@ export const navigation = {
   },
 
   // Method to get the login URL
-
   getLoginUrl() {
     return "/login";
   },
+
+  // Method to get the register URL
+  getRegisterUrl() {
+    return "/register";
+  },
+
   // Method to get the logout URL
   getLogoutUrl() {
     return "/logout";
