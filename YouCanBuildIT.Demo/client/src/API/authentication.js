@@ -8,7 +8,7 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
       "Content-Type": "application/json",
     },
   });
-  console.log(endpoint)
+  
   const user = await res.json();
   
   const userFilteredData = {
