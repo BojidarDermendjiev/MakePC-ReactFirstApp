@@ -8,7 +8,7 @@ export const createComment = async (user, data) => {
             name: user.name,
             email: user.email,
             comment: data.comment,
-            review: data.comment
+            review: data.review
         })
     })
     const dataJson = await res.json()
