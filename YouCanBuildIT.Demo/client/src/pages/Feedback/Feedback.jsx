@@ -30,7 +30,7 @@ export default function Feedback() {
           <Spiner />
         ) : (
           comments &&
-          Object.values(comments.comments).map((comment) => (
+          Object.values(comments).map((comment) => (
             <Review
               key={comment._id}
               {...comment}

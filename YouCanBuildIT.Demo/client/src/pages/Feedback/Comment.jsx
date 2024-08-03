@@ -1,12 +1,17 @@
-import React, { useContext, useState } from "react";
+import  { useContext, useState } from "react";
 import styles from "../../assets/styles/comment.module.css";
 import { createComment } from "../../API/comments";
 import { AuthContext } from "../../context/AuthContextProvider";
+import {  useNavigate } from "react-router-dom";
+import { navigation } from "../../context/common/navigations";
 
 const Comment = () => {
   const { user } = useContext(AuthContext);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
+
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +21,8 @@ const Comment = () => {
     });
     setComment(""); // Reset comment input after submission
     setRating(0); // Reset rating after submission
+    navigate(navigation.getFeedBackUrl());
+    
   };
 
   return (
