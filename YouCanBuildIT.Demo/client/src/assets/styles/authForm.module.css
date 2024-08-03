@@ -4,6 +4,7 @@
   align-items: center;
   margin: 3em;
   width: 100%;
+  position: relative;
 }
 .container {
   margin: 2em;
