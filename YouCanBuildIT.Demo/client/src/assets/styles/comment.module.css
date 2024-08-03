@@ -5,13 +5,21 @@
   border: 1px solid #000000;
   border-radius: 8px;
   background-color: #c7f022;
-  height: 30vh;
+  height: 50vh;
   margin-bottom: 20em;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
+.LeaveCom {
+  color: #c7f022;
+  text-align: center;
+  font-size: 2em;
+}
+.Info {
+  color: #c7f022;
+  font-size: 1.2em;
+}
 .comment-form {
   display: flex;
   flex-direction: column;
@@ -24,6 +32,7 @@
 
 .form-group {
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .form-group label {
@@ -69,9 +78,8 @@ textarea .form-group input:focus,
 }
 
 .star-button-blank .star {
-  color: #ccc; /* Light grey for unselected stars */
+  color: #000000; /* Light grey for unselected stars */
   padding: 0 !important;
-
 }
 
 .btnSumit {

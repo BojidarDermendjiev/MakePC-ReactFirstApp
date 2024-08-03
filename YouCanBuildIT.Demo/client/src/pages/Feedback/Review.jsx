@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../assets/styles/feedback.module.css";
 
-export default function Review({loggedInUser, email, comment, name}) {
+export default function Review({ loggedInUser, email, comment, name }) {
   const isOwner = loggedInUser && loggedInUser.email === email;
   return (
     <div className={styles.card}>
