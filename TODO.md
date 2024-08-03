@@ -1,8 +1,6 @@
 [x] Login
 - Save data in the client side and redirect to home page
 [x] Register
-[ ] Account Page
-- When user is registered to login automatically and redirect to home page
 [ ] Reviews
 - On my comments / feedbacks to show edit and delete only on the user comment/feedback
 - Button comment has to show only when user is logged in
