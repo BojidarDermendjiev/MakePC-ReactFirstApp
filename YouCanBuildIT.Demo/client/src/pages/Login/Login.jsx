@@ -1,7 +1,7 @@
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { useFormik } from "formik";
-import { basicSchema } from "../../schemas";
+import { signUpSchema, signInSchema } from "../../schemas/index.js";
 import { useTranslation } from "react-i18next";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -49,25 +49,16 @@ const Login = () => {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: basicSchema,
-    onSubmit: signUpHandler,
-  });
-
-  const {
-    signInValues,
-    signInErrors,
-    signInTouched,
-    signInIsSubmitting,
-    signInHandleBlur,
-    signInHandleChange,
-    signInHandler,
-  } = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
+    validationSchema: isSignUp ? signUpSchema : signInSchema,
+    onSubmit: (values) => {
+      if (isSignUp) {
+        signUpHandler(values, actions);
+        console.log("Sign Up:", values);
+      } else {
+        signInHandler(values, actions);
+        console.log("Sign In:", values);
+      }
     },
-    validationSchema: basicSchema,
-    onSubmit: signUpHandler,
   });
 
   return (
