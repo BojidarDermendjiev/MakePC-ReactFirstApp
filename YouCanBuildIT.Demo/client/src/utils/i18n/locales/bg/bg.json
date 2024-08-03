@@ -5,7 +5,8 @@
     "reviews": "Отзиви",
     "language": "Език",
     "signIn": "Вход",
-    "signUp": "Регистрация"
+    "signUp": "Регистрация",
+    "signOut": "Изход"
   },
   "homePage": {
     "welcomeTitle": "Добре дошли в MakePC!",
@@ -104,5 +105,9 @@
     "sales": "Продажби",
     "salesEmail": "sales@makeIT.com",
     "salesPhone": "+359888788804"
+  },
+  "logout": {
+    "title": "Добре дошли отново!",
+    "home": "Начало"
   }
 }

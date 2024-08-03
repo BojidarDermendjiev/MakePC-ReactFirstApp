@@ -5,7 +5,8 @@
     "reviews": "Reviews",
     "language": "Language",
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "signOut": "Sign Out"
   },
   "homePage": {
     "welcomeTitle": "Welcome to the MakePC!",
@@ -104,5 +105,9 @@
     "sales": "Sales",
     "salesEmail": "sales@makePC.com",
     "salesPhone": "+359888788804"
+  },
+  "logout": {
+    "title": "Welcome back!",
+    "home": "Home"
   }
 }

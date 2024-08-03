@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/header.module.css";
 import { navigation } from "../../context/common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
+import { UserContext } from "../../context/userContext";
 
 export default function Header() {
   const { t } = useTranslation();
   const { language, changeLanguage } = useContext(LanguageContext);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const { user, logout } = useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -22,6 +23,11 @@ export default function Header() {
 
   const handleLanguageChange = (lng) => {
     changeLanguage(lng, hideDropdown);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate(navigation.getHomeUrl());
   };
 
   return (
@@ -73,16 +79,30 @@ export default function Header() {
           </li>
         </ul>
         <ul className={styles.rightNav}>
-          <li className={styles.signUp}>
-            <Link className={styles.link} to={navigation.getLoginUrl()}>
-              {t("header.signIn")}
-            </Link>
-          </li>
-          <li className={styles.signIn}>
-            <Link className={styles.link} to={navigation.getLoginUrl()}>
-              {t("header.signUp")}
-            </Link>
-          </li>
+          {user ? (
+            <li className={styles.logout}>
+              <Link
+                className={styles.link}
+                to={navigation.getLogoutUrl()}
+                onClick={handleLogout}
+              >
+                {t("header.signOut")}
+              </Link>
+            </li>
+          ) : (
+            <>
+              <li className={styles.signUp}>
+                <Link className={styles.link} to={navigation.getLoginUrl()}>
+                  {t("header.signIn")}
+                </Link>
+              </li>
+              <li className={styles.signIn}>
+                <Link className={styles.link} to={navigation.getLoginUrl()}>
+                  {t("header.signUp")}
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>

@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import { useTranslation } from "react-i18next";
-import { basicSchema } from "../../schemas";
-import { Link } from "react-router-dom";
-import styles from "../../assets/styles/authForm.module.css";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import { useFormik } from "formik";
+import { basicSchema } from "../../schemas";
+import { useTranslation } from "react-i18next";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
+import styles from "../../assets/styles/authForm.module.css";
+import { navigation } from "../../context/common/navigations";
 
 const Login = () => {
   const { t } = useTranslation();
   const [isSignUp, setIsSignUp] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   const onSubmit = async (values, actions) => {
     console.log("submitted");
@@ -17,6 +21,18 @@ const Login = () => {
     console.log(actions);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
+
+    if (isSignUp) {
+      console.log("User signed up:", values);
+
+      login(values);
+      navigate(navigation.getHomeUrl());
+    } else {
+      console.log("User logged in:", values);
+
+      login(values);
+      navigate(navigation.getHomeUrl());
+    }
   };
 
   const {
