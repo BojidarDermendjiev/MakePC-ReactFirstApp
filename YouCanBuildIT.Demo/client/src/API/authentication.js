@@ -44,5 +44,3 @@ export const logout = async (setUser) => {
 
   localStorage.removeItem("user");
 };
-
-export const getUser = async () => {};
