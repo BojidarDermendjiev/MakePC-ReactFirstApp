@@ -7,7 +7,10 @@ export const AuthContext = createContext({
 
 // eslint-disable-next-line no-unused-vars
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  
+  const userFromStore = JSON.parse(localStorage.getItem("user"));
+
+  const [user, setUser] = useState(userFromStore || null)
 
   return (
     <AuthContext.Provider

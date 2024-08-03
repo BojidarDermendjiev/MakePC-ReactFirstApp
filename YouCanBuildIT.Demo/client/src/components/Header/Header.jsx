@@ -5,12 +5,14 @@ import styles from "../../assets/styles/header.module.css";
 import { navigation } from "../../context/common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContextProvider";
+import { logout } from "../../API/authentication";
 
 export default function Header() {
   const { t } = useTranslation();
 
-  const { user } = useContext(AuthContext);
-  const { language, changeLanguage } = useContext(LanguageContext);
+  const { user, setUser } = useContext(AuthContext);
+  const { changeLanguage } = useContext(LanguageContext);
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -26,7 +28,8 @@ export default function Header() {
     changeLanguage(lng, hideDropdown);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logout(setUser);
     navigate(navigation.getHomeUrl());
   };
 

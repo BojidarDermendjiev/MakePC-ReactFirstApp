@@ -3,31 +3,35 @@ import SignUp from "./SignUp";
 import { useFormik } from "formik";
 import { basicSchema } from "../../schemas";
 import { useTranslation } from "react-i18next";
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../context/common/navigations";
+import { login, register } from "../../API/authentication";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const Login = () => {
   const { t } = useTranslation();
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
 
-  const onSubmit = async (values, actions) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  const signUpHandler = async (values, actions) => {
     actions.resetForm();
 
-    if (isSignUp) {
-      console.log("User signed up:", values);
+    console.log("User signed up:", values);
+    await register(values, setUser);
 
-      // login(values);
-      navigate(navigation.getHomeUrl());
-    } else {
-      console.log("User logged in:", values);
+    navigate(navigation.getHomeUrl());
+  };
 
-      // login(values);
-      navigate(navigation.getHomeUrl());
-    }
+  const signInHandler = async (values, actions) => {
+    actions.resetForm();
+
+    console.log("User logged in:", values);
+    await login({ email: values.email, password: values.password }, setUser);
+
+    navigate(navigation.getHomeUrl());
   };
 
   const {
@@ -46,7 +50,24 @@ const Login = () => {
       confirmPassword: "",
     },
     validationSchema: basicSchema,
-    onSubmit,
+    onSubmit: signUpHandler,
+  });
+
+  const {
+    signInValues,
+    signInErrors,
+    signInTouched,
+    signInIsSubmitting,
+    signInHandleBlur,
+    signInHandleChange,
+    signInHandler,
+  } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: basicSchema,
+    onSubmit: signUpHandler,
   });
 
   return (
