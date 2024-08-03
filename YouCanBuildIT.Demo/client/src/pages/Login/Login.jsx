@@ -5,7 +5,6 @@ import { basicSchema } from "../../schemas";
 import { useTranslation } from "react-i18next";
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../context/common/navigations";
 
@@ -13,7 +12,6 @@ const Login = () => {
   const { t } = useTranslation();
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
 
   const onSubmit = async (values, actions) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -22,12 +20,12 @@ const Login = () => {
     if (isSignUp) {
       console.log("User signed up:", values);
 
-      login(values);
+      // login(values);
       navigate(navigation.getHomeUrl());
     } else {
       console.log("User logged in:", values);
 
-      login(values);
+      // login(values);
       navigate(navigation.getHomeUrl());
     }
   };
