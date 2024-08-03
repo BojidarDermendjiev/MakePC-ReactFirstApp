@@ -5,6 +5,7 @@ import styles from "../../assets/styles/header.module.css";
 import { navigation } from "../../context/common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
 import { UserContext } from "../../context/userContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Header() {
   const { t } = useTranslation();
@@ -12,6 +13,8 @@ export default function Header() {
   const { user, logout } = useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { loginWithRedirect } = useAuth0();
 
   const showDropdown = () => {
     setDropdownOpen(true);
@@ -91,15 +94,11 @@ export default function Header() {
             </li>
           ) : (
             <>
-              <li className={styles.signUp}>
-                <Link className={styles.link} to={navigation.getLoginUrl()}>
-                  {t("header.signIn")}
-                </Link>
+              <li className={styles.signUp} onClick={()=> loginWithRedirect()}>
+                sign in
               </li>
               <li className={styles.signIn}>
-                <Link className={styles.link} to={navigation.getLoginUrl()}>
-                  {t("header.signUp")}
-                </Link>
+              
               </li>
             </>
           )}
