@@ -71,7 +71,7 @@ input {
   outline: none;
 }
 
-button {
+.auth-button {
   background-color: #000000;
   color: #c7f022;
   font-size: 12px;

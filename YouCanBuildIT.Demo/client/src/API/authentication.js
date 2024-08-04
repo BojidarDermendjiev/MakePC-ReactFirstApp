@@ -8,9 +8,9 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
       "Content-Type": "application/json",
     },
   });
-  
+
   const user = await res.json();
-  
+  С;
   const userFilteredData = {
     email: user.email,
     name: user.name,
@@ -44,5 +44,3 @@ export const logout = async (setUser) => {
 
   localStorage.removeItem("user");
 };
-
-export const getUser = async () => {};

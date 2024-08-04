@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../assets/styles/feedback.module.css";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 import ErrorLoading from "../PageNotFound/ErrorLoading";
 import Spiner from "../PageNotFound/Spiner";
 import Review from "./Review";
 import useFetch from "../../hooks/useFetch";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 export default function Feedback() {
   const {
     data: comments,
     loading,
     error,
-  } = useFetch("http://localhost:3030/jsonstore/advanced/users");
+    triggerRefreshHandler,
+  } = useFetch("http://localhost:3030/jsonstore/comments");
 
-  const loggedInUser = JSON.parse(localStorage.getItem("user"));
+  const { user } = useContext(AuthContext);
 
   if (error) return <ErrorLoading />;
 
@@ -30,18 +32,21 @@ export default function Feedback() {
           comments &&
           Object.values(comments).map((comment) => (
             <Review
-              key={comment._id}
+              key={comment.userId}
               {...comment}
-              loggedInUser={loggedInUser}
+              loggedInUser={user}
+              triggerRefreshHandler={triggerRefreshHandler}
             />
           ))
         )}
       </div>
-      <div className={styles.coment}>
-        <Link className={styles.donation} to={navigation.getCommentFromUrl()}>
-          Comment
-        </Link>
-      </div>
+      {user && (
+        <div className={styles.coment}>
+          <Link className={styles.donation} to={navigation.getCommentFromUrl()}>
+            Comment
+          </Link>
+        </div>
+      )}
       <div className={styles.btn}>
         <h1>Buy me a coffee 😊</h1>
         <Link className={styles.donation} to={navigation.getDonationUrl()}>

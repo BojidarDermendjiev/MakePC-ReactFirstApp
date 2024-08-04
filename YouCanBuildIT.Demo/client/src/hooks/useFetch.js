@@ -5,7 +5,8 @@ export default function useFetch(url) {
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(false);
   const [error, setError] = useState(null);
-  useEffect(() => {
+
+  const triggerRefreshHandler = () =>{
     setloading(true);
     axios
       .get(url)
@@ -18,7 +19,11 @@ export default function useFetch(url) {
       .finally(() => {
         setloading(false);
       });
+  }
+  
+  useEffect(() => {
+    triggerRefreshHandler()
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, triggerRefreshHandler };
 }

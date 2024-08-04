@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Main from "./Main";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 
 test("renders all routes correctly", () => {
   const { getByText } = render(

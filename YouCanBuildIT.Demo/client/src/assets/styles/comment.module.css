@@ -1,0 +1,99 @@
+.comment-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background-color: #c7f022;
+  height: 50vh;
+  margin-bottom: 20em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.LeaveCom {
+  color: #c7f022;
+  text-align: center;
+  font-size: 2em;
+}
+.Info {
+  color: #c7f022;
+  font-size: 1.2em;
+}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccce4;
+  border-radius: 4px;
+  background: black;
+  color: #c7f022;
+  height: 15vh;
+}
+
+textarea .form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff00;
+  outline: none;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.star-button,
+.star-button-blank {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.star {
+  color: #ff0; /* Yellow stars */
+  font-size: 4em;
+  padding: 0 !important;
+}
+
+.star-button-blank .star {
+  color: #000000; /* Light grey for unselected stars */
+  padding: 0 !important;
+}
+
+.btnSumit {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0000007a;
+  color: #c7f022;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center;
+}
+
+.btnSumit:hover {
+  background-color: #000000;
+}

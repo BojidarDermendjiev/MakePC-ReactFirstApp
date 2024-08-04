@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 
 import About from "../../pages/About/About";
 import Login from "../../pages/Login/Login";
@@ -12,6 +12,7 @@ import NotFound from "../../pages/PageNotFound/NotFound";
 import ShopBasket from "../../pages/ShopBasket/ShopBasket";
 import HardwareBlog from "../../pages/HardwareBlog/HardwareBlog";
 import BuildComposition from "../../pages/BuildComposition/BuildComposition";
+import EditComment from "../../pages/Feedback/edit/EditComment";
 
 export default function Main() {
   return (
@@ -30,9 +31,15 @@ export default function Main() {
           element={<HardwareBlog />}
         />
         <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
+        <Route
+          path={`${navigation.getCommentFromUrl()}/:commentId`}
+          element={<EditComment />}
+        />
+
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />
         <Route path={navigation.getShopBasketUrl()} element={<ShopBasket />} />
+        <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
         <Route path={navigation.getPageNotFoundUrl()} element={<NotFound />} />
       </Routes>
     </main>

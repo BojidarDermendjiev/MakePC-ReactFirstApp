@@ -1,13 +1,13 @@
-import { useContext, useState } from "react";
-import styles from "../../assets/styles/comment.module.css";
-import { createComment } from "../../API/comments";
-import { AuthContext } from "../../context/AuthContextProvider";
-import { useNavigate } from "react-router-dom";
-import { navigation } from "../../common/navigations";
-import Stars from "./Stars";
+import { useEffect, useState } from "react";
+import styles from "../../../assets/styles/comment.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { navigation } from "../../../common/navigations";
+import Stars from "../Stars";
+import { editComment, getCommentById } from "../../../API/comments";
 
-const Comment = () => {
-  const { user } = useContext(AuthContext);
+const EditComment = () => {
+  let { commentId } = useParams();
+
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
@@ -15,14 +15,21 @@ const Comment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createComment(user, {
-      comment,
-      review: rating,
-    });
-    setComment(""); // Reset comment input after submission
-    setRating(0); // Reset rating after submission
+    await editComment(commentId, { comment, review: rating });
+
+    setComment("");
+    setRating(0);
     navigate(navigation.getFeedBackUrl());
   };
+
+  useEffect(() => {
+    const initial = async () => {
+      const data = await getCommentById(commentId);
+      setComment(data.comment);
+      setRating(data.review);
+    };
+    initial();
+  }, []);
 
   return (
     <div className={styles["comment-form-container"]}>
@@ -46,4 +53,4 @@ const Comment = () => {
   );
 };
 
-export default Comment;
+export default EditComment;

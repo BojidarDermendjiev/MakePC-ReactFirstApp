@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/home.module.css";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 
 export default function Home() {
   const { t } = useTranslation();
