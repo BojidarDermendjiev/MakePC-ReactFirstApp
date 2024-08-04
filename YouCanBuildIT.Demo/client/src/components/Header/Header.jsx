@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/header.module.css";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { logout } from "../../API/authentication";
@@ -12,7 +12,7 @@ export default function Header() {
 
   const { user, setUser } = useContext(AuthContext);
   const { changeLanguage } = useContext(LanguageContext);
-  
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 

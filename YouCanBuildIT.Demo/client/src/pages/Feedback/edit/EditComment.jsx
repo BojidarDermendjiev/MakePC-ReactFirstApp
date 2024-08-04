@@ -1,7 +1,7 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../../assets/styles/comment.module.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { navigation } from "../../../context/common/navigations";
+import { navigation } from "../../../common/navigations";
 import Stars from "../Stars";
 import { editComment, getCommentById } from "../../../API/comments";
 
@@ -15,22 +15,21 @@ const EditComment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Edit comment
-    await editComment(commentId, {comment, review: rating})
+    await editComment(commentId, { comment, review: rating });
 
-    setComment(""); // Reset comment input after submission
-    setRating(0); // Reset rating after submission
+    setComment("");
+    setRating(0);
     navigate(navigation.getFeedBackUrl());
   };
 
-  useEffect(()=>{
-    const initial = async () =>{
-        const data = await getCommentById(commentId)
-        setComment(data.comment)
-        setRating(data.review)
-    }
-    initial()
-  },[])
+  useEffect(() => {
+    const initial = async () => {
+      const data = await getCommentById(commentId);
+      setComment(data.comment);
+      setRating(data.review);
+    };
+    initial();
+  }, []);
 
   return (
     <div className={styles["comment-form-container"]}>

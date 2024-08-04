@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 
 import About from "../../pages/About/About";
 import Login from "../../pages/Login/Login";
@@ -31,7 +31,10 @@ export default function Main() {
           element={<HardwareBlog />}
         />
         <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
-        <Route path={`${navigation.getCommentFromUrl()}/:commentId`} element={<EditComment />} />
+        <Route
+          path={`${navigation.getCommentFromUrl()}/:commentId`}
+          element={<EditComment />}
+        />
 
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />

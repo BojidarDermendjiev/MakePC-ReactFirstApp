@@ -3,7 +3,7 @@ import styles from "../../assets/styles/comment.module.css";
 import { createComment } from "../../API/comments";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 import Stars from "./Stars";
 
 const Comment = () => {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../assets/styles/feedback.module.css";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 import ErrorLoading from "../PageNotFound/ErrorLoading";
 import Spiner from "../PageNotFound/Spiner";
 import Review from "./Review";
@@ -13,9 +13,8 @@ export default function Feedback() {
     data: comments,
     loading,
     error,
-    triggerRefreshHandler
+    triggerRefreshHandler,
   } = useFetch("http://localhost:3030/jsonstore/comments");
-
 
   const { user } = useContext(AuthContext);
 
@@ -33,7 +32,7 @@ export default function Feedback() {
           comments &&
           Object.values(comments).map((comment) => (
             <Review
-              key={comment._id}
+              key={comment.userId}
               {...comment}
               loggedInUser={user}
               triggerRefreshHandler={triggerRefreshHandler}

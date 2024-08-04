@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/about.module.css";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 
 export default function About() {
   const { t } = useTranslation();

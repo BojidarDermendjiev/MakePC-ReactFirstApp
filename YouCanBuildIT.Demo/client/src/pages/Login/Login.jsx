@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/authForm.module.css";
-import { navigation } from "../../context/common/navigations";
+import { navigation } from "../../common/navigations";
 import { login, register } from "../../API/authentication";
 import { AuthContext } from "../../context/AuthContextProvider";
 
@@ -48,7 +48,7 @@ const Login = () => {
       confirmPassword: "",
     },
     validationSchema: isSignUp ? signUpSchema : signInSchema,
-    onSubmit: (values,actions) => {
+    onSubmit: (values, actions) => {
       if (isSignUp) {
         signUpHandler(values, actions);
       } else {
@@ -121,7 +121,7 @@ const Login = () => {
                   : t("authenticator.registerDetails")}
               </p>
               <button
-                className={ `${styles.hidden} ${styles["auth-button"]}`}
+                className={`${styles.hidden} ${styles["auth-button"]}`}
                 id={isSignUp ? "login" : "register"}
                 onClick={() => setIsSignUp(!isSignUp)}
               >
