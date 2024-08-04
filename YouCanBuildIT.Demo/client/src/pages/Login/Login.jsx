@@ -16,12 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(AuthContext);
 
-<<<<<<< Updated upstream
   const signUpHandler = async (values, actions) => {
-=======
-  const onSubmit = async (values, actions) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
->>>>>>> Stashed changes
     actions.resetForm();
 
     await register(values, setUser);
@@ -53,7 +48,7 @@ const Login = () => {
       confirmPassword: "",
     },
     validationSchema: isSignUp ? signUpSchema : signInSchema,
-    onSubmit: (values,actions) => {
+    onSubmit: (values, actions) => {
       if (isSignUp) {
         signUpHandler(values, actions);
       } else {
