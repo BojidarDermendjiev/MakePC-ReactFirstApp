@@ -33,8 +33,8 @@ const SignIn = ({
         onBlur={handleBlur}
         required
       />
-     
-      <button className={styles.signIn} type="submit" >
+
+      <button className={styles.signIn} type="submit">
         {t("authenticator.signIn")}
       </button>
     </>
