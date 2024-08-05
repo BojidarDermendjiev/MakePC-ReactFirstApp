@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../../../assets/styles/comment.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { navigation } from "../../../common/navigations";
 import Stars from "../Stars";
 import { editComment, getCommentById } from "../../../API/comments";
+import { AuthContext } from "../../../context/AuthContextProvider";
 
-const EditComment = ({ user }) => {
+const EditComment = () => {
+  const { user } = useContext(AuthContext);
   let { commentId } = useParams();
 
   const [comment, setComment] = useState("");
@@ -15,6 +17,7 @@ const EditComment = ({ user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("handleSubmit called");
     await editComment(commentId, user, { comment, review: rating });
 
     setComment("");
@@ -24,9 +27,17 @@ const EditComment = ({ user }) => {
 
   useEffect(() => {
     const initial = async () => {
-      const data = await getCommentById(commentId);
-      setComment(data.comment);
-      setRating(data.review);
+      try {
+        const data = await getCommentById(commentId);
+        if (data && data.comment !== undefined && data.review !== undefined) {
+          setComment(data.comment);
+          setRating(data.review);
+        } else {
+          setError("Failed to load comment data.");
+        }
+      } catch (error) {
+        setError("Failed to load comment data.");
+      }
     };
     initial();
   }, [commentId]);

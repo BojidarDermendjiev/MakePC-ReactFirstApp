@@ -30,9 +30,9 @@ export default function Feedback() {
           <Spiner />
         ) : (
           comments &&
-          Object.values(comments).map((comment) => (
+          Object.values(comments).map((comment, index) => (
             <Review
-              key={comment.UserId}
+              key={`${comment.userId}-${index}`}
               {...comment}
               loggedInUser={user}
               triggerRefreshHandler={triggerRefreshHandler}
