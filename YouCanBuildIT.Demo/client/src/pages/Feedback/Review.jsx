@@ -8,7 +8,7 @@ export default function Review({
   email,
   comment,
   review,
-  _id,
+  _id: userId,
   triggerRefreshHandler,
 }) {
   const navigate = useNavigate();
@@ -16,12 +16,12 @@ export default function Review({
   const isOwner = loggedInUser && loggedInUser.email === email;
 
   const deleteHandler = async () => {
-    await deleteComment(_id);
+    await deleteComment(userId);
     triggerRefreshHandler();
   };
 
   const editComment = async () => {
-    navigate(`${navigation.getCommentFromUrl()}/${_id}`);
+    navigate(`${navigation.getCommentFromUrl()}/${userId}`);
   };
   return (
     <div className={styles.card}>

@@ -1,16 +1,9 @@
 import { serverEndpoints, serverUrl } from "../common/generic";
+import requester from "./requester";
 
 const fetchAuthentication = async (endpoint, values, setUser) => {
-  const res = await fetch(endpoint, {
-    method: "POST",
-    body: JSON.stringify(values),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const user = await requester.post(endpoint, values);
 
-  const user = await res.json();
-  С;
   const userFilteredData = {
     email: user.email,
     name: user.name,
@@ -21,6 +14,7 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
 
   localStorage.setItem("user", JSON.stringify(userFilteredData));
 };
+
 export const register = async (values, setUser) => {
   await fetchAuthentication(
     `${serverUrl}${serverEndpoints.register}`,
@@ -38,7 +32,7 @@ export const login = async (values, setUser) => {
 };
 
 export const logout = async (setUser) => {
-  await fetch(`${serverUrl}${serverEndpoints.logout}`);
+  await requester.post(`${serverUrl}${serverEndpoints.logout}`);
 
   setUser(null);
 

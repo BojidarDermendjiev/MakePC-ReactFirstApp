@@ -5,7 +5,7 @@ import { navigation } from "../../../common/navigations";
 import Stars from "../Stars";
 import { editComment, getCommentById } from "../../../API/comments";
 
-const EditComment = () => {
+const EditComment = ({ user }) => {
   let { commentId } = useParams();
 
   const [comment, setComment] = useState("");
@@ -15,7 +15,7 @@ const EditComment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await editComment(commentId, { comment, review: rating });
+    await editComment(commentId, user, { comment, review: rating });
 
     setComment("");
     setRating(0);
@@ -29,12 +29,12 @@ const EditComment = () => {
       setRating(data.review);
     };
     initial();
-  }, []);
+  }, [commentId]);
 
   return (
     <div className={styles["comment-form-container"]}>
       <form className={styles["comment-form"]} onSubmit={handleSubmit}>
-        <h2>Leave a Comment</h2>
+        <h2>Edit Comment</h2>
         <div className={styles["form-group"]}>
           <label htmlFor="comment">Comment</label>
           <textarea
@@ -45,7 +45,7 @@ const EditComment = () => {
           />
         </div>
         <Stars rating={rating} setRating={setRating} />
-        <button type="submit" className={styles["btnSumit"]}>
+        <button type="submit" className={styles["btnSubmit"]}>
           Submit
         </button>
       </form>

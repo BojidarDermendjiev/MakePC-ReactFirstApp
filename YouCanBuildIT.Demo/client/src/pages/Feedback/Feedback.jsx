@@ -32,7 +32,7 @@ export default function Feedback() {
           comments &&
           Object.values(comments).map((comment) => (
             <Review
-              key={comment.userId}
+              key={comment.UserId}
               {...comment}
               loggedInUser={user}
               triggerRefreshHandler={triggerRefreshHandler}

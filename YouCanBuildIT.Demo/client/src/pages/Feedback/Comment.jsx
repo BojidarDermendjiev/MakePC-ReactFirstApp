@@ -19,8 +19,8 @@ const Comment = () => {
       comment,
       review: rating,
     });
-    setComment(""); // Reset comment input after submission
-    setRating(0); // Reset rating after submission
+    setComment("");
+    setRating(0);
     navigate(navigation.getFeedBackUrl());
   };
 
