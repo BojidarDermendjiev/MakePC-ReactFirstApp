@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.886);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,9 @@
 }
 
 .modalContent {
-  background: white;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #c7f022;
+  background: rgb(20 33 61);
   padding: 20px;
   border-radius: 5px;
   text-align: center;
@@ -23,9 +25,14 @@
 .closeButton {
   margin-top: 20px;
   padding: 10px 20px;
-  background: #007bff;
-  color: white;
+  background-color: #0000007a;
+  color: #c7f02279;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: #000000f9;
+  color: #c7f022;
 }

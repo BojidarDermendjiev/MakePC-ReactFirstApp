@@ -2,6 +2,7 @@ import styles from "../../assets/styles/feedback.module.css";
 import { deleteComment } from "../../API/comments";
 import { useNavigate } from "react-router-dom";
 import { navigation } from "../../common/navigations";
+import Stars from "./Stars";
 
 export default function Review({
   loggedInUser,
@@ -31,7 +32,12 @@ export default function Review({
     <div className={styles.card}>
       <p className={styles.content}>{email}</p>
       <p className={styles.content}>{comment}</p>
-      <p className={styles.content}>{review} stars</p>
+      <Stars
+        rating={review}
+        setRating={() => {
+          review;
+        }}
+      />
 
       {isOwner && (
         <>

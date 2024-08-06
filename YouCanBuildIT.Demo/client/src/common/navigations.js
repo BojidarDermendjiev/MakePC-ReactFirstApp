@@ -45,7 +45,9 @@ export const navigation = {
   getLogoutUrl() {
     return "/logout";
   },
-
+  getPaymentCardUrl() {
+    return "/payment-card";
+  },
   // Method to get the shop basket URL
   getShopBasketUrl() {
     return "/shop-basket";

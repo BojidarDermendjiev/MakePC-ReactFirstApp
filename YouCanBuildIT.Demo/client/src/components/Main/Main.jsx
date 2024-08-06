@@ -7,12 +7,13 @@ import Home from "../../pages/HomePage/Home";
 import Logout from "../../pages/Logout/Logout";
 import Comment from "../../pages/Feedback/Comment";
 import Feedback from "../../pages/Feedback/Feedback";
-import Donation from "../../pages/Donation/Donation";
 import NotFound from "../../pages/PageNotFound/NotFound";
 import ShopBasket from "../../pages/ShopBasket/ShopBasket";
+import EditComment from "../../pages/Feedback/edit/EditComment";
+import PriceSelectior from "../../pages/Donation/PriceSelectior";
 import HardwareBlog from "../../pages/HardwareBlog/HardwareBlog";
 import BuildComposition from "../../pages/BuildComposition/BuildComposition";
-import EditComment from "../../pages/Feedback/edit/EditComment";
+import PaymentCard from "../../pages/Donation/PaymentCard";
 
 export default function Main() {
   return (
@@ -24,7 +25,10 @@ export default function Main() {
           path={navigation.getBuildCompositionUrl()}
           element={<BuildComposition />}
         />
-        <Route path={navigation.getDonationUrl()} element={<Donation />} />
+        <Route
+          path={navigation.getDonationUrl()}
+          element={<PriceSelectior />}
+        />
         <Route path={navigation.getFeedBackUrl()} element={<Feedback />} />
         <Route
           path={navigation.getHardwareBlogUrl()}
@@ -35,7 +39,10 @@ export default function Main() {
           path={`${navigation.getCommentFromUrl()}/:commentId`}
           element={<EditComment />}
         />
-
+        <Route
+          path={navigation.getPaymentCardUrl()}
+          element={<PaymentCard />}
+        />
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />
         <Route path={navigation.getShopBasketUrl()} element={<ShopBasket />} />

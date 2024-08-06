@@ -85,6 +85,35 @@ export default function Home() {
             src="../../src/assets/img/image-removebg-preview (15).png"
             alt="aorus img"
           />
+          {/* Duplicate the images for seamless looping */}
+          <img
+            src="../../src/assets/img/image-removebg-preview (3).png"
+            alt="razer img"
+          />
+          <img
+            src="../../src/assets/img/image-removebg-preview (4).png"
+            alt="amd img"
+          />
+          <img
+            src="../../src/assets/img/image-removebg-preview (5).png"
+            alt="intel img"
+          />
+          <img
+            src="../../src/assets/img/image-removebg-preview (6).png"
+            alt="nvidia img"
+          />
+          <img
+            src="../../src/assets/img/image-removebg-preview (13).png"
+            alt="msi img"
+          />
+          <img
+            src="../../src/assets/img/image-removebg-preview (14).png"
+            alt="asrock img"
+          />
+          <img
+            src="../../src/assets/img/image-removebg-preview (15).png"
+            alt="aorus img"
+          />
         </div>
       </div>
     </>

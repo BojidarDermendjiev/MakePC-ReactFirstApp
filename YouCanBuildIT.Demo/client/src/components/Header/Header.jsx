@@ -41,7 +41,7 @@ export default function Header() {
             <Link className={styles.link} to={navigation.getHomeUrl()}>
               <img
                 className={styles.logo}
-                src="/img/Artboard 1.png"
+                src="/img/Artboard 2.png"
                 alt="homepage"
               />
             </Link>
@@ -97,11 +97,6 @@ export default function Header() {
               <li className={styles.signUp}>
                 <Link className={styles.link} to={navigation.getLoginUrl()}>
                   {t("header.signIn")}
-                </Link>
-              </li>
-              <li className={styles.signIn}>
-                <Link className={styles.link} to={navigation.getLoginUrl()}>
-                  {t("header.signUp")}
                 </Link>
               </li>
             </>

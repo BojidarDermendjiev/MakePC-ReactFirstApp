@@ -127,6 +127,24 @@
     "message": "Please check your credentials and try again.",
     "closeButton": "Close"
   },
+  "paymentCard": {
+    "twoCoffees": "Two Coffees ☕",
+    "wholeBuffet": "A whole buffet 🍛",
+    "maintenance": "Maintenance 😅",
+    "donate": "donate"
+  },
+  "card": {
+    "name": "Name",
+    "cardNumber": "Card Number",
+    "expiration": "Expiration (mm/yy)",
+    "securityCode": "Security Code",
+    "submit": "Submit",
+    "cardholderName": "cardholder name",
+    "expirationText": "expiration",
+    "cardNumberText": "card number",
+    "validThru": "VALID THRU",
+    "securityCodeText": "security code"
+  },
   "footer": {
     "contacts": "Contacts",
     "support": "Support",

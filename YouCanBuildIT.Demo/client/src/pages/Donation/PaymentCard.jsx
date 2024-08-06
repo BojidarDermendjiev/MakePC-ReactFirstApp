@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../../assets/styles/donation.css";
+import { useTranslation } from "react-i18next";
 
-function Donation() {
+function PaymentCard() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiration, setExpiration] = useState("");
@@ -78,19 +80,19 @@ function Donation() {
                     transform="matrix(1 0 0 1 54.1074 389.8793)"
                     className="st7 st5 st8"
                   >
-                    cardholder name
+                    {t("card.cardholderName")}
                   </text>
                   <text
                     transform="matrix(1 0 0 1 479.7754 388.8793)"
                     className="st7 st5 st8"
                   >
-                    expiration
+                    {t("card.expirationText")}
                   </text>
                   <text
                     transform="matrix(1 0 0 1 65.1054 241.5)"
                     className="st7 st5 st8"
                   >
-                    card number
+                    {t("card.cardNumberText")}
                   </text>
                   <g>
                     <text
@@ -258,7 +260,7 @@ function Donation() {
                       transform="matrix(1 0 0 1 518.083 280.0879)"
                       className="st9 st6 st10"
                     >
-                      security code
+                      {t("card.securityCode")}
                     </text>
                   </g>
                   <rect
@@ -289,7 +291,7 @@ function Donation() {
         </div>
         <form onSubmit={handleSubmit} className="form-container">
           <div className="field-container">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">{t("card.name")}</label>
             <input
               id="name"
               maxLength="20"
@@ -300,7 +302,7 @@ function Donation() {
             />
           </div>
           <div className="field-container">
-            <label htmlFor="cardnumber">Card Number</label>
+            <label htmlFor="cardnumber">{t("card.cardNumber")}</label>
             <input
               id="cardnumber"
               type="text"
@@ -312,7 +314,7 @@ function Donation() {
             />
           </div>
           <div className="field-container">
-            <label htmlFor="expirationdate">Expiration (mm/yy)</label>
+            <label htmlFor="expirationdate">{t("card.expiration")}</label>
             <input
               id="expirationdate"
               type="text"
@@ -324,7 +326,7 @@ function Donation() {
             />
           </div>
           <div className="field-container">
-            <label htmlFor="securitycode">Security Code</label>
+            <label htmlFor="securitycode">{t("card.securityCode")}</label>
             <input
               id="securitycode"
               type="text"
@@ -337,11 +339,11 @@ function Donation() {
               onBlur={handleSecurityCodeBlur}
             />
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">{t("card.submit")}</button>
         </form>
       </div>
     </>
   );
 }
 
-export default Donation;
+export default PaymentCard;
