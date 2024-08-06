@@ -1,35 +1,52 @@
+import React, { useState, useContext } from "react";
+import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { useFormik } from "formik";
 import { signUpSchema, signInSchema } from "../../schemas/index.js";
-import { useTranslation } from "react-i18next";
-import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../common/navigations";
 import { login, register } from "../../API/authentication";
 import { AuthContext } from "../../context/AuthContextProvider";
+import InvalidPassOrEmailModal from "../Login/InvalidPassOrEmail.jsx";
+import AlreadyExist from "../Login/AlreadyExist.jsx";
 
 const Login = () => {
-  const { t } = useTranslation();
-  const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { setUser } = useContext(AuthContext);
+  const [showInvalidModal, setShowInvalidModal] = useState(false);
+  const [showUserExistsModal, setShowUserExistsModal] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const signUpHandler = async (values, actions) => {
-    actions.resetForm();
-
-    await register(values, setUser);
-
-    navigate(navigation.getHomeUrl());
+    try {
+      actions.resetForm();
+      await register(
+        { email: values.email, password: values.password },
+        setUser
+      );
+      navigate(navigation.getHomeUrl());
+    } catch (error) {
+      console.error(error.message);
+      actions.setFieldError("email", error.message);
+      if (error.message === "A user with this email already exists.") {
+        setShowUserExistsModal(true);
+      }
+    }
   };
 
   const signInHandler = async (values, actions) => {
-    actions.resetForm();
-
-    await login({ email: values.email, password: values.password }, setUser);
-
-    navigate(navigation.getHomeUrl());
+    try {
+      actions.resetForm();
+      await login({ email: values.email, password: values.password }, setUser);
+      navigate(navigation.getHomeUrl());
+    } catch (error) {
+      console.error(error.message);
+      actions.setFieldError("email", error.message);
+      setShowInvalidModal(true);
+    }
   };
 
   const {
@@ -153,6 +170,14 @@ const Login = () => {
           )}
         </div>
       </div>
+      <InvalidPassOrEmailModal
+        show={showInvalidModal}
+        onClose={() => setShowInvalidModal(false)}
+      />
+      <AlreadyExist
+        show={showUserExistsModal}
+        onClose={() => setShowUserExistsModal(false)}
+      />
     </section>
   );
 };

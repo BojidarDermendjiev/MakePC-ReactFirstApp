@@ -28,9 +28,5 @@ export const signInSchema = yup.object().shape({
     .string()
     .email("Please enter a valid email!")
     .required("Please enter a valid email!"),
-  password: yup
-    .string()
-    .min(5)
-    .matches(passwordRules, { message: "Please create a stronger password!" })
-    .required("Please create a stronger password!"),
+  password: yup.string().required("Please enter a password!"),
 });

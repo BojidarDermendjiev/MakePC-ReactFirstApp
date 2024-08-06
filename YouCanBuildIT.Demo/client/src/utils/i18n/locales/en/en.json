@@ -117,6 +117,16 @@
     "donationText": "Your support helps us keep the lights on and the code flowing. Every little bit counts!",
     "donationButton": "Donation"
   },
+  "userExistsModal": {
+    "title": "User Already Exists",
+    "message": "A user with this email already exists. Please try logging in.",
+    "closeButton": "Close"
+  },
+  "invalidPassOrEmailModal": {
+    "title": "Invalid Password or Email",
+    "message": "Please check your credentials and try again.",
+    "closeButton": "Close"
+  },
   "footer": {
     "contacts": "Contacts",
     "support": "Support",

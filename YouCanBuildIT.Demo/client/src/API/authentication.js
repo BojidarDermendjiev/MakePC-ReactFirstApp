@@ -16,6 +16,17 @@ const fetchAuthentication = async (endpoint, values, setUser) => {
 };
 
 export const register = async (values, setUser) => {
+  const existingUsers = await requester.get(
+    `${serverUrl}${serverEndpoints.register}`
+  );
+
+  const isDuplicate = Object.values(existingUsers).some(
+    (user) => user.email === values.email
+  );
+
+  if (isDuplicate) {
+    throw new Error("A user with this email already exists.");
+  }
   await fetchAuthentication(
     `${serverUrl}${serverEndpoints.register}`,
     values,
@@ -24,11 +35,26 @@ export const register = async (values, setUser) => {
 };
 
 export const login = async (values, setUser) => {
-  await fetchAuthentication(
-    `${serverUrl}${serverEndpoints.login}`,
-    values,
-    setUser
+  const existingUsers = await requester.get(
+    `${serverUrl}${serverEndpoints.login}`
   );
+
+  const user = Object.values(existingUsers).find(
+    (user) => user.email === values.email && user.password === values.password
+  );
+  if (!user) {
+    throw new Error("Invalid email or password.");
+  }
+
+  const userFilteredData = {
+    email: user.email,
+    name: user.name,
+    _id: user._id,
+  };
+
+  setUser(userFilteredData);
+
+  localStorage.setItem("user", JSON.stringify(userFilteredData));
 };
 
 export const logout = async (setUser) => {
