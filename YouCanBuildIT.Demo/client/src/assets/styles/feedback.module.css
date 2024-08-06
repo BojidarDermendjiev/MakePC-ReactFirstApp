@@ -107,9 +107,15 @@
 .btn h1 {
   margin: 2em;
 }
+.donationText {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #c7f022;
+  margin-bottom: 2em;
+}
 .donation {
+  padding: 1em 3.5em;
   display: inline-block;
-  padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   color: var(--primary-color);

@@ -1,0 +1,102 @@
+{
+  "clients": {
+    "2d5ae478-87c7-45fa-acf9-f04aa4724421": {
+      "_id": "2d5ae478-87c7-45fa-acf9-f04aa4724421",
+      "name": "Alice",
+      "password": "password123",
+      "email": "alice@example.com",
+      "comments": {
+        "2d5ae478-87c7-452a-acf9-f04aa4724421": {
+          "commentId": "2d5ae478-87c7-452a-acf9-f04aa4724421",
+          "comment": "Great service!",
+          "review": "5"
+        }
+      }
+    },
+    "6012c542-38e1-4660-ba40-1b109c40cb2f": {
+      "_id": "6012c542-38e1-4660-ba40-1b109c40cb2f",
+      "name": "Bob",
+      "password": "securePass456",
+      "email": "bob@example.com",
+      "comments": {
+        "6012c542-38e1-4260-ba40-1b109c40cb2f": {
+          "commentId": "6012c542-38e1-4260-ba40-1b109c40cb2f",
+          "comment": "Good quality products.",
+          "review": "4"
+        }
+      }
+    },
+    "d749a819-1e41-4c65-9ce2-7b429c4ebd0d": {
+      "_id": "d749a819-1e41-4c65-9ce2-7b429c4ebd0d",
+      "name": "Charlie",
+      "password": "charlie789",
+      "email": "charlie@example.com",
+      "comments": {
+        "2d5ae478-1e41-4f65-9ce2-1b109c40cb2f": {
+          "commentId": "2d5ae478-1e41-4f65-9ce2-1b109c40cb2f",
+          "comment": "Fast delivery!",
+          "review": "5"
+        }
+      }
+    }
+  },
+  "products": {
+    "2d5ae478-87c7-45fa-acf9-f04aa4724121": {
+      "_id": "2d5ae478-87c7-45fa-acf9-f04aa4724121",
+      "name": "Graphics Card",
+      "model": "NVIDIA GeForce RTX 3080",
+      "price": 699.99,
+      "specs": {
+        "memory": "10GB GDDR6X",
+        "coreClock": "1.44 GHz",
+        "boostClock": "1.71 GHz"
+      }
+    },
+    "6012c542-38e1-4660-ba40-1b109c40cb2f": {
+      "_id": "6012c542-38e1-4660-ba40-1b109c40cb2f",
+      "name": "Processor",
+      "model": "AMD Ryzen 9 5900X",
+      "price": 549.99,
+      "specs": {
+        "cores": 12,
+        "threads": 24,
+        "baseClock": "3.7 GHz",
+        "boostClock": "4.8 GHz"
+      }
+    },
+    "d749a819-1e41-4c65-9ce2-7b429c4ebd0d": {
+      "_id": "d749a819-1e41-4c65-9ce2-7b429c4ebd0d",
+      "name": "Motherboard",
+      "model": "ASUS ROG Strix X570-E",
+      "price": 299.99,
+      "specs": {
+        "chipset": "AMD X570",
+        "formFactor": "ATX",
+        "memorySlots": 4,
+        "maxMemory": "128GB"
+      }
+    },
+    "d742a819-1e41-4c65-9ce2-7b429c4ebd0d": {
+      "_id": "d742a819-1e41-4c65-9ce2-7b429c4ebd0d",
+      "name": "RAM",
+      "model": "Corsair Vengeance LPX 16GB",
+      "price": 89.99,
+      "specs": {
+        "capacity": "16GB (2 x 8GB)",
+        "type": "DDR4",
+        "speed": "3200 MHz"
+      }
+    },
+    "d742a819-1e41-4c25-9ce2-7b421c4ebd0d": {
+      "_id": "d742a819-1e41-4c25-9ce2-7b421c4ebd0d",
+      "name": "Power Supply",
+      "model": "EVGA SuperNOVA 750 G5",
+      "price": 129.99,
+      "specs": {
+        "wattage": "750W",
+        "efficiency": "80+ Gold",
+        "modular": "Fully Modular"
+      }
+    }
+  }
+}

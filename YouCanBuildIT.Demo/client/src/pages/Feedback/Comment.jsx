@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
-import styles from "../../assets/styles/comment.module.css";
-import { createComment } from "../../API/comments";
-import { AuthContext } from "../../context/AuthContextProvider";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createComment } from "../../API/comments";
 import { navigation } from "../../common/navigations";
+import styles from "../../assets/styles/comment.module.css";
+import { AuthContext } from "../../context/AuthContextProvider";
 import Stars from "./Stars";
 
 const Comment = () => {
@@ -15,13 +15,17 @@ const Comment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createComment(user, {
-      comment,
-      review: rating,
-    });
-    setComment("");
-    setRating(0);
-    navigate(navigation.getFeedBackUrl());
+    try {
+      await createComment(user._id, {
+        comment,
+        review: rating,
+      });
+      setComment("");
+      setRating(0);
+      navigate(navigation.getFeedBackUrl());
+    } catch (error) {
+      console.error("Failed to create comment:", error);
+    }
   };
 
   return (

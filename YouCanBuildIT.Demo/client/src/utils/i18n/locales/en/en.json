@@ -98,6 +98,25 @@
       "iosLogoAlt": "ios logo"
     }
   },
+  "forum": {
+    "header": "Hardware Blog",
+    "gpuNews": "GPU News",
+    "gpuDescription": "NVIDIA has just announced their latest GPU, the RTX 4090, which promises unprecedented performance and power efficiency. AMD is also gearing up to release their new RX 7000 series.",
+    "readMore": "Read More",
+    "cpuNews": "CPU News",
+    "cpuDescription": "Intel's 13th Gen processors are set to hit the market soon, boasting significant improvements in speed and efficiency. AMD's Ryzen 7000 series is also expected to make waves in the CPU market.",
+    "ramNews": "RAM News",
+    "ramDescription": "The latest DDR5 RAM modules are now available, offering higher speeds and better performance than their DDR4 predecessors. Major manufacturers like Corsair and G.Skill have already launched their new products.",
+    "otherHardwareNews": "Other Hardware News",
+    "otherHardwareDescription": "New SSDs with PCIe 5.0 support are on the horizon, promising faster data transfer rates. Additionally, the latest motherboards are now equipped with advanced features to support the newest hardware."
+  },
+  "feedback": {
+    "header": "What our clients say about us.",
+    "comment": "Comment",
+    "donationHeader": "Fuel Our Mission with a Cup of Coffee ☕️",
+    "donationText": "Your support helps us keep the lights on and the code flowing. Every little bit counts!",
+    "donationButton": "Donation"
+  },
   "footer": {
     "contacts": "Contacts",
     "support": "Support",

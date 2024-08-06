@@ -51,15 +51,21 @@ export const navigation = {
     return "/shop-basket";
   },
 
-  // Method to get a URL for a specific user profile
-  getUserProfileUrl(userId) {
-    return `/user/${userId}`;
-  },
-
   getCommentFromUrl() {
     return "/comment";
   },
-
+  getInvidiaUrl() {
+    return "https://www.nvidia.com/";
+  },
+  getIntel13GenUrl() {
+    return "https://www.intel.com/";
+  },
+  getRamDDR5Url() {
+    return "https://www.corsair.com/";
+  },
+  getSSDsUrl() {
+    return "https://www.samsung.com/";
+  },
   getMicrosoftUrl() {
     return "https://www.microsoft.com/";
   },

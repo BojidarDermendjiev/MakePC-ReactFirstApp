@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "../../../assets/styles/comment.module.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { navigation } from "../../../common/navigations";
 import Stars from "../Stars";
 import { editComment, getCommentById } from "../../../API/comments";
@@ -9,20 +9,24 @@ import { AuthContext } from "../../../context/AuthContextProvider";
 const EditComment = () => {
   const { user } = useContext(AuthContext);
   let { commentId } = useParams();
+  const location = useLocation();
 
-  const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState(location.state?.comment || "");
+  const [rating, setRating] = useState(location.state?.review || 0);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handleSubmit called");
-    await editComment(commentId, user, { comment, review: rating });
-
-    setComment("");
-    setRating(0);
-    navigate(navigation.getFeedBackUrl());
+    try {
+      await editComment(commentId, user, { comment, review: rating });
+      setComment("");
+      setRating(0);
+      navigate(navigation.getFeedBackUrl());
+    } catch (error) {
+      setError("Failed to edit comment.");
+    }
   };
 
   useEffect(() => {
@@ -39,13 +43,16 @@ const EditComment = () => {
         setError("Failed to load comment data.");
       }
     };
-    initial();
-  }, [commentId]);
+    if (!location.state) {
+      initial();
+    }
+  }, [commentId, location.state]);
 
   return (
     <div className={styles["comment-form-container"]}>
       <form className={styles["comment-form"]} onSubmit={handleSubmit}>
         <h2>Edit Comment</h2>
+        {error && <p className={styles.error}>{error}</p>}
         <div className={styles["form-group"]}>
           <label htmlFor="comment">Comment</label>
           <textarea

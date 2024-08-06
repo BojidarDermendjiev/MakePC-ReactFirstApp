@@ -7,14 +7,16 @@ import Spiner from "../PageNotFound/Spiner";
 import Review from "./Review";
 import useFetch from "../../hooks/useFetch";
 import { AuthContext } from "../../context/AuthContextProvider";
+import { useTranslation } from "react-i18next";
 
 export default function Feedback() {
+  const { t } = useTranslation();
   const {
-    data: comments,
+    data: clients,
     loading,
     error,
     triggerRefreshHandler,
-  } = useFetch("http://localhost:3030/jsonstore/comments");
+  } = useFetch("http://localhost:3030/jsonstore/users/clients");
 
   const { user } = useContext(AuthContext);
 
@@ -23,34 +25,41 @@ export default function Feedback() {
   return (
     <div className={styles.section__container}>
       <div className={styles.header}>
-        <h1>What our clients say about us.</h1>
+        <h1>{t("feedback.header")}</h1>
       </div>
       <div className={styles.testimonials__grid}>
         {loading ? (
           <Spiner />
         ) : (
-          comments &&
-          Object.values(comments).map((comment, index) => (
-            <Review
-              key={`${comment.userId}-${index}`}
-              {...comment}
-              loggedInUser={user}
-              triggerRefreshHandler={triggerRefreshHandler}
-            />
-          ))
+          clients &&
+          Object.values(clients).map((client) =>
+            Object.values(client.comments || {}).map((comment, index) => (
+              <Review
+                key={`${client._id}-${comment.commentId}-${index}`}
+                email={client.email}
+                comment={comment.comment}
+                review={comment.review}
+                _id={client._id}
+                commentId={comment.commentId}
+                loggedInUser={user}
+                triggerRefreshHandler={triggerRefreshHandler}
+              />
+            ))
+          )
         )}
       </div>
       {user && (
         <div className={styles.coment}>
           <Link className={styles.donation} to={navigation.getCommentFromUrl()}>
-            Comment
+            {t("feedback.comment")}
           </Link>
         </div>
       )}
       <div className={styles.btn}>
-        <h1>Buy me a coffee 😊</h1>
+        <h1>{t("feedback.donationHeader")}</h1>
+        <p className={styles.donationText}>{t("feedback.donationText")}</p>
         <Link className={styles.donation} to={navigation.getDonationUrl()}>
-          Donation
+          {t("feedback.donationButton")}
         </Link>
       </div>
     </div>
