@@ -1,3 +1,6 @@
+import { getIn } from "formik";
+import { get } from "../API/requester";
+
 export const navigation = {
   baseUrl: "http://localhost:5173",
 
@@ -76,5 +79,20 @@ export const navigation = {
   },
   getIOSUrl() {
     return "https://www.apple.com/ios/";
+  },
+  getGithubUrl() {
+    return "https://github.com/BojidarDermendjiev/MakePC-ReactFirstApp";
+  },
+  getLinkedInUrl() {
+    return "https://www.linkedin.com";
+  },
+  getInstagramUrl() {
+    return "https://www.instagram.com/";
+  },
+  getTwitterUrl() {
+    return "https://x.com/?lang=bg";
+  },
+  getYouTubeUrl() {
+    return "https://www.youtube.com/";
   },
 };

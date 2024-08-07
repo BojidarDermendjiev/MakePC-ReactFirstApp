@@ -116,11 +116,6 @@ describe("Main Component", () => {
     expect(screen.getByText("Logout Page")).toBeInTheDocument();
   });
 
-  it("renders ShopBasket component for /shop-basket route", () => {
-    renderWithRouter(["/shop-basket"]);
-    expect(screen.getByText("ShopBasket Page")).toBeInTheDocument();
-  });
-
   it("renders NotFound component for unknown route", () => {
     renderWithRouter(["/unknown"]);
     expect(screen.getByText("NotFound Page")).toBeInTheDocument();

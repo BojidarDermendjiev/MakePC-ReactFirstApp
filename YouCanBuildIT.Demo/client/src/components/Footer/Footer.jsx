@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/footer.module.css";
 import { navigationYoutobeVideo } from "../../common/youtobe";
+import { navigation } from "../../common/navigations";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -30,19 +31,34 @@ export default function Footer() {
       </div>
       <h1>CONNECT WITH US</h1>
       <div className={styles.wrapper}>
-        <Link to="#" className={`${styles.icon} ${styles.instagram}`}>
+        <Link
+          to={navigation.getInstagramUrl()}
+          className={`${styles.icon} ${styles.instagram}`}
+        >
           <i className="fa-brands fa-instagram"></i>
         </Link>
-        <Link to="#" className={`${styles.icon} ${styles.linkedin}`}>
+        <Link
+          to={navigation.getLinkedInUrl}
+          className={`${styles.icon} ${styles.linkedin}`}
+        >
           <i className="fa-brands fa-linkedin-in"></i>
         </Link>
-        <Link to="#" className={`${styles.icon} ${styles.youtube}`}>
+        <Link
+          to={navigation.getYouTubeUrl()}
+          className={`${styles.icon} ${styles.youtube}`}
+        >
           <i className="fa-brands fa-youtube"></i>
         </Link>
-        <Link to="#" className={`${styles.icon} ${styles.twitter}`}>
+        <Link
+          to={navigation.getTwitterUrl()}
+          className={`${styles.icon} ${styles.twitter}`}
+        >
           <i className="fa-brands fa-x-twitter"></i>
         </Link>
-        <Link to="#" className={`${styles.icon} ${styles.github}`}>
+        <Link
+          to={navigation.getGithubUrl()}
+          className={`${styles.icon} ${styles.github}`}
+        >
           <i className="fa-brands fa-github"></i>
         </Link>
       </div>
