@@ -1,9 +1,9 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import Login from "./Login";
 import { describe, it, expect, vi } from "vitest";
 import { BrowserRouter as Router } from "react-router-dom";
-import Login from "./Login";
 import { AuthContext } from "../../context/AuthContextProvider";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 // Mock the useTranslation hook
 vi.mock("react-i18next", () => ({

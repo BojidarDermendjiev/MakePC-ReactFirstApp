@@ -8,7 +8,6 @@ import Logout from "../../pages/Logout/Logout";
 import Comment from "../../pages/Feedback/Comment";
 import Feedback from "../../pages/Feedback/Feedback";
 import NotFound from "../../pages/PageNotFound/NotFound";
-import ShopBasket from "../../pages/ShopBasket/ShopBasket";
 import EditComment from "../../pages/Feedback/edit/EditComment";
 import PriceSelectior from "../../pages/Donation/PriceSelectior";
 import HardwareBlog from "../../pages/HardwareBlog/HardwareBlog";
@@ -40,7 +39,6 @@ export default function Main() {
         />
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />
-        <Route path={navigation.getShopBasketUrl()} element={<ShopBasket />} />
         <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
         <Route path={navigation.getPageNotFoundUrl()} element={<NotFound />} />
       </Routes>
