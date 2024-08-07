@@ -29,7 +29,7 @@ This application is a multi-language platform with both public and private conte
   - Public content is accessible to all users.
   - Private content is restricted to authenticated users.
     
-- **Guest content
+- Guest content
   
 ![Screenshot 2024-08-07 213439](https://github.com/user-attachments/assets/1f157105-f5e4-44e6-87f2-7c1a3707f247)
 
