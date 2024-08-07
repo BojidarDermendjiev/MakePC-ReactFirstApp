@@ -12,6 +12,11 @@ const SignUp = ({
 }) => {
   const { t } = useTranslation();
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+    handleSubmit();
+  };
+
   return (
     <>
       <input
@@ -68,7 +73,13 @@ const SignUp = ({
       {errors.confirmPassword && touched.confirmPassword && (
         <p className={styles.error}>{errors.confirmPassword}</p>
       )}
-      <button className={styles.signUp} disabled={isSubmitting} type="submit">
+      <button
+        className={styles.signUp}
+        disabled={isSubmitting}
+        aria-label="authenticator.signUp"
+        type="button"
+        onClick={onSubmit}
+      >
         {t("authenticator.signUp")}
       </button>
     </>

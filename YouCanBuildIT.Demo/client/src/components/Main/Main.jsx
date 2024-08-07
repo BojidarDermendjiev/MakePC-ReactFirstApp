@@ -12,7 +12,6 @@ import ShopBasket from "../../pages/ShopBasket/ShopBasket";
 import EditComment from "../../pages/Feedback/edit/EditComment";
 import PriceSelectior from "../../pages/Donation/PriceSelectior";
 import HardwareBlog from "../../pages/HardwareBlog/HardwareBlog";
-import BuildComposition from "../../pages/BuildComposition/BuildComposition";
 import PaymentCard from "../../pages/Donation/PaymentCard";
 
 export default function Main() {
@@ -21,10 +20,6 @@ export default function Main() {
       <Routes>
         <Route path={navigation.getHomeUrl()} element={<Home />} />
         <Route path={navigation.getAboutUrl()} element={<About />} />
-        <Route
-          path={navigation.getBuildCompositionUrl()}
-          element={<BuildComposition />}
-        />
         <Route
           path={navigation.getDonationUrl()}
           element={<PriceSelectior />}

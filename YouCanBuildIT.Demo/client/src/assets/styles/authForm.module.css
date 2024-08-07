@@ -164,9 +164,32 @@ button.hidden {
   font-size: 1.2em;
 }
 
+.signUp {
+  background-color: #00000095;
+  border: none;
+  border-color: #c7f022;
+  color: #c7f022;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.signUp:hover {
+  background-color: #000000; /* Darker blue on hover */
+}
+
 .signUp:disabled {
+  background-color: #cccccc; /* Gray color when disabled */
+  cursor: not-allowed;
   opacity: 0.35;
 }
+
 h1 {
   color: #c7f022;
 }

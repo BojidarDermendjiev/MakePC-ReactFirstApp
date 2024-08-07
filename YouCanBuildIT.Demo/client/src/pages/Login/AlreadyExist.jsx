@@ -15,7 +15,11 @@ const UserExistsModal = ({ show, onClose }) => {
   };
 
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+    <div
+      className={styles.modalOverlay}
+      onClick={handleOverlayClick}
+      data-testid="modal-overlay"
+    >
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>{t("userExistsModal.title")}</h2>
         <p>{t("userExistsModal.message")}</p>

@@ -13,7 +13,11 @@ const InvalidPassOrEmailModal = ({ show, onClose }) => {
     }
   };
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+    <div
+      className={styles.modalOverlay}
+      onClick={handleOverlayClick}
+      data-testid="modal-overlay"
+    >
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>{t("invalidPassOrEmailModal.title")}</h2>
         <p>{t("invalidPassOrEmailModal.message")}</p>

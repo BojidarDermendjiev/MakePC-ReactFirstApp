@@ -145,6 +145,10 @@
     "validThru": "VALID THRU",
     "securityCodeText": "security code"
   },
+  "errorLoading": {
+    "title": "Error Loading Comments",
+    "message": "There was an error loading the comments. Please try again later."
+  },
   "footer": {
     "contacts": "Contacts",
     "support": "Support",
