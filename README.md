@@ -42,10 +42,18 @@ This application is a multi-language platform with both public and private conte
 ![Screenshot 2024-08-07 213910](https://github.com/user-attachments/assets/6c5f3120-a2f4-4c14-b31d-8a28ecd5df74)
 
   - **Edit Comments**: Users can edit their existing comments.
+
+![Screenshot 2024-08-07 223501](https://github.com/user-attachments/assets/a3af0dbd-340b-4a4d-a7ad-44131b7dfa12)
+    
+![Screenshot 2024-08-07 223542](https://github.com/user-attachments/assets/b662ec6b-1a5d-4c11-aa03-8e79f3d6ed48)
+
   - **Delete Comments**: Users can delete their comments.
 
-  ![Screenshot 2024-08-07 213902](https://github.com/user-attachments/assets/a168ab64-1cde-4bd0-b7f1-3e0113e847aa)
+![Screenshot 2024-08-07 213902](https://github.com/user-attachments/assets/a168ab64-1cde-4bd0-b7f1-3e0113e847aa)
+  
+![Screenshot 2024-08-07 223549](https://github.com/user-attachments/assets/cc53fb20-9b27-43af-9c82-8356645858bd)
 
+![Screenshot 2024-08-07 223555](https://github.com/user-attachments/assets/e7ec67c2-9971-4beb-bedd-505bb91c8cd7)
 
 - **Sign In and Sign Up**:
   - Users can sign in or sign up using their credentials.
