@@ -34,30 +34,35 @@ export default function Footer() {
         <Link
           to={navigation.getInstagramUrl()}
           className={`${styles.icon} ${styles.instagram}`}
+          target="_blank"
         >
           <i className="fa-brands fa-instagram"></i>
         </Link>
         <Link
           to={navigation.getLinkedInUrl}
           className={`${styles.icon} ${styles.linkedin}`}
+          target="_blank"
         >
           <i className="fa-brands fa-linkedin-in"></i>
         </Link>
         <Link
           to={navigation.getYouTubeUrl()}
           className={`${styles.icon} ${styles.youtube}`}
+          target="_blank"
         >
           <i className="fa-brands fa-youtube"></i>
         </Link>
         <Link
           to={navigation.getTwitterUrl()}
           className={`${styles.icon} ${styles.twitter}`}
+          target="_blank"
         >
           <i className="fa-brands fa-x-twitter"></i>
         </Link>
         <Link
           to={navigation.getGithubUrl()}
           className={`${styles.icon} ${styles.github}`}
+          target="_blank"
         >
           <i className="fa-brands fa-github"></i>
         </Link>
