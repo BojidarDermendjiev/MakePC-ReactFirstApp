@@ -1,6 +1,5 @@
 # MakePC-ReactFirstApp
 
-# My Application
 
 ## Overview
 
