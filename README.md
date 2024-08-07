@@ -49,8 +49,6 @@ This application is a multi-language platform with both public and private conte
 
   - **Delete Comments**: Users can delete their comments.
 
-![Screenshot 2024-08-07 213902](https://github.com/user-attachments/assets/a168ab64-1cde-4bd0-b7f1-3e0113e847aa)
-  
 ![Screenshot 2024-08-07 223549](https://github.com/user-attachments/assets/cc53fb20-9b27-43af-9c82-8356645858bd)
 
 ![Screenshot 2024-08-07 223555](https://github.com/user-attachments/assets/e7ec67c2-9971-4beb-bedd-505bb91c8cd7)
