@@ -1,48 +1,45 @@
 import styles from "../../assets/styles/feedback.module.css";
-import { deleteComment } from "../../API/comments";
+import { deleteComment } from "../../API/feedbackService";
 import { useNavigate } from "react-router-dom";
 import { navigation } from "../../common/navigations";
 import Stars from "./Stars";
 
 export default function Review({
   loggedInUser,
-  email,
+  userId,
+  userName,
   comment,
-  review,
-  _id: userId,
+  rating,
   commentId,
   triggerRefreshHandler,
 }) {
   const navigate = useNavigate();
-
-  const isOwner = loggedInUser && loggedInUser.email === email;
+  const isOwner = loggedInUser && loggedInUser.id === userId;
 
   const deleteHandler = async () => {
-    await deleteComment(userId, commentId);
+    await deleteComment(commentId);
     triggerRefreshHandler();
   };
 
   const editComment = () => {
     navigate(`${navigation.getCommentFromUrl()}/${commentId}`, {
-      state: { comment, review },
+      state: { comment, rating },
     });
   };
 
   return (
     <div className={styles.card}>
-      <p className={styles.content}>{email}</p>
+      <p className={styles.content}>{userName}</p>
       <p className={styles.content}>{comment}</p>
-      <Stars
-        rating={review}
-        setRating={() => {
-          review;
-        }}
-      />
-
+      <Stars rating={rating} setRating={() => {}} />
       {isOwner && (
         <>
-          <button onClick={editComment}>Edit</button>
-          <button onClick={deleteHandler}>Delete</button>
+          <button className={styles.btnEdit} onClick={editComment}>
+            Edit
+          </button>
+          <button className={styles.btnDelete} onClick={deleteHandler}>
+            Delete
+          </button>
         </>
       )}
     </div>

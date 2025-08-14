@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/userExistsModal.module.css";
 
-const UserExistsModal = ({ show, onClose }) => {
+const AlreadyExist = ({ show, onClose }) => {
   const { t } = useTranslation();
   if (!show) {
     return null;
@@ -31,4 +31,4 @@ const UserExistsModal = ({ show, onClose }) => {
   );
 };
 
-export default UserExistsModal;
+export default AlreadyExist;

@@ -2,62 +2,118 @@ import { getIn } from "formik";
 import { get } from "../API/requester";
 
 export const navigation = {
-  baseUrl: "http://localhost:5173",
+  baseUrl: "http://localhost:5173/api",
 
-  // Method to get the home URL
   getHomeUrl() {
     return "/";
   },
-
-  // Method to get the about URL
   getAboutUrl() {
     return "/about";
   },
-
-  // Method to get the build composition URL
   getBuildCompositionUrl() {
     return "/build-composition";
   },
-
-  // Method to navigate you to donation URL
   getDonationUrl() {
     return "/donation";
   },
-
-  // Method to get the feedback URL
   getFeedBackUrl() {
     return "/feedback";
   },
-
-  // Method to get the page not found URL
   getPageNotFoundUrl() {
     return "/*";
   },
-
-  // Method to get the hardware blog URL
   getHardwareBlogUrl() {
     return "/hardware-blog";
   },
-
-  // Method to get the login URL
-
   getLoginUrl() {
     return "/login";
   },
-  // Method to get the logout URL
+  getRegisterUrl() {
+    return "/register";
+  },
+  getUserSettingsUrl() {
+    return "/usersettings";
+  },
   getLogoutUrl() {
     return "/logout";
   },
   getPaymentCardUrl() {
     return "/payment-card";
   },
-  // Method to get the shop basket URL
   getShopBasketUrl() {
     return "/shop-basket";
   },
-
   getCommentFromUrl() {
     return "/comment";
+  },
+  getProductsUrl() {
+    return "/products";
+  },
+  getProductCreateUrl() {
+    return "/products/create";
+  },
+  getProductEditUrl(id) {
+    return `/products/edit/${id}`;
+  },
+  getProductDetailsUrl(id) {
+    return `/products/${id}`;
+  },
+  getReviewByIdUrl(id) {
+    return `/review/${id}`;
+  },
+  getProductReviewUrl(productId) {
+    return `/products/${productId}/review`;
+  },
+  getOrdersUrl() {
+    return "/orders";
+  },
+  getOrderCreateUrl() {
+    return "/order/create";
+  },
+  getOrderEditUrl(id) {
+    return `/order/edit/${id}`;
+  },
+  getOrderDetailsUrl(id) {
+    return `/order/${id}`;
+  },
+  getShopBasketUrl() {
+    return "/shop-basket";
+  },
+  getBasketsUrl() {
+    return "/baskets";
+  },
+  getBasketCreateUrl() {
+    return "/basket/create";
+  },
+  getBasketEditUrl(id) {
+    return `/basket/edit/${id}`;
+  },
+  getBasketDetailsUrl(id) {
+    return `/basket/${id}`;
+  },
+  getCategoriesUrl() {
+    return "/categories";
+  },
+  getCategoryDetailsUrl(id) {
+    return `/category/${id}`;
+  },
+  getCategoryCreateUrl() {
+    return "/category/create";
+  },
+  getCategoryEditUrl(id) {
+    return `/category/edit/${id}`;
+  },
+  getBrandsUrl() {
+    return "/brands";
+  },
+  getBrandDetailsUrl(id) {
+    return `/brand/${id}`;
+  },
+  getBrandCreateUrl() {
+    return "/brand/create";
+  },
+  getBrandEditUrl(id) {
+    return `/brand/edit/${id}`;
   },
   getInvidiaUrl() {
     return "https://www.nvidia.com/";

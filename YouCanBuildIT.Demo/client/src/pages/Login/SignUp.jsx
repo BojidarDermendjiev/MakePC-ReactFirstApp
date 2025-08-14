@@ -12,73 +12,73 @@ const SignUp = ({
 }) => {
   const { t } = useTranslation();
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    handleSubmit();
-  };
-
   return (
     <>
       <input
-        name="name"
-        value={values.name}
+        name="FullName"
+        value={values.FullName}
         onChange={handleChange}
         type="text"
         placeholder={t("authenticator.name")}
         onBlur={handleBlur}
-        className={errors.name && touched.name ? styles["input-error"] : ""}
+        className={
+          errors.FullName && touched.FullName ? styles["input-error"] : ""
+        }
+        required
       />
-      {errors.name && touched.name && (
-        <p className={styles.error}>{errors.name}</p>
+      {errors.FullName && touched.FullName && (
+        <p className={styles.error}>{errors.FullName}</p>
       )}
       <input
-        name="email"
-        value={values.email}
+        name="Email"
+        value={values.Email}
         onChange={handleChange}
         type="email"
         placeholder={t("authenticator.email")}
         onBlur={handleBlur}
-        className={errors.email && touched.email ? styles["input-error"] : ""}
+        className={errors.Email && touched.Email ? styles["input-error"] : ""}
+        required
       />
-      {errors.email && touched.email && (
-        <p className={styles.error}>{errors.email}</p>
+      {errors.Email && touched.Email && (
+        <p className={styles.error}>{errors.Email}</p>
       )}
       <input
-        name="password"
-        value={values.password}
+        name="Password"
+        value={values.Password}
         onChange={handleChange}
         type="password"
         placeholder={t("authenticator.password")}
         onBlur={handleBlur}
         className={
-          errors.password && touched.password ? styles["input-error"] : ""
+          errors.Password && touched.Password ? styles["input-error"] : ""
         }
+        required
       />
-      {errors.password && touched.password && (
-        <p className={styles.error}>{errors.password}</p>
+      {errors.Password && touched.Password && (
+        <p className={styles.error}>{errors.Password}</p>
       )}
       <input
-        name="confirmPassword"
-        value={values.confirmPassword}
+        name="ConfirmPassword"
+        value={values.ConfirmPassword}
         onChange={handleChange}
         type="password"
         placeholder={t("authenticator.confirmPassword")}
         onBlur={handleBlur}
         className={
-          errors.confirmPassword && touched.confirmPassword
+          errors.ConfirmPassword && touched.ConfirmPassword
             ? styles["input-error"]
             : ""
         }
+        required
       />
-      {errors.confirmPassword && touched.confirmPassword && (
-        <p className={styles.error}>{errors.confirmPassword}</p>
+      {errors.ConfirmPassword && touched.ConfirmPassword && (
+        <p className={styles.error}>{errors.ConfirmPassword}</p>
       )}
       <button
         className={styles.signUp}
         disabled={isSubmitting}
         aria-label="authenticator.signUp"
-        type="button"
-        onClick={onSubmit}
+        type="submit"
       >
         {t("authenticator.signUp")}
       </button>

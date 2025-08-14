@@ -1,32 +1,44 @@
-import * as yup from "yup";
+import * as Yup from "yup";
 
-const userNameRules = /^[a-zA-Z][a-zA-Z0-9_-]{2,15}$/;
-const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
-
-export const signUpSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Please enter a valid email!")
-    .required("Please enter a valid email!"),
-  name: yup
-    .string()
-    .matches(userNameRules, { message: "Please enter your name!" })
-    .required("Please enter your name!"),
-  password: yup
-    .string()
-    .min(5)
-    .matches(passwordRules, { message: "Please create a stronger password!" })
-    .required("Please create a stronger password!"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Passwords must match!"),
+export const loginSchema = Yup.object({
+  Email: Yup.string().email("Invalid email").required("Email required"),
+  Password: Yup.string().required("Password required"),
 });
 
-export const signInSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Please enter a valid email!")
-    .required("Please enter a valid email!"),
-  password: yup.string().required("Please enter a password!"),
+export const signInSchema = loginSchema;
+
+export const registerSchema = Yup.object({
+  Email: Yup.string().email("Invalid email").required("Email required"),
+  Password: Yup.string()
+    .min(6, "Password too short")
+    .required("Password required"),
+  ConfirmPassword: Yup.string()
+    .oneOf([Yup.ref("Password"), null], "Passwords must match")
+    .required("Confirm Password required"),
+  FullName: Yup.string()
+    .min(2, "Full name too short")
+    .required("Full Name required"),
+});
+
+export const signUpSchema = registerSchema;
+
+export const forgotPasswordSchema = Yup.object({
+  Email: Yup.string().email("Invalid email").required("Email required"),
+});
+export const resetPasswordSchema = Yup.object({
+  Password: Yup.string()
+    .min(6, "Password too short")
+    .required("Password required"),
+  ConfirmPassword: Yup.string()
+    .oneOf([Yup.ref("Password"), null], "Passwords must match")
+    .required("Confirm Password required"),
+});
+export const changePasswordSchema = Yup.object({
+  CurrentPassword: Yup.string().required("Current Password required"),
+  NewPassword: Yup.string()
+    .min(6, "New Password too short")
+    .required("New Password required"),
+  ConfirmNewPassword: Yup.string()
+    .oneOf([Yup.ref("NewPassword"), null], "Passwords must match")
+    .required("Confirm New Password required"),
 });

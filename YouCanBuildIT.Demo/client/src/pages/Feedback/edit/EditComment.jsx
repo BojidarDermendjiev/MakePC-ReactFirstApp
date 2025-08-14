@@ -3,7 +3,7 @@ import styles from "../../../assets/styles/comment.module.css";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { navigation } from "../../../common/navigations";
 import Stars from "../Stars";
-import { editComment, getCommentById } from "../../../API/comments";
+import { editComment, getCommentById } from "../../../API/feedbackService";
 import { AuthContext } from "../../../context/AuthContextProvider";
 
 const EditComment = () => {
@@ -20,7 +20,7 @@ const EditComment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await editComment(commentId, user, { comment, review: rating });
+      await editComment(commentId, user.id, { comment, rating });
       setComment("");
       setRating(0);
       navigate(navigation.getFeedBackUrl());

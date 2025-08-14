@@ -5,12 +5,10 @@ export const AuthContext = createContext({
   user: null,
 });
 
-// eslint-disable-next-line no-unused-vars
 export const AuthContextProvider = ({ children }) => {
-  
   const userFromStore = JSON.parse(localStorage.getItem("user"));
 
-  const [user, setUser] = useState(userFromStore || null)
+  const [user, setUser] = useState(userFromStore || null);
 
   return (
     <AuthContext.Provider
@@ -24,4 +22,4 @@ export const AuthContextProvider = ({ children }) => {
   );
 };
 
-export default AuthContextProvider
+export default AuthContextProvider;

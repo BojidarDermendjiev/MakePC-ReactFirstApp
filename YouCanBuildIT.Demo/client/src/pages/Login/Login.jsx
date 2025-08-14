@@ -1,50 +1,54 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { signUpSchema, signInSchema } from "../../schemas/index.js";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../common/navigations";
-import { login, register } from "../../API/authentication";
+import { login } from "../../API/authentication";
 import { AuthContext } from "../../context/AuthContextProvider";
 import InvalidPassOrEmailModal from "../Login/InvalidPassOrEmail.jsx";
-import AlreadyExist from "../Login/AlreadyExist.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { setUser } = useContext(AuthContext);
   const [showInvalidModal, setShowInvalidModal] = useState(false);
-  const [showUserExistsModal, setShowUserExistsModal] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(location.pathname === "/register");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isActive, setIsActive] = useState(location.pathname === "/register");
 
-  const signUpHandler = async (values, actions) => {
-    try {
-      actions.resetForm();
-      await register(
-        { email: values.email, password: values.password },
-        setUser
-      );
-      navigate(navigation.getHomeUrl());
-    } catch (error) {
-      console.error(error.message);
-      actions.setFieldError("email", error.message);
-      if (error.message === "A user with this email already exists.") {
-        setShowUserExistsModal(true);
-      }
-    }
+  useEffect(() => {
+    setIsSignUp(location.pathname === "/register");
+    setIsActive(location.pathname === "/register");
+  }, [location.pathname]);
+
+  const handleSwitchToSignUp = () => {
+    setIsTransitioning(true);
+    setIsActive(true);
+    setTimeout(() => {
+      setIsSignUp(true);
+      setIsTransitioning(false);
+      navigate(navigation.getRegisterUrl());
+    }, 650);
   };
 
   const signInHandler = async (values, actions) => {
     try {
       actions.resetForm();
-      await login({ email: values.email, password: values.password }, setUser);
+      await login(
+        {
+          Email: values.Email,
+          Password: values.Password,
+        },
+        setUser
+      );
       navigate(navigation.getHomeUrl());
     } catch (error) {
-      console.error(error.message);
-      actions.setFieldError("email", error.message);
+      actions.setFieldError("Email", error.message);
       setShowInvalidModal(true);
     }
   };
@@ -59,24 +63,20 @@ const Login = () => {
     handleSubmit,
   } = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      Email: "",
+      Password: "",
     },
-    validationSchema: isSignUp ? signUpSchema : signInSchema,
+    validationSchema: signInSchema,
     onSubmit: (values, actions) => {
-      if (isSignUp) {
-        signUpHandler(values, actions);
-      } else {
-        signInHandler(values, actions);
-      }
+      signInHandler(values, actions);
     },
   });
 
   return (
     <section className={styles.formInput}>
-      <div className={`${styles.container} ${isSignUp ? styles.active : ""}`}>
+      <div
+        className={`${styles.container} ${isActive ? styles.active : ""} ${isTransitioning ? styles.transitioning : ""}`}
+      >
         <div
           className={`${styles["form-container"]} ${
             isSignUp ? styles["sign-up"] : styles["sign-in"]
@@ -125,7 +125,6 @@ const Login = () => {
               className={`${styles["toggle-panel"]} ${
                 isSignUp ? styles["toggle-left"] : styles["toggle-right"]
               }`}
-              onClick={() => setIsSignUp(!isSignUp)}
             >
               <h1>
                 {isSignUp
@@ -140,7 +139,7 @@ const Login = () => {
               <button
                 className={`${styles.hidden} ${styles["auth-button"]}`}
                 id={isSignUp ? "login" : "register"}
-                onClick={() => setIsSignUp(!isSignUp)}
+                onClick={handleSwitchToSignUp}
               >
                 {isSignUp
                   ? t("authenticator.signIn")
@@ -149,34 +148,10 @@ const Login = () => {
             </div>
           </div>
         </div>
-
-        <div className={styles["account-info"]}>
-          {isSignUp ? (
-            <p>
-              {t("authenticator.alreadyHaveAccount")}{" "}
-              <Link to="#" onClick={() => setIsSignUp(false)}>
-                {t("authenticator.signInHere")}
-              </Link>
-              .
-            </p>
-          ) : (
-            <p>
-              {t("authenticator.dontHaveAccount")}{" "}
-              <Link to="#" onClick={() => setIsSignUp(true)}>
-                {t("authenticator.signUpHere")}
-              </Link>
-              .
-            </p>
-          )}
-        </div>
       </div>
       <InvalidPassOrEmailModal
         show={showInvalidModal}
         onClose={() => setShowInvalidModal(false)}
-      />
-      <AlreadyExist
-        show={showUserExistsModal}
-        onClose={() => setShowUserExistsModal(false)}
       />
     </section>
   );

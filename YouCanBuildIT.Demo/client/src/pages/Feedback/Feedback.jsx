@@ -8,15 +8,16 @@ import Review from "./Review";
 import useFetch from "../../hooks/useFetch";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useTranslation } from "react-i18next";
+import { serverUrl, serverEndpoints } from "../../common/generic";
 
 export default function Feedback() {
   const { t } = useTranslation();
   const {
-    data: clients,
+    data: feedbacks,
     loading,
     error,
     triggerRefreshHandler,
-  } = useFetch("http://localhost:3030/jsonstore/users/clients");
+  } = useFetch(`${serverUrl}${serverEndpoints.getAllFeedbacks}`);
 
   const { user } = useContext(AuthContext);
 
@@ -31,21 +32,20 @@ export default function Feedback() {
         {loading ? (
           <Spiner />
         ) : (
-          clients &&
-          Object.values(clients).map((client) =>
-            Object.values(client.comments || {}).map((comment, index) => (
-              <Review
-                key={`${client._id}-${comment.commentId}-${index}`}
-                email={client.email}
-                comment={comment.comment}
-                review={comment.review}
-                _id={client._id}
-                commentId={comment.commentId}
-                loggedInUser={user}
-                triggerRefreshHandler={triggerRefreshHandler}
-              />
-            ))
-          )
+          feedbacks &&
+          Array.isArray(feedbacks) &&
+          feedbacks.map((feedback) => (
+            <Review
+              key={feedback.id}
+              userId={feedback.userId}
+              userName={feedback.userName}
+              comment={feedback.comment}
+              rating={feedback.rating}
+              commentId={feedback.id}
+              loggedInUser={user}
+              triggerRefreshHandler={triggerRefreshHandler}
+            />
+          ))
         )}
       </div>
       {user && (

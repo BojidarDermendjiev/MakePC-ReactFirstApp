@@ -1,16 +1,14 @@
 .comment-form-container {
-  max-width: 600px;
+  max-width: 850px;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #000000;
-  border-radius: 8px;
-  background-color: #c7f022;
+  padding: 0.6em;
   height: 50vh;
   margin-bottom: 20em;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .LeaveCom {
   color: #c7f022;
   text-align: center;
@@ -21,11 +19,19 @@
   font-size: 1.2em;
 }
 .comment-form {
+  border-radius: 2em;
+  background: #0459f7ae;
+  background: linear-gradient(
+    90deg,
+    rgba(4, 89, 247, 1) 35%,
+    rgba(199, 240, 34, 1) 100%
+  );
   display: flex;
   flex-direction: column;
 }
 
 .comment-form h2 {
+  color: #c7f022;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -36,25 +42,30 @@
 }
 
 .form-group label {
+  color: #c7f022;
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 .form-group input,
 .form-group textarea {
+  all: unset;
   width: 100%;
+  box-shadow: -1px 21px 49px 20px rgba(0, 0, 0, 0.59);
+  -webkit-box-shadow: -1px 21px 49px 20px rgba(0, 0, 0, 0.59);
+  -moz-box-shadow: -1px 21px 49px 20px rgba(0, 0, 0, 0.59);
   padding: 10px;
-  border: 1px solid #cccccce4;
+  font-size: 1.5em;
   border-radius: 4px;
-  background: black;
   color: #c7f022;
   height: 15vh;
 }
 
 textarea .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #007bff00;
+  border-color: #00000000;
   outline: none;
 }
 
@@ -72,28 +83,12 @@ textarea .form-group input:focus,
 }
 
 .star {
-  color: #ff0; /* Yellow stars */
+  color: #ff0;
   font-size: 4em;
   padding: 0 !important;
 }
 
 .star-button-blank .star {
-  color: #000000; /* Light grey for unselected stars */
+  color: #f5f5f54b;
   padding: 0 !important;
-}
-
-.btnSumit {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  background-color: #0000007a;
-  color: #c7f022;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: center;
-}
-
-.btnSumit:hover {
-  background-color: #000000;
 }

@@ -1,0 +1,177 @@
+.settingsContainer {
+  max-width: 850px;
+  margin: 3em auto;
+  border-radius: 2em;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  padding: 2.5em 2em 2em 2em;
+  font-family: "Poppins", monospace;
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
+  color: #c7f022;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.settingsForm {
+  background-color: #00000000;
+  padding: 3.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  margin-bottom: 1em;
+}
+
+.formGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: #c7f022;
+  margin-bottom: 0.3em;
+}
+
+.formGroup input[type="email"],
+.formGroup input[type="text"],
+.formGroup input[type="password"] {
+  padding: 0.7em;
+  border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  font-size: 1em;
+  outline: none;
+  transition: border 0.2s;
+  background: #c7f022;
+}
+.formGroup input[type="email"]:focus,
+.formGroup input[type="text"]:focus,
+.formGroup input[type="password"]:focus {
+  border-color: #000000;
+  background: #c7f022;
+  color: #000000;
+}
+
+.formGroup input[type="file"] {
+  margin-top: 0.2em;
+}
+
+.avatarInput {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.avatarPreview {
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 0px;
+  object-fit: cover;
+  border: 2px solid #bdbdbd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #c7f022;
+}
+
+.saveButton {
+  padding: 0.9em;
+  font-size: 1.1em;
+  background: linear-gradient(90deg, #1976d2 0%, #4fc3f7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 0.8em;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+
+.saveButton:hover {
+  background: linear-gradient(90deg, #145ea8 0%, #039be5 100%);
+  transform: scale(1.04);
+}
+
+.closeButton {
+  margin-top: 16px;
+  padding: 0.7em 1.3em;
+  background-color: #efefef;
+  color: #1976d2;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.closeButton:hover {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.error {
+  color: #d32f2f;
+  background: #ffeeee;
+  padding: 0.6em;
+  border-radius: 7px;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 1em;
+}
+
+.success {
+  color: #388e3c;
+  background: #e5ffec;
+  padding: 0.6em;
+  border-radius: 7px;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 1em;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 33, 61, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  font-family: "Poppins", monospace;
+  color: #c7f022;
+  background: rgb(20 33 61);
+  padding: 28px 32px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 440px;
+  width: 94vw;
+  box-shadow: 0 6px 32px rgba(25, 118, 210, 0.17);
+  position: relative;
+}
+
+.modalContent h3 {
+  color: #fff;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+@media (max-width: 600px) {
+  .settingsContainer {
+    padding: 1em;
+  }
+  .modalContent {
+    padding: 16px 8px;
+  }
+}

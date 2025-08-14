@@ -7,6 +7,8 @@ import { LanguageContext } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { logout } from "../../API/authentication";
 
+import defaultAvatar from "../../../public/img/image.png";
+
 export default function Header() {
   const { t } = useTranslation();
 
@@ -14,18 +16,18 @@ export default function Header() {
   const { changeLanguage } = useContext(LanguageContext);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
   const navigate = useNavigate();
 
-  const showDropdown = () => {
-    setDropdownOpen(true);
-  };
-
-  const hideDropdown = () => {
-    setDropdownOpen(false);
-  };
+  const showDropdown = () => setDropdownOpen(true);
+  const hideDropdown = () => setDropdownOpen(false);
 
   const handleLanguageChange = (lng) => {
     changeLanguage(lng, hideDropdown);
+  };
+  const handleUserSettings = () => {
+    navigate(navigation.getUserSettingsUrl());
   };
 
   const handleLogout = async () => {
@@ -83,23 +85,30 @@ export default function Header() {
         </ul>
         <ul className={styles.rightNav}>
           {user ? (
-            <li className={styles.logout}>
-              <Link
-                className={styles.link}
-                to={navigation.getLogoutUrl()}
-                onClick={handleLogout}
-              >
-                {t("header.signOut")}
-              </Link>
-            </li>
-          ) : (
             <>
-              <li className={styles.signUp}>
-                <Link className={styles.link} to={navigation.getLoginUrl()}>
-                  {t("header.signIn")}
+              <li className={styles.avatarContainer}>
+                <img
+                  className={`${styles.avatarIcon} ${styles.profileDropdown}`}
+                  src={user.avatarUrl || defaultAvatar}
+                  onClick={handleUserSettings}
+                />
+              </li>
+              <li className={styles.logout}>
+                <Link
+                  className={styles.link}
+                  to={navigation.getLogoutUrl()}
+                  onClick={handleLogout}
+                >
+                  {t("header.signOut")}
                 </Link>
               </li>
             </>
+          ) : (
+            <li className={styles.signUp}>
+              <Link className={styles.link} to={navigation.getLoginUrl()}>
+                {t("header.signIn")}
+              </Link>
+            </li>
           )}
         </ul>
       </nav>
