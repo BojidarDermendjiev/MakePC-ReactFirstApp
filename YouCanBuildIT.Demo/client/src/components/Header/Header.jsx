@@ -6,6 +6,7 @@ import { navigation } from "../../common/navigations";
 import { LanguageContext } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { logout } from "../../API/authentication";
+import { serverOrigin } from "../../common/generic";
 
 import defaultAvatar from "../../../public/img/image.png";
 
@@ -89,7 +90,13 @@ export default function Header() {
               <li className={styles.avatarContainer}>
                 <img
                   className={`${styles.avatarIcon} ${styles.profileDropdown}`}
-                  src={user.avatarUrl || defaultAvatar}
+                  src={
+                    user.avatarUrl
+                      ? user.avatarUrl.startsWith("http")
+                        ? user.avatarUrl
+                        : serverOrigin + user.avatarUrl
+                      : defaultAvatar
+                  }
                   onClick={handleUserSettings}
                 />
               </li>

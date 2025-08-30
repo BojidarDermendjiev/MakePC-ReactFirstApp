@@ -1,29 +1,28 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import axiosInstance from "../../src/API/axiosInstance.js";
 
-export default function useFetch(url) {
+const useFetch = (url) => {
   const [data, setData] = useState(null);
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const triggerRefreshHandler = () =>{
-    setloading(true);
-    axios
-      .get(url)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setloading(false);
-      });
-  }
-  
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axiosInstance.get(url);
+      setData(res.data);
+    } catch (err) {
+      setError(err);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    triggerRefreshHandler()
+    fetchData();
   }, [url]);
 
-  return { data, loading, error, triggerRefreshHandler };
-}
+  return { data, loading, error, triggerRefreshHandler: fetchData };
+};
+
+export default useFetch;

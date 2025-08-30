@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/userSettings.module.css";
 import { AuthContext } from "../../context/AuthContextProvider";
 import requester from "../../API/requester";
-import { serverUrl, serverEndpoints } from "../../common/generic";
+import {
+  serverApiUrl,
+  serverOrigin,
+  serverEndpoints,
+} from "../../common/generic";
 import PasswordModal from "./PasswordModal";
 
 const UserSettings = () => {
@@ -42,7 +46,6 @@ const UserSettings = () => {
     setPasswordModalMessage("");
     setLoading(true);
 
-    // Password change logic
     if (newPassword) {
       if (!currentPassword || currentPassword.length < 2) {
         setPasswordModalMessage(
@@ -54,7 +57,7 @@ const UserSettings = () => {
       }
       try {
         await requester.post(
-          `${serverUrl}${serverEndpoints.changeUserPassword(user.id)}`,
+          `${serverApiUrl}${serverEndpoints.changeUserPassword(user.id)}`,
           { oldPassword: currentPassword, newPassword }
         );
         setCurrentPassword("");
@@ -77,21 +80,27 @@ const UserSettings = () => {
       if (avatarFile) {
         const formData = new FormData();
         formData.append("avatar", avatarFile);
+
         const avatarRes = await requester.put(
-          `${serverUrl}/user/${user.id}/avatar`,
+          `${serverApiUrl}/user/${user.id}/avatar`,
           formData
         );
+
         if (avatarRes && avatarRes.avatarUrl) {
+          // If backend returns relative path like "/uploads/avatars/..", prepend origin (NO /api).
           uploadedAvatarUrl = avatarRes.avatarUrl.startsWith("http")
             ? avatarRes.avatarUrl
-            : `${serverUrl}${avatarRes.avatarUrl}`;
+            : `${serverOrigin}${avatarRes.avatarUrl}`;
           setAvatarPreview(uploadedAvatarUrl);
+          console.log("New uploadedAvatarUrl:", uploadedAvatarUrl);
+        } else {
+          console.log("No avatarUrl received!", avatarRes);
         }
       }
 
       const payload = { fullName, email, role: user.role };
       await requester.put(
-        `${serverUrl}${serverEndpoints.updateUserById(user.id)}`,
+        `${serverApiUrl}${serverEndpoints.updateUserById(user.id)}`,
         payload
       );
 
@@ -99,15 +108,14 @@ const UserSettings = () => {
       setUser({ ...user, fullName, email, avatarUrl: uploadedAvatarUrl });
       setLocalPreview("");
       setAvatarFile(null);
-
-      // Success: redirect to home
       navigate("/");
     } catch (err) {
       setProfileError(
         err?.error || err?.message || "Failed to update profile."
       );
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const closePasswordModal = () => setShowPasswordModal(false);

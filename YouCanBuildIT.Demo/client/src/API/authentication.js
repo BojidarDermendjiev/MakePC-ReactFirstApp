@@ -1,4 +1,4 @@
-import { serverEndpoints, serverUrl } from "../common/generic";
+import { serverEndpoints, serverApiUrl } from "../common/generic";
 import requester from "./requester";
 
 const handleAuthResponse = (response, setUser) => {
@@ -10,6 +10,7 @@ const handleAuthResponse = (response, setUser) => {
     fullName: user.fullName || user.name,
     id: user.id || user._id,
     role: user.role,
+    avatarUrl: user.avatarUrl || user.avatar,
   };
 
   setUser(userFilteredData);
@@ -20,32 +21,19 @@ const handleAuthResponse = (response, setUser) => {
 };
 
 export const register = async (values, setUser) => {
-  try {
-    const response = await requester.post(
-      `${serverUrl}${serverEndpoints.register}`,
-      values
-    );
-    handleAuthResponse(response, setUser);
-  } catch (err) {
-    throw new Error(
-      err?.response?.data?.error || "Registration failed. Please try again."
-    );
-  }
+  const response = await requester.post(
+    `${serverApiUrl}${serverEndpoints.register}`,
+    values
+  );
+  handleAuthResponse(response, setUser);
 };
 
 export const login = async (values, setUser) => {
-  try {
-    const response = await requester.post(
-      `${serverUrl}${serverEndpoints.login}`,
-      values
-    );
-    handleAuthResponse(response, setUser);
-  } catch (err) {
-    throw new Error(
-      err?.response?.data?.error ||
-        "Login failed. Please check your credentials."
-    );
-  }
+  const response = await requester.post(
+    `${serverApiUrl}${serverEndpoints.login}`,
+    values
+  );
+  handleAuthResponse(response, setUser);
 };
 
 export const logout = (setUser) => {

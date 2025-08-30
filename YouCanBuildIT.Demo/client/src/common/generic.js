@@ -1,76 +1,80 @@
-// Base URL for your ASP.NET Core API
-export const serverUrl = "https://localhost:57175/api";
+// Base URLs
+export const serverOrigin = "https://localhost:57175"; // no /api
+export const serverApiUrl = `${serverOrigin}/api`; // with /api
 
-// Endpoints for every controller/action logic based on your ASP.NET Core API
+// Backward compatibility alias (so old imports keep working)
+export const serverUrl = serverApiUrl;
+
+// Endpoints for every controller/action
 export const serverEndpoints = {
   // --- UserController ---
-  register: "/user/register", // POST
-  login: "/user/authenticate", // POST
-  getUserById: (id) => `/user/${id}`, // GET
-  updateUserById: (id) => `/user/${id}`, // PUT
-  deleteUserById: (id) => `/user/${id}`, // DELETE
-  changeUserPassword: (id) => `/user/${id}/change-password`, // POST
+  register: "/user/register",
+  login: "/user/authenticate",
+  getUserById: (id) => `/user/${id}`,
+  updateUserById: (id) => `/user/${id}`,
+  deleteUserById: (id) => `/user/${id}`,
+  changeUserPassword: (id) => `/user/${id}/change-password`,
 
   // --- ShoppingCartController ---
-  getCartByUserId: (userId) => `/shoppingcart/${userId}`, // GET
-  addCartItem: "/shoppingcart/items", // POST
-  removeCartItem: "/shoppingcart/items", // DELETE
-  clearCart: (userId) => `/shoppingcart/items/all/${userId}`, // DELETE
+  getCartByUserId: (userId) => `/shoppingcart/${userId}`,
+  addCartItem: "/shoppingcart/items",
+  removeCartItem: "/shoppingcart/items",
+  clearCart: (userId) => `/shoppingcart/items/all/${userId}`,
 
   // --- ReviewController ---
-  getAllReviews: "/review", // GET
-  getReviewById: (id) => `/review/${id}`, // GET
-  getReviewsByProductId: (productId) => `/review/product/${productId}`, // GET
-  getReviewsByUserId: (userId) => `/review/user/${userId}`, // GET
-  createReview: "/review", // POST
-  updateReview: (id) => `/review/${id}`, // PUT
-  deleteReview: (id) => `/review/${id}`, // DELETE
+  getAllReviews: "/review",
+  getReviewById: (id) => `/review/${id}`,
+  getReviewsByProductId: (productId) => `/review/product/${productId}`,
+  getReviewsByUserId: (userId) => `/review/user/${userId}`,
+  createReview: "/review",
+  updateReview: (id) => `/review/${id}`,
+  deleteReview: (id) => `/review/${id}`,
 
   // --- ProductController ---
-  getAllProducts: "/product", // GET
-  getProductById: (id) => `/product/${id}`, // GET
-  createProduct: "/product", // POST
-  updateProduct: (id) => `/product/${id}`, // PUT
-  deleteProduct: (id) => `/product/${id}`, // DELETE
-  searchProducts: (query) => `/product/search?q=${encodeURIComponent(query)}`, // GET
+  getAllProducts: "/product",
+  getProductById: (id) => `/product/${id}`,
+  createProduct: "/product",
+  updateProduct: (id) => `/product/${id}`,
+  deleteProduct: (id) => `/product/${id}`,
+  searchProducts: (query) => `/product/search?q=${encodeURIComponent(query)}`,
   getPagedProducts: (page = 1, size = 10) =>
-    `/product/paged?page=${page}&size=${size}`, // GET
+    `/product/paged?page=${page}&size=${size}`,
 
   // --- PlatformFeedbackController ---
-  getAllFeedbacks: "/platformfeedback", // GET
-  getFeedbackById: (id) => `/platformfeedback/${id}`, // GET
-  getFeedbacksByUserId: (userId) => `/platformfeedback/user/${userId}`, // GET
-  createFeedback: "/platformfeedback", // POST
-  updateFeedback: (id) => `/platformfeedback/${id}`, // PUT
-  deleteFeedback: (id) => `/platformfeedback/${id}`, // DELETE
+  getAllFeedbacks: "/platformfeedback",
+  getFeedbackById: (id) => `/platformfeedback/${id}`,
+  getFeedbacksByUserId: (userId) => `/platformfeedback/user/${userId}`,
+  createFeedback: "/platformfeedback",
+  updateFeedback: (id) => `/platformfeedback/${id}`,
+  deleteFeedback: (id) => `/platformfeedback/${id}`,
 
   // --- OrderController ---
-  getAllOrders: "/order", // GET
-  getOrdersByUserId: (userId) => `/order/user/${userId}`, // GET
-  getOrderById: (id) => `/order/${id}`, // GET
-  createOrder: "/order", // POST
-  updateOrder: (id) => `/order/${id}`, // PUT
-  deleteOrder: (id) => `/order/${id}`, // DELETE
+  getAllOrders: "/order",
+  getOrdersByUserId: (userId) => `/order/user/${userId}`,
+  getOrderById: (id) => `/order/${id}`,
+  createOrder: "/order",
+  updateOrder: (id) => `/order/${id}`,
+  deleteOrder: (id) => `/order/${id}`,
 
   // --- CategoryController ---
-  getAllCategories: "/category", // GET
-  getCategoryById: (id) => `/category/${id}`, // GET
-  createCategory: "/category", // POST
-  updateCategory: (id) => `/category/${id}`, // PUT
-  deleteCategory: (id) => `/category/${id}`, // DELETE
+  getAllCategories: "/category",
+  getCategoryById: (id) => `/category/${id}`,
+  createCategory: "/category",
+  updateCategory: (id) => `/category/${id}`,
+  deleteCategory: (id) => `/category/${id}`,
 
   // --- BrandController ---
-  getAllBrands: "/brand", // GET
-  getBrandById: (id) => `/brand/${id}`, // GET
-  createBrand: "/brand", // POST
-  updateBrand: (id) => `/brand/${id}`, // PUT
-  deleteBrand: (id) => `/brand/${id}`, // DELETE
+  getAllBrands: "/brand",
+  getBrandById: (id) => `/brand/${id}`,
+  createBrand: "/brand",
+  updateBrand: (id) => `/brand/${id}`,
+  deleteBrand: (id) => `/brand/${id}`,
 
   // --- BasketController ---
-  getAllBaskets: "/basket", // GET
-  getBasketById: (id) => `/basket/${id}`, // GET
-  getBasketByUserId: (userId) => `/basket/user/${userId}`, // GET
-  createBasket: "/basket", // POST
-  updateBasket: (id) => `/basket/${id}`, // PUT
-  deleteBasket: (id) => `/basket/${id}`, // DELETE
+  getAllBaskets: "/basket",
+  getBasketById: (id) => `/basket/${id}`,
+  getBasketByUserId: (userId) => `/basket/user/${userId}`,
+  createBasket: "/basket",
+  updateBasket: (id) => `/basket/${id}`,
+  deleteBasket: (id) => `/basket/${id}`,
 };
