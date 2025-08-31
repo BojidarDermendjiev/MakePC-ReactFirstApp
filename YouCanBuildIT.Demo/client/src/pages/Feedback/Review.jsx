@@ -3,6 +3,8 @@ import { deleteComment } from "../../API/feedbackService";
 import { useNavigate } from "react-router-dom";
 import { navigation } from "../../common/navigations";
 import Stars from "./Stars";
+import { serverOrigin } from "../../common/generic";
+const defaultAvatar = "/img/image.png";
 
 export default function Review({
   loggedInUser,
@@ -11,15 +13,21 @@ export default function Review({
   comment,
   rating,
   commentId,
+  avatarUrl,
   triggerRefreshHandler,
 }) {
   const navigate = useNavigate();
   const isOwner = loggedInUser && loggedInUser.id === userId;
 
-  const deleteHandler = async () => {
-    await deleteComment(commentId);
-    triggerRefreshHandler();
-  };
+  const imgSrc = avatarUrl
+    ? avatarUrl.startsWith("http")
+      ? avatarUrl
+      : avatarUrl.startsWith("/uploads/avatars/")
+        ? `${serverOrigin}${avatarUrl}`
+        : avatarUrl.startsWith("/")
+          ? avatarUrl
+          : `/${avatarUrl}`
+    : defaultAvatar;
 
   const editComment = () => {
     navigate(`${navigation.getCommentFromUrl()}/${commentId}`, {
@@ -27,8 +35,16 @@ export default function Review({
     });
   };
 
+  const deleteHandler = async () => {
+    await deleteComment(commentId);
+    triggerRefreshHandler();
+  };
+
   return (
     <div className={styles.card}>
+      <p>
+        <img src={imgSrc} alt="avatar" />
+      </p>
       <p className={styles.content}>{userName}</p>
       <p className={styles.content}>{comment}</p>
       <Stars rating={rating} setRating={() => {}} />

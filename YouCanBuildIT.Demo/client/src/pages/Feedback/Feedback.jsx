@@ -43,6 +43,7 @@ export default function Feedback() {
               rating={feedback.rating}
               commentId={feedback.id}
               loggedInUser={user}
+              avatarUrl={feedback.avatarUrl}
               triggerRefreshHandler={triggerRefreshHandler}
             />
           ))
