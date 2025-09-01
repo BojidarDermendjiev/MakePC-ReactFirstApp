@@ -1,0 +1,133 @@
+.page-layout {
+  min-height: calc(100vh - 140px); /* Assuming header + footer height */
+  padding: 2rem 1rem;
+}
+
+.page-layout__container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-layout__header {
+  margin-bottom: 2rem;
+}
+
+.page-layout__breadcrumbs {
+  margin-bottom: 1rem;
+}
+
+.page-layout__breadcrumbs ol,
+.page-layout__breadcrumbs ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.page-layout__breadcrumbs li {
+  display: flex;
+  align-items: center;
+}
+
+.page-layout__breadcrumbs li:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.5rem;
+  color: #666;
+}
+
+.page-layout__breadcrumbs a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.page-layout__breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.page-layout__breadcrumbs .current {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.page-layout__header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.page-layout__header-text {
+  flex: 1;
+}
+
+.page-layout__title {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+}
+
+.page-layout__subtitle {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.page-layout__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.page-layout__content {
+  /* Content styles can be customized per page */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .page-layout {
+    padding: 1rem;
+  }
+
+  .page-layout__header-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .page-layout__title {
+    font-size: 1.5rem;
+  }
+
+  .page-layout__subtitle {
+    font-size: 1rem;
+  }
+
+  .page-layout__actions {
+    justify-content: stretch;
+  }
+
+  .page-layout__actions > * {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-layout {
+    padding: 0.5rem;
+  }
+
+  .page-layout__title {
+    font-size: 1.25rem;
+  }
+
+  .page-layout__breadcrumbs {
+    font-size: 0.75rem;
+  }
+}

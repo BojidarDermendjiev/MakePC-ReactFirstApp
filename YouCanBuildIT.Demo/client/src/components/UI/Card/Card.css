@@ -1,0 +1,104 @@
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.card__image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card__image img {
+  transform: scale(1.05);
+}
+
+.card__content {
+  padding: 1.5rem;
+}
+
+.card__header {
+  margin-bottom: 1rem;
+}
+
+.card__title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.3;
+}
+
+.card__subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card__body {
+  color: #555;
+  line-height: 1.6;
+}
+
+.card__body p:last-child {
+  margin-bottom: 0;
+}
+
+.card__actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .card__content {
+    padding: 1rem;
+  }
+  
+  .card__image {
+    height: 150px;
+  }
+  
+  .card__title {
+    font-size: 1.125rem;
+  }
+}
+
+/* Card variants */
+.card--compact {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card--compact:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.card--flat {
+  box-shadow: none;
+  border: 1px solid #eee;
+}
+
+.card--elevated {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
