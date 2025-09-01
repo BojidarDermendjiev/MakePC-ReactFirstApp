@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import axiosInstance from "../../src/API/axiosInstance.js";
+import axiosInstance from "../API/axiosInstance.js";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -24,7 +24,5 @@ const useFetch = (url) => {
 
   return { data, loading, error, triggerRefreshHandler: fetchData };
 };
-
-export default useFetch;
 
 export default useFetch;
