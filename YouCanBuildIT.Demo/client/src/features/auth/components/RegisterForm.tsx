@@ -2,7 +2,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { signUpSchema } from "../../../schemas/index.js";
+import { signUpSchema } from "../../../schemas/index";
 import styles from "../../../assets/styles/authForm.module.css";
 import { navigation } from "../../../common/navigations";
 

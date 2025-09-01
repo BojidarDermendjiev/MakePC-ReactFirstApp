@@ -1,5 +1,5 @@
 
-import shoppingCartService from "../../api/shoppingCartService.js";
+import shoppingCartService from "../../api/shoppingCartService";
 import { AuthContext } from "../../context/AuthContextProvider";
 
 const AddToCartButton = ({ productId, productName }) => {

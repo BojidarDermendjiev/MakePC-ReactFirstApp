@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { signUpSchema, signInSchema } from "../../schemas/index.js";
+import { signUpSchema, signInSchema } from "../../schemas/index";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../common/navigations";
 import { login } from "../../api/authentication";

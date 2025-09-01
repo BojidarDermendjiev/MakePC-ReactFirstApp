@@ -1,10 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "../api/axiosInstance";
 
-const useFetch = (url) => {
-  const [data, setData] = useState(null);
+interface UseFetchReturn<T> {
+  data: T | null;
+  loading: boolean;
+  error: any;
+  triggerRefreshHandler: () => void;
+}
+
+const useFetch = <T = any>(url: string): UseFetchReturn<T> => {
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);

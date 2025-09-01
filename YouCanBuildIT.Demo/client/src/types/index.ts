@@ -24,3 +24,39 @@ export interface BaseEntity {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Category extends BaseEntity {
+  name: string;
+  description?: string;
+  isActive: boolean;
+}
+
+export interface Brand extends BaseEntity {
+  name: string;
+  description?: string;
+  logoUrl?: string;
+  isActive: boolean;
+}
+
+export interface BasketItem {
+  id: string;
+  productId: string;
+  quantity: number;
+  price: number;
+}
+
+export interface Basket extends BaseEntity {
+  userId: string;
+  items: BasketItem[];
+  totalAmount: number;
+  status: 'active' | 'ordered' | 'abandoned';
+}
+
+export interface Order extends BaseEntity {
+  userId: string;
+  basketId: string;
+  totalAmount: number;
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  shippingAddress: string;
+  paymentMethod: string;
+}

@@ -12,7 +12,7 @@ vi.mock("react-i18next", () => ({
 }));
 
 const mockRegister = vi.fn();
-vi.mock("../../api/authentication.js", () => ({
+vi.mock("../../api/authentication", () => ({
   register: mockRegister,
 }));
 
