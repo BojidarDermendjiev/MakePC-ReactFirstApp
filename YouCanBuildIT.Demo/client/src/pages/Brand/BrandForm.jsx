@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+
 import brandService from "../../API/brandService";
 import { useNavigate, useParams } from "react-router-dom";
 import { navigation } from "../../common/navigations";

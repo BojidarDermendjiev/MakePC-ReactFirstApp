@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+
 import shoppingCartService from "../../API/shoppingCartService.js";
 import { AuthContext } from "../../context/AuthContextProvider";
 

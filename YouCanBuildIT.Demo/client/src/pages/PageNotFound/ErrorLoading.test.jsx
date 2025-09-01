@@ -1,4 +1,4 @@
-import React from "react";
+
 import i18n from "../../utils/i18n";
 import ErrorLoading from "./ErrorLoading";
 import { I18nextProvider } from "react-i18next";

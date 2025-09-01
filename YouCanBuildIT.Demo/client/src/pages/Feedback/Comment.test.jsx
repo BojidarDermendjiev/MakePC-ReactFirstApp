@@ -1,4 +1,4 @@
-import React from "react";
+
 import Comment from "./Comment";
 import { useNavigate } from "react-router-dom";
 import { createComment } from "../../API/comments";

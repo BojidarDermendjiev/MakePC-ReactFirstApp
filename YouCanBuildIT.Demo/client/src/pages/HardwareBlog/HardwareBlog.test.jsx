@@ -1,4 +1,4 @@
-import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { I18nextProvider } from "react-i18next";

@@ -1,4 +1,4 @@
-import React from "react";
+
 import Footer from "./Footer";
 import { MemoryRouter } from "react-router-dom";
 import { describe, it, expect, vi } from "vitest";

@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-
 const ReviewForm = ({ initialData = {}, onSubmit, loading }) => {
   const [text, setText] = useState(initialData.text || "");
   const [rating, setRating] = useState(initialData.rating || 0);

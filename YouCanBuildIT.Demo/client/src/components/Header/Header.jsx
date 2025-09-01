@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "../../assets/styles/header.module.css";
@@ -17,7 +17,6 @@ export default function Header() {
   const { changeLanguage } = useContext(LanguageContext);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { vi } from "vitest";
 import About from "./About";
 import { MemoryRouter } from "react-router-dom";

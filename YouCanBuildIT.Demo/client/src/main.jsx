@@ -1,12 +1,13 @@
 import "./utils/i18n";
 import App from "./App.jsx";
-import ReactDOM from "react-dom/client";
-import { StrictMode, React } from "react";
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import AuthContextProvider from "./context/AuthContextProvider.jsx";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
     <AuthContextProvider>

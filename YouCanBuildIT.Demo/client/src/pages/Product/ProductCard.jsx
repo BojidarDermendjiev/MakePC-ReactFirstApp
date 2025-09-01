@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProductCard = ({ product }) => (
   <div>
     <h2>{product.name}</h2>
