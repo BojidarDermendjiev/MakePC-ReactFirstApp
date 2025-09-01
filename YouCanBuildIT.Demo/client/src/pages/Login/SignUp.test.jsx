@@ -1,4 +1,4 @@
-import React from "react";
+
 import SignUp from "./SignUp";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";

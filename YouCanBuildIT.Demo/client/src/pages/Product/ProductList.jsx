@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { getAllProducts } from "../../API/productService";
 import ProductCard from "../../pages/Product/ProductCard";
 

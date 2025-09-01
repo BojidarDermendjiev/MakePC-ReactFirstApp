@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import axiosInstance from "../../src/API/axiosInstance.js";
+import { useState, useEffect, useCallback } from "react";
+import axiosInstance from "../API/axiosInstance.js";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -16,11 +16,11 @@ const useFetch = (url) => {
       setError(err);
     }
     setLoading(false);
-  };
+  }, [url]);
 
   useEffect(() => {
     fetchData();
-  }, [url]);
+  }, [fetchData]);
 
   return { data, loading, error, triggerRefreshHandler: fetchData };
 };

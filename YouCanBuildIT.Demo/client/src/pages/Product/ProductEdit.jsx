@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById, updateProduct } from "../../API/productService";
 import ProductForm from "../../pages/Product/ProductForm";

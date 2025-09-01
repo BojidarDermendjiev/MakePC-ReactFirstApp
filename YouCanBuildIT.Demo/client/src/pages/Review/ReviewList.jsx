@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import reviewService from "../../API/reviewService";
 
 const ReviewList = ({ productId }) => {

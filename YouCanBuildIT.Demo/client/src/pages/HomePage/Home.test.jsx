@@ -1,4 +1,4 @@
-import React from "react";
+
 import Home from "./Home";
 import i18n from "../../utils/i18n";
 import { I18nextProvider } from "react-i18next";

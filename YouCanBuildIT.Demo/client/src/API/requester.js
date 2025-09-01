@@ -1,14 +1,13 @@
 import { getAccessToken } from "../utils/AuthUtils/authUtils";
-import { serverApiUrl, serverEndpoints } from "../common/generic";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 async function baseRequester(method, url, data, customHeaders = {}) {
   const headers = {};
   const token = getAccessToken();
 
   if (API_KEY) headers["X-API-KEY"] = API_KEY;
-  if (token /* && url !== `${serverApiUrl}${serverEndpoints.logout}` */) {
+  if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 

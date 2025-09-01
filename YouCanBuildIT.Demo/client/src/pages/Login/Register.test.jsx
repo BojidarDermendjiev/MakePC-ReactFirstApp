@@ -1,4 +1,4 @@
-import React from "react";
+
 import Register from "./Register";
 import { describe, it, expect, vi } from "vitest";
 import { BrowserRouter as Router } from "react-router-dom";

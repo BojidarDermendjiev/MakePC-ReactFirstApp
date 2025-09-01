@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../../API/productService";
 import ReviewList from "../../pages/Review/ReviewList";

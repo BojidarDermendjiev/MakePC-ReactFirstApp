@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-
 const ProductForm = ({ initialProduct, onSubmit, loading }) => {
   const [product, setProduct] = useState({
     name: "",

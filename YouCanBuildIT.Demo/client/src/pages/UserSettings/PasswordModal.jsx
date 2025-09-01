@@ -1,4 +1,4 @@
-import React from "react";
+
 import styles from "../../assets/styles/userSettings.module.css";
 
 const PasswordModal = ({ show, message, onClose }) => {
