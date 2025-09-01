@@ -1,7 +1,7 @@
 
 import Comment from "./Comment";
 import { useNavigate } from "react-router-dom";
-import { createComment } from "../../API/comments";
+import { createComment } from "../../api/comments";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -10,7 +10,7 @@ vi.mock("react-router-dom", () => ({
   useNavigate: vi.fn(),
 }));
 
-vi.mock("../../API/comments", () => ({
+vi.mock("../../api/comments", () => ({
   createComment: vi.fn(),
 }));
 

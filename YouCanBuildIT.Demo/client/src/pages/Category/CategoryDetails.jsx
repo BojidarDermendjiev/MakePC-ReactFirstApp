@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import categoryService from "../../API/categoryService";
+import categoryService from "../../api/categoryService";
 import { navigation } from "../../common/navigations";
 
 const CategoryDetails = () => {

@@ -1,5 +1,5 @@
 
-import orderService from "../../API/orderService";
+import orderService from "../../api/orderService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const OrderForm = ({ initialData = {}, isEdit = false }) => {

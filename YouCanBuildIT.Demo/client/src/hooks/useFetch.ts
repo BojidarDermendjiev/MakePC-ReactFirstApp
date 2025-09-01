@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import axiosInstance from "../API/axiosInstance.js";
+import axiosInstance from "../api/axiosInstance";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);

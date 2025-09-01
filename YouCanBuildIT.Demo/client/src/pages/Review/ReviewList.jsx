@@ -1,5 +1,5 @@
 
-import reviewService from "../../API/reviewService";
+import reviewService from "../../api/reviewService";
 
 const ReviewList = ({ productId }) => {
   const [reviews, setReviews] = useState([]);

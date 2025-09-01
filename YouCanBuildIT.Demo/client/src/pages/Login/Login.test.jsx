@@ -13,7 +13,7 @@ vi.mock("react-i18next", () => ({
 }));
 
 // Mock the authentication API
-vi.mock("../../API/authentication", () => ({
+vi.mock("../../api/authentication", () => ({
   login: vi.fn(),
   register: vi.fn(),
 }));

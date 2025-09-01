@@ -5,7 +5,7 @@ import { I18nextProvider } from "react-i18next";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { AuthContext } from "../../../context/AuthContextProvider";
-import { editComment, getCommentById } from "../../../API/comments";
+import { editComment, getCommentById } from "../../../api/comments";
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
@@ -17,7 +17,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock("../../../API/comments", () => ({
+vi.mock("../../../api/comments", () => ({
   editComment: vi.fn(),
   getCommentById: vi.fn(),
 }));

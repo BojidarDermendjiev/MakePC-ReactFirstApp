@@ -1,5 +1,5 @@
 
-import basketService from "../../API/basketService";
+import basketService from "../../api/basketService";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useNavigate, useParams } from "react-router-dom";
 

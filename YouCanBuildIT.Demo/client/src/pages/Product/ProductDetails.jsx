@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductById } from "../../API/productService";
+import { getProductById } from "../../api/productService";
 import ReviewList from "../../pages/Review/ReviewList";
 import ReviewCrudPage from "../Review/ReviewCrudPage";
 import { navigation } from "../../common/navigations";

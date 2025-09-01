@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SignUp from "../Login/SignUp";
 import { signUpSchema } from "../../schemas/index.js";
 import styles from "../../assets/styles/authForm.module.css";
-import { register } from "../../API/authentication.js";
+import { register } from "../../api/authentication.js";
 import { AuthContext } from "../../context/AuthContextProvider";
 import AlreadyExist from "../Login/AlreadyExist.jsx";
 import { navigation } from "../../common/navigations";

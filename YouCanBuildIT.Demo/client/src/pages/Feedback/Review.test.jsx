@@ -2,7 +2,7 @@ import Review from "./Review";
 import { useNavigate } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import { describe, it, expect, vi } from "vitest";
-import { deleteComment } from "../../API/comments";
+import { deleteComment } from "../../api/comments";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 vi.mock("react-router-dom", async (importOriginal) => {
@@ -13,7 +13,7 @@ vi.mock("react-router-dom", async (importOriginal) => {
   };
 });
 
-vi.mock("../../API/comments", () => ({
+vi.mock("../../api/comments", () => ({
   deleteComment: vi.fn(),
 }));
 

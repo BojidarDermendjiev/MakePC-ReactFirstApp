@@ -1,5 +1,5 @@
 
-import basketService from "../../API/basketService";
+import basketService from "../../api/basketService";
 import { useNavigate } from "react-router-dom";
 
 const BasketDeleteButton = ({ basketId }) => {

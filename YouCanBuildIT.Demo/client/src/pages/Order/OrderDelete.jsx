@@ -1,5 +1,5 @@
 
-import orderService from "../../API/orderService";
+import orderService from "../../api/orderService";
 import { useNavigate } from "react-router-dom";
 
 const OrderDeleteButton = ({ orderId }) => {

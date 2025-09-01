@@ -7,7 +7,7 @@ import SignUp from "./SignUp";
 import { signUpSchema, signInSchema } from "../../schemas/index.js";
 import styles from "../../assets/styles/authForm.module.css";
 import { navigation } from "../../common/navigations";
-import { login } from "../../API/authentication";
+import { login } from "../../api/authentication";
 import { AuthContext } from "../../context/AuthContextProvider";
 import InvalidPassOrEmailModal from "../Login/InvalidPassOrEmail.jsx";
 

@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/userSettings.module.css";
 import { AuthContext } from "../../context/AuthContextProvider";
-import requester from "../../API/requester";
+import requester from "../../api/requester";
 import {
   serverApiUrl,
   serverOrigin,

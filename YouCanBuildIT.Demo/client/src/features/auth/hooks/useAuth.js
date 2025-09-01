@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
-import { login, register, logout } from "../../../API/authentication";
+import { login, register, logout } from "../../../api/authentication";
 
 /**
  * Custom hook for authentication operations

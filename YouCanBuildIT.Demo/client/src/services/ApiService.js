@@ -1,4 +1,4 @@
-import axiosInstance from "../API/axiosInstance";
+import axiosInstance from "../api/axiosInstance";
 
 /**
  * Generic API service class for handling CRUD operations

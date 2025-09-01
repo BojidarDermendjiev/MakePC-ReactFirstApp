@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import reviewService from "../../API/reviewService";
+import reviewService from "../../api/reviewService";
 import ReviewForm from "../../pages/Review/ReviewForm";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { navigation } from "../../common/navigations";

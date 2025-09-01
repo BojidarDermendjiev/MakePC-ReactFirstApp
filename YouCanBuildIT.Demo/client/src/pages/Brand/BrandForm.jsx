@@ -1,5 +1,5 @@
 
-import brandService from "../../API/brandService";
+import brandService from "../../api/brandService";
 import { useNavigate, useParams } from "react-router-dom";
 import { navigation } from "../../common/navigations";
 

@@ -1,5 +1,5 @@
 
-import shoppingCartService from "../../API/shoppingCartService.js";
+import shoppingCartService from "../../api/shoppingCartService.js";
 import { AuthContext } from "../../context/AuthContextProvider";
 
 const ShoppingCart = () => {

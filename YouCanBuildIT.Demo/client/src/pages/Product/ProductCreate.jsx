@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import { createProduct } from "../../API/productService";
+import { createProduct } from "../../api/productService";
 import ProductForm from "../../pages/Product/ProductForm";
 import { navigation } from "../../common/navigations";
 

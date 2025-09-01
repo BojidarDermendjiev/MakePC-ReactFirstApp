@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import brandService from "../../API/brandService";
+import brandService from "../../api/brandService";
 import { navigation } from "../../common/navigations";
 
 const BrandDetails = () => {

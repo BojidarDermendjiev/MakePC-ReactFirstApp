@@ -1,5 +1,5 @@
 
-import categoryService from "../../API/categoryService";
+import categoryService from "../../api/categoryService";
 import { useNavigate, useParams } from "react-router-dom";
 import { navigation } from "../../common/navigations";
 

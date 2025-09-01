@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import basketService from "../../API/basketService";
+import basketService from "../../api/basketService";
 
 const BasketDetails = () => {
   const { id } = useParams();

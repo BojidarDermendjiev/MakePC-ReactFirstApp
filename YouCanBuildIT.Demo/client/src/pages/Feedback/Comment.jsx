@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import { createComment } from "../../API/feedbackService";
+import { createComment } from "../../api/feedbackService";
 import { navigation } from "../../common/navigations";
 import styles from "../../assets/styles/comment.module.css";
 import { AuthContext } from "../../context/AuthContextProvider";

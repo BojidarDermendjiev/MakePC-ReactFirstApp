@@ -1,6 +1,6 @@
 
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductById, updateProduct } from "../../API/productService";
+import { getProductById, updateProduct } from "../../api/productService";
 import ProductForm from "../../pages/Product/ProductForm";
 import { navigation } from "../../common/navigations";
 
