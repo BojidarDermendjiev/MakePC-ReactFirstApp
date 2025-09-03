@@ -2,7 +2,6 @@
 export const serverOrigin = "https://localhost:57175"; // no /api
 export const serverApiUrl = `${serverOrigin}/api`; // with /api
 
-// Backward compatibility alias (so old imports keep working)
 export const serverUrl = serverApiUrl;
 
 // Endpoints for every controller/action

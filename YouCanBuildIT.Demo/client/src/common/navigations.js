@@ -1,5 +1,5 @@
 import { getIn } from "formik";
-import { get } from "../API/requester";
+import { get } from "../api/requester";
 
 export const navigation = {
   baseUrl: "http://localhost:5173/api",

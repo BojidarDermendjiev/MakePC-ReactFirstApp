@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import SignUp from "../Login/SignUp";
+import SignUp from "./SignUp.jsx";
 import { signUpSchema } from "../../schemas/index.js";
 import styles from "../../assets/styles/authForm.module.css";
-import { register } from "../../API/authentication.js";
-import { AuthContext } from "../../context/AuthContextProvider";
-import AlreadyExist from "../Login/AlreadyExist.jsx";
-import { navigation } from "../../common/navigations";
+import { register } from "../../api/authentication.js";
+import { AuthContext } from "../../context/AuthContextProvider.jsx";
+import AlreadyExist from "./AlreadyExist.jsx";
+import { navigation } from "../../common/navigations.js";
 
 const Register = () => {
   const navigate = useNavigate();

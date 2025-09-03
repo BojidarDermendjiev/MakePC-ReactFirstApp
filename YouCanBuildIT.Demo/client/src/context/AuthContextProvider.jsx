@@ -1,5 +1,4 @@
-import { createContext } from "react";
-import { useState } from "react";
+import React, { createContext, useState } from "react";
 
 export const AuthContext = createContext({
   user: null,
@@ -7,16 +6,10 @@ export const AuthContext = createContext({
 
 export const AuthContextProvider = ({ children }) => {
   const userFromStore = JSON.parse(localStorage.getItem("user"));
-
   const [user, setUser] = useState(userFromStore || null);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-      }}
-    >
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
