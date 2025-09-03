@@ -8,7 +8,7 @@ async function baseRequester(method, url, data, customHeaders = {}) {
   const token = getAccessToken();
 
   if (API_KEY) headers["X-API-KEY"] = API_KEY;
-  if (token /* && url !== `${serverApiUrl}${serverEndpoints.logout}` */) {
+  if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
