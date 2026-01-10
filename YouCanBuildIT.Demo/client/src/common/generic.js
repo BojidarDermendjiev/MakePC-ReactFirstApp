@@ -1,6 +1,6 @@
-// Base URLs
-export const serverOrigin = "https://localhost:57175"; // no /api
-export const serverApiUrl = `${serverOrigin}/api`; // with /api
+// Base URLs - Use environment variables for configuration
+export const serverOrigin = import.meta.env.VITE_API_URL || "https://localhost:57175";
+export const serverApiUrl = `${serverOrigin}/api`;
 
 export const serverUrl = serverApiUrl;
 
@@ -13,6 +13,7 @@ export const serverEndpoints = {
   updateUserById: (id) => `/user/${id}`,
   deleteUserById: (id) => `/user/${id}`,
   changeUserPassword: (id) => `/user/${id}/change-password`,
+  uploadAvatar: (id) => `/user/${id}/avatar`,
 
   // --- ShoppingCartController ---
   getCartByUserId: (userId) => `/shoppingcart/${userId}`,

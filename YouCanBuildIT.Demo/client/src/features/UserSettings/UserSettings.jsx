@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/userSettings.module.css";
 import { AuthContext } from "../../context/AuthContextProvider";
@@ -31,15 +31,28 @@ const UserSettings = () => {
   const fileInputRef = useRef();
   const [localPreview, setLocalPreview] = useState("");
 
-  const handleAvatarChange = (e) => {
+  // Cleanup object URL to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (localPreview) {
+        URL.revokeObjectURL(localPreview);
+      }
+    };
+  }, [localPreview]);
+
+  const handleAvatarChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
+      // Revoke previous URL before creating new one
+      setLocalPreview((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(file);
+      });
       setAvatarFile(file);
-      setLocalPreview(URL.createObjectURL(file));
     }
-  };
+  }, []);
 
-  const handleProfileSubmit = async (e) => {
+  const handleProfileSubmit = useCallback(async (e) => {
     e.preventDefault();
     setProfileError("");
     setProfileSuccess("");
@@ -86,15 +99,11 @@ const UserSettings = () => {
           formData
         );
 
-        if (avatarRes && avatarRes.avatarUrl) {
-          // If backend returns relative path like "/uploads/avatars/..", prepend origin (NO /api).
+        if (avatarRes?.avatarUrl) {
           uploadedAvatarUrl = avatarRes.avatarUrl.startsWith("http")
             ? avatarRes.avatarUrl
             : `${serverOrigin}${avatarRes.avatarUrl}`;
           setAvatarPreview(uploadedAvatarUrl);
-          console.log("New uploadedAvatarUrl:", uploadedAvatarUrl);
-        } else {
-          console.log("No avatarUrl received!", avatarRes);
         }
       }
 
@@ -106,6 +115,11 @@ const UserSettings = () => {
 
       setProfileSuccess("Profile updated!");
       setUser({ ...user, fullName, email, avatarUrl: uploadedAvatarUrl });
+
+      // Cleanup and reset
+      if (localPreview) {
+        URL.revokeObjectURL(localPreview);
+      }
       setLocalPreview("");
       setAvatarFile(null);
       navigate("/");
@@ -116,9 +130,9 @@ const UserSettings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [newPassword, currentPassword, user, avatarFile, avatarPreview, fullName, email, localPreview, setUser, navigate]);
 
-  const closePasswordModal = () => setShowPasswordModal(false);
+  const closePasswordModal = useCallback(() => setShowPasswordModal(false), []);
 
   return (
     <div className={styles.settingsContainer}>

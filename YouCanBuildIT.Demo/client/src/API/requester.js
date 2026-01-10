@@ -1,7 +1,7 @@
 import { getAccessToken } from "../utils/AuthUtils/authUtils";
-import { serverApiUrl, serverEndpoints } from "../common/generic";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
+const IS_DEV = import.meta.env.DEV;
 
 async function baseRequester(method, url, data, customHeaders = {}) {
   const headers = {};
@@ -27,7 +27,11 @@ async function baseRequester(method, url, data, customHeaders = {}) {
     headers[key] = customHeaders[key];
   }
 
-  console.log(`Making ${method} request to ${url} with options:`, options);
+  // Only log in development mode, and don't log sensitive headers
+  if (IS_DEV) {
+    console.log(`Making ${method} request to ${url}`);
+  }
+
   const response = await fetch(url, options);
 
   if (response.status === 204) return;
@@ -39,10 +43,9 @@ async function baseRequester(method, url, data, customHeaders = {}) {
       : await response.text();
 
   if (!response.ok) {
-    console.error(
-      `Request to ${url} failed with status ${response.status}:`,
-      result
-    );
+    if (IS_DEV) {
+      console.error(`Request to ${url} failed with status ${response.status}`);
+    }
     throw typeof result === "object" ? result : { error: result };
   }
 
