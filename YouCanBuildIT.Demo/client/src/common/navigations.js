@@ -1,6 +1,3 @@
-import { getIn } from "formik";
-import { get } from "../api/requester";
-
 export const navigation = {
   baseUrl: "http://localhost:5173/api",
 
@@ -64,6 +61,12 @@ export const navigation = {
   getProductReviewUrl(productId) {
     return `/products/${productId}/review`;
   },
+  getCheckoutUrl() {
+    return "/checkout";
+  },
+  getOrderSuccessUrl(orderId) {
+    return `/order/success/${orderId}`;
+  },
   getOrdersUrl() {
     return "/orders";
   },
@@ -76,8 +79,8 @@ export const navigation = {
   getOrderDetailsUrl(id) {
     return `/order/${id}`;
   },
-  getShopBasketUrl() {
-    return "/shop-basket";
+  getCartUrl() {
+    return "/cart";
   },
   getBasketsUrl() {
     return "/baskets";

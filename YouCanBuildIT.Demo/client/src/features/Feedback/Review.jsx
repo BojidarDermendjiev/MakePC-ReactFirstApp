@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import styles from "../../assets/styles/feedback.module.css";
 import { deleteComment } from "../../api/feedbackService";
 import { useNavigate } from "react-router-dom";
@@ -62,3 +62,14 @@ export default function Review({
     </div>
   );
 }
+
+Review.propTypes = {
+  loggedInUser: PropTypes.object,
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  userName: PropTypes.string,
+  comment: PropTypes.string,
+  rating: PropTypes.number,
+  commentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  avatarUrl: PropTypes.string,
+  triggerRefreshHandler: PropTypes.func,
+};

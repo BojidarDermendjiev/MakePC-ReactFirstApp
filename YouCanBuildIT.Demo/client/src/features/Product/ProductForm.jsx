@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 const ProductForm = ({ initialProduct, onSubmit, loading }) => {
   const [product, setProduct] = useState({
@@ -59,6 +60,12 @@ const ProductForm = ({ initialProduct, onSubmit, loading }) => {
       </button>
     </form>
   );
+};
+
+ProductForm.propTypes = {
+  initialProduct: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default ProductForm;

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import orderService from "../../api/orderService";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -61,6 +62,11 @@ const OrderForm = ({ initialData = {}, isEdit = false }) => {
       </button>
     </form>
   );
+};
+
+OrderForm.propTypes = {
+  initialData: PropTypes.object,
+  isEdit: PropTypes.bool,
 };
 
 export default OrderForm;

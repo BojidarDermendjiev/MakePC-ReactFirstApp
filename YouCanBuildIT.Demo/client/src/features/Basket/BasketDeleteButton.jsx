@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import basketService from "../../api/basketService";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,10 @@ const BasketDeleteButton = ({ basketId }) => {
   };
 
   return <button onClick={handleDelete}>Delete Basket</button>;
+};
+
+BasketDeleteButton.propTypes = {
+  basketId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default BasketDeleteButton;

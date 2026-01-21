@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { navigation } from "../common/navigations";
 
@@ -33,6 +32,8 @@ import BrandList from "../features/Brand/BrandList";
 import BrandDetails from "../features/Brand/BrandDetails";
 import BrandForm from "../features/Brand/BrandForm";
 import UserSettings from "../features/UserSettings/UserSettings";
+import ShoppingCart from "../features/ShoppingCart/ShoppingCart";
+import { Checkout, OrderSuccess } from "../features/Checkout";
 
 export default function Main() {
   return (
@@ -93,6 +94,12 @@ export default function Main() {
         <Route
           path={navigation.getOrderEditUrl(":id")}
           element={<OrderForm isEdit={true} />}
+        />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path={navigation.getCheckoutUrl()} element={<Checkout />} />
+        <Route
+          path={navigation.getOrderSuccessUrl(":orderId")}
+          element={<OrderSuccess />}
         />
         <Route
           path={navigation.getShopBasketUrl()}

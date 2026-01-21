@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import basketService from "../../api/basketService";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useNavigate, useParams } from "react-router-dom";
@@ -55,6 +56,10 @@ const BasketForm = ({ isEdit = false }) => {
       </button>
     </form>
   );
+};
+
+BasketForm.propTypes = {
+  isEdit: PropTypes.bool,
 };
 
 export default BasketForm;

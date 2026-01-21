@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import categoryService from "../../api/categoryService";
 import { useNavigate } from "react-router-dom";
 import { navigation } from "../../common/navigations";

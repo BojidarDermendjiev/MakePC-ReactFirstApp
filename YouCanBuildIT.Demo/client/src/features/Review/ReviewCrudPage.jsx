@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { useParams, useNavigate } from "react-router-dom";
 import reviewService from "../../api/reviewService";
 import ReviewForm from "../../features/Review/ReviewForm";
@@ -62,6 +63,10 @@ const ReviewCrudPage = ({ productId }) => {
       {reviewId && <button onClick={handleDelete}>Delete Review</button>}
     </div>
   );
+};
+
+ReviewCrudPage.propTypes = {
+  productId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ReviewCrudPage;

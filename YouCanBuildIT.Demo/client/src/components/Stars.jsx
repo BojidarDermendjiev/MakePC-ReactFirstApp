@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import styles from "../assets/styles/comment.module.css";
 
 export default function Stars({ rating = 0, setRating }) {
@@ -25,3 +25,8 @@ export default function Stars({ rating = 0, setRating }) {
     </div>
   );
 }
+
+Stars.propTypes = {
+  rating: PropTypes.number,
+  setRating: PropTypes.func,
+};

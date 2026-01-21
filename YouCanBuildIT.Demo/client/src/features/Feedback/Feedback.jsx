@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../assets/styles/feedback.module.css";
 import { navigation } from "../../common/navigations";

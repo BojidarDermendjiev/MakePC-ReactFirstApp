@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import categoryService from "../../api/categoryService";
 import { useNavigate, useParams } from "react-router-dom";
 import { navigation } from "../../common/navigations";
@@ -60,6 +61,10 @@ const CategoryForm = ({ isEdit = false }) => {
       </button>
     </form>
   );
+};
+
+CategoryForm.propTypes = {
+  isEdit: PropTypes.bool,
 };
 
 export default CategoryForm;

@@ -31,7 +31,6 @@ const UserSettings = () => {
   const fileInputRef = useRef();
   const [localPreview, setLocalPreview] = useState("");
 
-  // Cleanup object URL to prevent memory leaks
   useEffect(() => {
     return () => {
       if (localPreview) {
@@ -43,7 +42,6 @@ const UserSettings = () => {
   const handleAvatarChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
-      // Revoke previous URL before creating new one
       setLocalPreview((prev) => {
         if (prev) URL.revokeObjectURL(prev);
         return URL.createObjectURL(file);
@@ -52,85 +50,99 @@ const UserSettings = () => {
     }
   }, []);
 
-  const handleProfileSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    setProfileError("");
-    setProfileSuccess("");
-    setPasswordModalMessage("");
-    setLoading(true);
+  const handleProfileSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setProfileError("");
+      setProfileSuccess("");
+      setPasswordModalMessage("");
+      setLoading(true);
 
-    if (newPassword) {
-      if (!currentPassword || currentPassword.length < 2) {
-        setPasswordModalMessage(
-          "Current password must be at least 2 characters."
-        );
-        setShowPasswordModal(true);
-        setLoading(false);
-        return;
-      }
-      try {
-        await requester.post(
-          `${serverApiUrl}${serverEndpoints.changeUserPassword(user.id)}`,
-          { oldPassword: currentPassword, newPassword }
-        );
-        setCurrentPassword("");
-        setNewPassword("");
-      } catch (err) {
-        setPasswordModalMessage(
-          err?.error === "Current password is incorrect."
-            ? "Incorrect current password. Please try again."
-            : err?.error ||
-                "Current password is incorrect. Cannot change password."
-        );
-        setShowPasswordModal(true);
-        setLoading(false);
-        return;
-      }
-    }
-
-    try {
-      let uploadedAvatarUrl = avatarPreview;
-      if (avatarFile) {
-        const formData = new FormData();
-        formData.append("avatar", avatarFile);
-
-        const avatarRes = await requester.put(
-          `${serverApiUrl}/user/${user.id}/avatar`,
-          formData
-        );
-
-        if (avatarRes?.avatarUrl) {
-          uploadedAvatarUrl = avatarRes.avatarUrl.startsWith("http")
-            ? avatarRes.avatarUrl
-            : `${serverOrigin}${avatarRes.avatarUrl}`;
-          setAvatarPreview(uploadedAvatarUrl);
+      if (newPassword) {
+        if (!currentPassword || currentPassword.length < 2) {
+          setPasswordModalMessage(
+            "Current password must be at least 2 characters."
+          );
+          setShowPasswordModal(true);
+          setLoading(false);
+          return;
+        }
+        try {
+          await requester.post(
+            `${serverApiUrl}${serverEndpoints.changeUserPassword(user.id)}`,
+            { oldPassword: currentPassword, newPassword }
+          );
+          setCurrentPassword("");
+          setNewPassword("");
+        } catch (err) {
+          setPasswordModalMessage(
+            err?.error === "Current password is incorrect."
+              ? "Incorrect current password. Please try again."
+              : err?.error ||
+                  "Current password is incorrect. Cannot change password."
+          );
+          setShowPasswordModal(true);
+          setLoading(false);
+          return;
         }
       }
 
-      const payload = { fullName, email, role: user.role };
-      await requester.put(
-        `${serverApiUrl}${serverEndpoints.updateUserById(user.id)}`,
-        payload
-      );
+      try {
+        let uploadedAvatarUrl = avatarPreview;
+        if (avatarFile) {
+          const formData = new FormData();
+          formData.append("avatar", avatarFile);
 
-      setProfileSuccess("Profile updated!");
-      setUser({ ...user, fullName, email, avatarUrl: uploadedAvatarUrl });
+          const avatarRes = await requester.put(
+            `${serverApiUrl}/user/${user.id}/avatar`,
+            formData
+          );
 
-      // Cleanup and reset
-      if (localPreview) {
-        URL.revokeObjectURL(localPreview);
+          if (avatarRes?.avatarUrl) {
+            uploadedAvatarUrl = avatarRes.avatarUrl.startsWith("http")
+              ? avatarRes.avatarUrl
+              : `${serverOrigin}${avatarRes.avatarUrl}`;
+            setAvatarPreview(uploadedAvatarUrl);
+          }
+        }
+
+        const payload = { fullName, email, role: user.role };
+        await requester.put(
+          `${serverApiUrl}${serverEndpoints.updateUserById(user.id)}`,
+          payload
+        );
+
+        setProfileSuccess("Profile updated!");
+        setUser({ ...user, fullName, email, avatarUrl: uploadedAvatarUrl });
+
+        // Cleanup and reset
+        if (localPreview) {
+          URL.revokeObjectURL(localPreview);
+        }
+        setLocalPreview("");
+        setAvatarFile(null);
+        navigate("/");
+      } catch (err) {
+        setProfileError(
+          err?.error || err?.message || "Failed to update profile."
+        );
+      } finally {
+        setLoading(false);
       }
-      setLocalPreview("");
-      setAvatarFile(null);
-      navigate("/");
-    } catch (err) {
-      setProfileError(
-        err?.error || err?.message || "Failed to update profile."
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, [newPassword, currentPassword, user, avatarFile, avatarPreview, fullName, email, localPreview, setUser, navigate]);
+    },
+    [
+      newPassword,
+      currentPassword,
+      user,
+      avatarFile,
+      avatarPreview,
+      fullName,
+      email,
+      localPreview,
+      setUser,
+      navigate,
+    ]
+  );
 
   const closePasswordModal = useCallback(() => setShowPasswordModal(false), []);
 

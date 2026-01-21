@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import reviewService from "../../api/reviewService";
 
 const ReviewList = ({ productId }) => {
@@ -27,6 +28,10 @@ const ReviewList = ({ productId }) => {
       ))}
     </ul>
   );
+};
+
+ReviewList.propTypes = {
+  productId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ReviewList;

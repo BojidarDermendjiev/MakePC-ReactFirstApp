@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
+import PropTypes from "prop-types";
 import basketService from "../../api/basketService";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
@@ -42,6 +43,10 @@ const BasketList = ({ forCurrentUser = false }) => {
       </ul>
     </div>
   );
+};
+
+BasketList.propTypes = {
+  forCurrentUser: PropTypes.bool,
 };
 
 export default BasketList;

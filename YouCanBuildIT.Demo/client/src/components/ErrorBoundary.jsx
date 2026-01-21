@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class ErrorBoundary extends Component {
         <div className="error-boundary">
           <div className="error-boundary-content">
             <h1>Something went wrong</h1>
-            <p>We're sorry, but something unexpected happened.</p>
+            <p>We are sorry, but something unexpected happened.</p>
             {import.meta.env.DEV && this.state.error && (
               <details style={{ whiteSpace: "pre-wrap", marginTop: "1rem" }}>
                 <summary>Error Details (Development Only)</summary>
@@ -66,5 +67,10 @@ class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+  fallback: PropTypes.node,
+};
 
 export default ErrorBoundary;

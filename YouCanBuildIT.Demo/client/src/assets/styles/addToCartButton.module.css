@@ -1,0 +1,98 @@
+/* Container */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Button */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #1976d2;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 140px;
+}
+
+.buttonLarge {
+  padding: 14px 28px;
+  font-size: 16px;
+  min-width: 180px;
+}
+
+.buttonAdded {
+  background: #4CAF50;
+}
+
+.buttonAdded:hover:not(:disabled) {
+  background: #43A047;
+}
+
+.button:hover:not(:disabled) {
+  background: #1565c0;
+  transform: translateY(-1px);
+}
+
+.button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading Spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Quantity Selector */
+.quantitySelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.quantityLabel {
+  font-size: 14px;
+  color: #666;
+}
+
+.quantityInput {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.quantityInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* Icon styles */
+.button svg {
+  width: 18px;
+  height: 18px;
+}
