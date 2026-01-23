@@ -1,11 +1,13 @@
-import { createContext, useState, useCallback, useMemo } from "react";
+import { createContext, useState, useCallback, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
+import { verifySession, logout as apiLogout } from "../api/authentication";
 
 export const AuthContext = createContext({
   user: null,
   setUser: () => {},
   logout: () => {},
   isAuthenticated: false,
+  isLoading: true,
 });
 
 const getStoredUser = () => {
@@ -16,13 +18,35 @@ const getStoredUser = () => {
   } catch {
     // Clear corrupted data
     localStorage.removeItem("user");
-    localStorage.removeItem("token");
     return null;
   }
 };
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUserState] = useState(() => getStoredUser());
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Verify session on mount using HTTP-only cookie
+  useEffect(() => {
+    const checkSession = async () => {
+      const storedUser = getStoredUser();
+      if (storedUser) {
+        // Verify with server that the cookie session is still valid
+        const verifiedUser = await verifySession();
+        if (verifiedUser) {
+          setUserState(verifiedUser);
+          localStorage.setItem("user", JSON.stringify(verifiedUser));
+        } else {
+          // Session invalid, clear local state
+          setUserState(null);
+          localStorage.removeItem("user");
+        }
+      }
+      setIsLoading(false);
+    };
+
+    checkSession();
+  }, []);
 
   const setUser = useCallback((userData) => {
     setUserState(userData);
@@ -35,10 +59,8 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, []);
 
-  const logout = useCallback(() => {
-    setUserState(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+  const logout = useCallback(async () => {
+    await apiLogout(setUserState);
   }, []);
 
   const contextValue = useMemo(() => ({
@@ -46,7 +68,8 @@ export const AuthContextProvider = ({ children }) => {
     setUser,
     logout,
     isAuthenticated: !!user,
-  }), [user, setUser, logout]);
+    isLoading,
+  }), [user, setUser, logout, isLoading]);
 
   return (
     <AuthContext.Provider value={contextValue}>

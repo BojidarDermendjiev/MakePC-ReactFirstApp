@@ -1,9 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../../api/productService";
+import { AuthContext } from "../../context/AuthContextProvider";
 import AddToCartButton from "../ShoppingCart/AddToCartButton";
 import ReviewList from "../Review/ReviewList";
 import ReviewCrudPage from "../Review/ReviewCrudPage";
+import { CommentList } from "../Comments";
 import styles from "../../assets/styles/productDetails.module.css";
 
 const ArrowLeftIcon = () => (
@@ -24,6 +26,7 @@ const ImageIcon = () => (
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -224,6 +227,16 @@ const ProductDetails = () => {
 
         <h3 className={styles.writeReviewTitle}>Write a Review</h3>
         <ReviewCrudPage productId={product.id} />
+      </section>
+
+      <section className={styles.reviewsSection}>
+        <h2 className={styles.reviewsTitle}>Discussion</h2>
+        <CommentList
+          entityType="Product"
+          entityId={product.id}
+          currentUserId={user?.id}
+          isAuthenticated={isAuthenticated}
+        />
       </section>
     </div>
   );

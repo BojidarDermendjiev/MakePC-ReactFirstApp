@@ -1,18 +1,17 @@
-import { getAccessToken } from "../utils/AuthUtils/authUtils";
-
 const API_KEY = import.meta.env.VITE_API_KEY;
 const IS_DEV = import.meta.env.DEV;
 
 async function baseRequester(method, url, data, customHeaders = {}) {
   const headers = {};
-  const token = getAccessToken();
 
   if (API_KEY) headers["X-API-KEY"] = API_KEY;
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
 
-  const options = { method, headers };
+  // Use credentials: 'include' to send/receive HTTP-only cookies
+  const options = {
+    method,
+    headers,
+    credentials: "include", // Enable cookie-based authentication
+  };
 
   if (data instanceof FormData) {
     options.body = data;

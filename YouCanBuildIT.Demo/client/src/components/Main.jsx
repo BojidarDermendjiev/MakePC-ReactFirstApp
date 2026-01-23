@@ -34,6 +34,26 @@ import BrandForm from "../features/Brand/BrandForm";
 import UserSettings from "../features/UserSettings/UserSettings";
 import ShoppingCart from "../features/ShoppingCart/ShoppingCart";
 import { Checkout, OrderSuccess } from "../features/Checkout";
+import {
+  SecondHandList,
+  SecondHandDetails,
+  SecondHandCreate,
+  SecondHandEdit,
+  MyListings,
+} from "../features/SecondHand";
+import {
+  KeyboardsPage,
+  KeyboardDetails,
+  SwitchGuide,
+  SizeGuide,
+} from "../pages/Keyboards";
+import {
+  ForumHome,
+  CategoryView,
+  ThreadView,
+  CreateThread,
+} from "../pages/Forum";
+import { NewsHome, NewsArticle } from "../pages/News";
 
 export default function Main() {
   return (
@@ -148,6 +168,25 @@ export default function Main() {
           path={navigation.getBrandDetailsUrl(":id")}
           element={<BrandDetails />}
         />
+        {/* Keyboard Section Routes */}
+        <Route path="/keyboards" element={<KeyboardsPage />} />
+        <Route path="/keyboards/switch-guide" element={<SwitchGuide />} />
+        <Route path="/keyboards/size-guide" element={<SizeGuide />} />
+        <Route path="/keyboards/:id" element={<KeyboardDetails />} />
+        {/* SecondHand Marketplace Routes */}
+        <Route path="/secondhand" element={<SecondHandList />} />
+        <Route path="/secondhand/create" element={<SecondHandCreate />} />
+        <Route path="/secondhand/my-listings" element={<MyListings />} />
+        <Route path="/secondhand/edit/:id" element={<SecondHandEdit />} />
+        <Route path="/secondhand/:id" element={<SecondHandDetails />} />
+        {/* Forum Routes */}
+        <Route path="/forum" element={<ForumHome />} />
+        <Route path="/forum/category/:slug" element={<CategoryView />} />
+        <Route path="/forum/thread/:id" element={<ThreadView />} />
+        <Route path="/forum/create" element={<CreateThread />} />
+        {/* News Routes */}
+        <Route path="/news" element={<NewsHome />} />
+        <Route path="/news/:slug" element={<NewsArticle />} />
         <Route path={navigation.getPageNotFoundUrl()} element={<NotFound />} />
       </Routes>
     </main>
