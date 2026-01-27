@@ -54,6 +54,13 @@ import {
   CreateThread,
 } from "../pages/Forum";
 import { NewsHome, NewsArticle } from "../pages/News";
+import {
+  BuilderWizard,
+  MyBuilds,
+  PublicBuilds,
+} from "../features/Builder";
+import { ComparisonPage } from "../features/Comparison";
+import OAuthCallback from "../pages/OAuthCallback/OAuthCallback";
 
 export default function Main() {
   return (
@@ -81,6 +88,7 @@ export default function Main() {
         />
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getRegisterUrl()} element={<Register />} />
+        <Route path="/oauth-callback" element={<OAuthCallback />} />
         <Route
           path={navigation.getUserSettingsUrl()}
           element={<UserSettings />}
@@ -187,6 +195,11 @@ export default function Main() {
         {/* News Routes */}
         <Route path="/news" element={<NewsHome />} />
         <Route path="/news/:slug" element={<NewsArticle />} />
+        {/* PC Builder Routes */}
+        <Route path="/builder" element={<BuilderWizard />} />
+        <Route path="/builder/my-builds" element={<MyBuilds />} />
+        <Route path="/builder/community" element={<PublicBuilds />} />
+        <Route path="/builder/compare/:buildId" element={<ComparisonPage />} />
         <Route path={navigation.getPageNotFoundUrl()} element={<NotFound />} />
       </Routes>
     </main>

@@ -14,7 +14,7 @@ function PaymentCard() {
     e.preventDefault();
     console.log({
       name,
-      cardNumber,
+      cardNumber: cardNumber.replace(/\s/g, ""),
       expiration,
       securityCode,
     });
@@ -26,6 +26,52 @@ function PaymentCard() {
 
   const handleSecurityCodeBlur = () => {
     setIsFlipped(false);
+  };
+
+  // Format card number with spaces every 4 digits
+  const handleCardNumberChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
+    value = value.substring(0, 16); // Limit to 16 digits
+
+    // Add spaces every 4 digits
+    let formatted = "";
+    for (let i = 0; i < value.length; i++) {
+      if (i > 0 && i % 4 === 0) {
+        formatted += " ";
+      }
+      formatted += value[i];
+    }
+    setCardNumber(formatted);
+  };
+
+  // Format expiration date as MM/YY
+  const handleExpirationChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
+    value = value.substring(0, 4); // Limit to 4 digits (MMYY)
+
+    if (value.length >= 2) {
+      // Validate month (01-12)
+      let month = parseInt(value.substring(0, 2), 10);
+      if (month > 12) month = 12;
+      if (month < 1 && value.length >= 2) month = 1;
+      value = month.toString().padStart(2, "0") + value.substring(2);
+      value = value.substring(0, 2) + "/" + value.substring(2);
+    }
+    setExpiration(value);
+  };
+
+  // Handle security code (CVV) - 3 or 4 digits only
+  const handleSecurityCodeChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
+    value = value.substring(0, 4); // Limit to 4 digits (some cards have 4)
+    setSecurityCode(value);
+  };
+
+  // Handle name - letters and spaces only, uppercase
+  const handleNameChange = (e) => {
+    let value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Letters and spaces only
+    value = value.toUpperCase();
+    setName(value);
   };
 
   return (
@@ -294,11 +340,11 @@ function PaymentCard() {
             <label htmlFor="name">{t("card.name")}</label>
             <input
               id="name"
-              maxLength="20"
+              maxLength="26"
               type="text"
               value={name}
               placeholder="JOHN DOE"
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleNameChange}
             />
           </div>
           <div className="field-container">
@@ -306,11 +352,11 @@ function PaymentCard() {
             <input
               id="cardnumber"
               type="text"
-              pattern="[0-9]*"
               inputMode="numeric"
+              maxLength="19"
               value={cardNumber}
               placeholder="0123 4567 8910 1112"
-              onChange={(e) => setCardNumber(e.target.value)}
+              onChange={handleCardNumberChange}
             />
           </div>
           <div className="field-container">
@@ -318,11 +364,11 @@ function PaymentCard() {
             <input
               id="expirationdate"
               type="text"
-              pattern="[0-9]*"
               inputMode="numeric"
+              maxLength="5"
               value={expiration}
-              placeholder="01/23"
-              onChange={(e) => setExpiration(e.target.value)}
+              placeholder="MM/YY"
+              onChange={handleExpirationChange}
             />
           </div>
           <div className="field-container">
@@ -330,11 +376,11 @@ function PaymentCard() {
             <input
               id="securitycode"
               type="text"
-              pattern="[0-9]*"
               inputMode="numeric"
+              maxLength="4"
               value={securityCode}
-              placeholder="985"
-              onChange={(e) => setSecurityCode(e.target.value)}
+              placeholder="CVV"
+              onChange={handleSecurityCodeChange}
               onFocus={handleSecurityCodeFocus}
               onBlur={handleSecurityCodeBlur}
             />

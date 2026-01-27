@@ -46,6 +46,15 @@ export const navigation = {
   getProductsUrl() {
     return "/products";
   },
+  getNewHardwareUrl() {
+    return "/products";
+  },
+  getKeyboardsUrl() {
+    return "/keyboards";
+  },
+  getSecondhandUrl() {
+    return "/secondhand";
+  },
   getProductCreateUrl() {
     return "/products/create";
   },

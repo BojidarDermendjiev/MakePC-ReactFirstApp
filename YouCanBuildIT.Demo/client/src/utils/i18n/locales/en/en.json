@@ -160,5 +160,12 @@
   "logout": {
     "title": "Welcome back!",
     "home": "Home"
+  },
+  "cookies": {
+    "title": "We use cookies",
+    "description": "We use cookies to improve your experience on our site. Cookies help us understand how you use our website and allow us to remember your preferences.",
+    "learnMore": "Learn more",
+    "acceptAll": "Accept All",
+    "acceptNecessary": "Necessary Only"
   }
 }

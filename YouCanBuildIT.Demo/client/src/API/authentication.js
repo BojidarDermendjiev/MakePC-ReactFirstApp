@@ -64,6 +64,7 @@ export const verifySession = async () => {
       email: response.email,
       fullName: response.fullName,
       role: response.roles?.[0] || "User",
+      avatarUrl: response.avatarUrl,
     };
   } catch {
     return null;
@@ -80,4 +81,34 @@ export const refreshToken = async () => {
   } catch {
     return null;
   }
+};
+
+/**
+ * Initiate OAuth login with external provider
+ * @param {string} provider - OAuth provider (Google, GitHub, Facebook, LinkedIn, Microsoft)
+ * @param {string} returnUrl - URL to redirect to after authentication
+ */
+export const initiateOAuthLogin = (provider, returnUrl = "/oauth-callback") => {
+  const encodedReturnUrl = encodeURIComponent(window.location.origin + returnUrl);
+  window.location.href = `${serverApiUrl}/auth/external/start?provider=${provider}&returnUrl=${encodedReturnUrl}`;
+};
+
+/**
+ * Handle OAuth callback response and store user data
+ * @param {object} response - OAuth response from backend
+ * @param {function} setUser - Function to update user context
+ */
+export const handleOAuthResponse = (response, setUser) => {
+  const user = response.user || response;
+
+  const userFilteredData = {
+    email: user.email || user.Email,
+    fullName: user.fullName || user.FullName || user.name,
+    id: user.id || user.Id || user.userId,
+    role: user.roles?.[0] || user.role || "User",
+    avatarUrl: user.avatarUrl || user.avatar,
+  };
+
+  setUser(userFilteredData);
+  localStorage.setItem("user", JSON.stringify(userFilteredData));
 };

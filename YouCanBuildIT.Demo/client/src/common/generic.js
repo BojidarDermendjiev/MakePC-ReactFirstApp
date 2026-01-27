@@ -1,5 +1,6 @@
 // Base URLs - Use environment variables for configuration
-export const serverOrigin = import.meta.env.VITE_API_URL || "https://localhost:57175";
+export const serverOrigin =
+  import.meta.env.VITE_API_URL || "https://localhost:57175";
 export const serverApiUrl = `${serverOrigin}/api`;
 
 export const serverUrl = serverApiUrl;
@@ -50,7 +51,8 @@ export const serverEndpoints = {
     if (params.maxPrice) queryParams.append("maxPrice", params.maxPrice);
     if (params.search) queryParams.append("search", params.search);
     if (params.sortBy) queryParams.append("sortBy", params.sortBy);
-    if (params.sortDesc !== undefined) queryParams.append("sortDesc", params.sortDesc);
+    if (params.sortDesc !== undefined)
+      queryParams.append("sortDesc", params.sortDesc);
     return `/product/filter?${queryParams.toString()}`;
   },
 
@@ -65,12 +67,15 @@ export const serverEndpoints = {
     if (params?.maxPrice) queryParams.append("maxPrice", params.maxPrice);
     if (params?.search) queryParams.append("search", params.search);
     if (params?.sortBy) queryParams.append("sortBy", params.sortBy);
-    if (params?.sortDesc !== undefined) queryParams.append("sortDesc", params.sortDesc);
+    if (params?.sortDesc !== undefined)
+      queryParams.append("sortDesc", params.sortDesc);
     return `/secondhandlisting?${queryParams.toString()}`;
   },
   getSecondHandListingById: (id) => `/secondhandlisting/${id}`,
-  getSecondHandListingsByCategory: (categoryId) => `/secondhandlisting/category/${categoryId}`,
-  getSecondHandListingsBySeller: (sellerId) => `/secondhandlisting/seller/${sellerId}`,
+  getSecondHandListingsByCategory: (categoryId) =>
+    `/secondhandlisting/category/${categoryId}`,
+  getSecondHandListingsBySeller: (sellerId) =>
+    `/secondhandlisting/seller/${sellerId}`,
   getMySecondHandListings: "/secondhandlisting/my-listings",
   createSecondHandListing: "/secondhandlisting",
   updateSecondHandListing: (id) => `/secondhandlisting/${id}`,
@@ -166,4 +171,48 @@ export const serverEndpoints = {
   createNews: "/news",
   updateNews: (id) => `/news/${id}`,
   deleteNews: (id) => `/news/${id}`,
+
+  // --- BuildController (PC Builder) ---
+  getBuilds: (params) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append("page", params.page);
+    if (params?.size) queryParams.append("size", params.size);
+    if (params?.publicOnly !== undefined)
+      queryParams.append("publicOnly", params.publicOnly);
+    return `/build?${queryParams.toString()}`;
+  },
+  getBuildById: (id) => `/build/${id}`,
+  getMyBuilds: "/build/my-builds",
+  getPublicBuilds: (limit) => `/build/public${limit ? `?limit=${limit}` : ""}`,
+  createBuild: "/build",
+  updateBuild: (id) => `/build/${id}`,
+  deleteBuild: (id) => `/build/${id}`,
+  addBuildItem: (buildId) => `/build/${buildId}/items`,
+  updateBuildItem: (buildId, itemId) => `/build/${buildId}/items/${itemId}`,
+  removeBuildItem: (buildId, itemId) => `/build/${buildId}/items/${itemId}`,
+  checkBuildCompatibility: (buildId) => `/build/${buildId}/compatibility`,
+  getBuildSuggestions: (buildId, componentType) =>
+    `/build/${buildId}/suggestions/${componentType}`,
+
+  // --- PriceComparisonController ---
+  getVendors: "/pricecomparison/vendors",
+  getOffersForProduct: (productId) =>
+    `/pricecomparison/offers/product/${productId}`,
+  getLowestOfferForProduct: (productId) =>
+    `/pricecomparison/offers/product/${productId}/lowest`,
+  getPrebuilts: (params) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append("page", params.page);
+    if (params?.size) queryParams.append("size", params.size);
+    if (params?.purpose) queryParams.append("purpose", params.purpose);
+    return `/pricecomparison/prebuilts?${queryParams.toString()}`;
+  },
+  getPrebuiltById: (id) => `/pricecomparison/prebuilts/${id}`,
+  getPrebuiltsByPurpose: (purpose) =>
+    `/pricecomparison/prebuilts/purpose/${purpose}`,
+  compareBuild: (buildId) => `/pricecomparison/compare/build/${buildId}`,
+  getSimilarPrebuilts: (buildId, limit) =>
+    `/pricecomparison/compare/build/${buildId}/prebuilts${limit ? `?limit=${limit}` : ""}`,
+  getPriceHistory: (productId, days) =>
+    `/pricecomparison/history/product/${productId}${days ? `?days=${days}` : ""}`,
 };

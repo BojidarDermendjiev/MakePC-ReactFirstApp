@@ -106,11 +106,28 @@ export default function Header() {
         <ul className={styles.rightNav}>
           {user ? (
             <>
-              {/* Products Link - Only for logged in users */}
-              <li className={styles.navigations}>
+              {/* Products Dropdown - Only for logged in users */}
+              <li className={styles.productsDropdown}>
                 <Link className={styles.link} to={navigation.getProductsUrl()}>
                   {t("header.products", "Products")}
                 </Link>
+                <ul className={styles.dropdownMenu}>
+                  <li>
+                    <Link className={styles.link} to={navigation.getNewHardwareUrl()}>
+                      {t("header.newHardware", "New Hardware")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className={styles.link} to={navigation.getKeyboardsUrl()}>
+                      {t("header.keyboards", "Keyboards")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className={styles.link} to={navigation.getSecondhandUrl()}>
+                      {t("header.secondhand", "Secondhand")}
+                    </Link>
+                  </li>
+                </ul>
               </li>
               {/* Shopping Cart Icon - Only for logged in users */}
               <li className={styles.cartContainer}>

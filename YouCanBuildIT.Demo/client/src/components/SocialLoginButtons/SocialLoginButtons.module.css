@@ -1,0 +1,135 @@
+.socialLoginContainer {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.dividerText {
+  padding: 0 12px;
+  color: #666;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.socialButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.socialButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.socialButton:active {
+  transform: translateY(0);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Google */
+.google {
+  background-color: #fff;
+  border-color: #dadce0;
+  color: #3c4043;
+}
+
+.google:hover {
+  background-color: #f8f9fa;
+  border-color: #dadce0;
+}
+
+/* GitHub */
+.github {
+  background-color: #24292e;
+  border-color: #24292e;
+  color: #fff;
+}
+
+.github:hover {
+  background-color: #2f363d;
+  border-color: #2f363d;
+}
+
+/* Facebook */
+.facebook {
+  background-color: #1877f2;
+  border-color: #1877f2;
+  color: #fff;
+}
+
+.facebook:hover {
+  background-color: #166fe5;
+  border-color: #166fe5;
+}
+
+/* LinkedIn */
+.linkedin {
+  background-color: #0a66c2;
+  border-color: #0a66c2;
+  color: #fff;
+}
+
+.linkedin:hover {
+  background-color: #004182;
+  border-color: #004182;
+}
+
+/* Microsoft */
+.microsoft {
+  background-color: #fff;
+  border-color: #8c8c8c;
+  color: #5e5e5e;
+}
+
+.microsoft:hover {
+  background-color: #f3f3f3;
+  border-color: #8c8c8c;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .socialButtons {
+    flex-direction: column;
+  }
+
+  .socialButton {
+    width: 100%;
+    min-width: unset;
+  }
+}

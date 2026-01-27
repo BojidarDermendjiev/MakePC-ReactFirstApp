@@ -1,10 +1,11 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import shoppingCartService from "../../api/shoppingCartService.js";
 import orderService from "../../api/orderService.js";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { navigation } from "../../common/navigations";
+import { TURNSTILE_SITE_KEY, TURNSTILE_THEME } from "../../config/turnstile";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -366,6 +367,9 @@ const Checkout = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef(null);
+  const turnstileWidgetId = useRef(null);
 
   const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
@@ -407,6 +411,38 @@ const Checkout = () => {
     fetchCart();
   }, [user, navigate]);
 
+  // Load Turnstile script and render widget
+  useEffect(() => {
+    const loadTurnstile = () => {
+      if (window.turnstile && turnstileRef.current && !turnstileWidgetId.current) {
+        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: TURNSTILE_THEME,
+          callback: (token) => setTurnstileToken(token),
+          "expired-callback": () => setTurnstileToken(""),
+          "error-callback": () => setTurnstileToken(""),
+        });
+      }
+    };
+
+    if (window.turnstile) {
+      loadTurnstile();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      script.async = true;
+      script.onload = loadTurnstile;
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+        turnstileWidgetId.current = null;
+      }
+    };
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setShippingInfo((prev) => ({ ...prev, [name]: value }));
@@ -445,13 +481,14 @@ const Checkout = () => {
       const orderData = {
         userId: user.id,
         shippingAddress: fullAddress,
-        paymentStatus: paymentMethod === "card" ? "Pending" : "Cash on Delivery",
+        paymentStatus: paymentMethod === "card" ? "Card Payment Pending" : "Cash on Delivery",
         totalPrice: total,
         items: items.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
           unitPrice: item.price,
         })),
+        turnstileToken: turnstileToken,
       };
 
       const createdOrder = await orderService.createOrder(orderData);
@@ -464,6 +501,10 @@ const Checkout = () => {
     } catch (err) {
       console.error("Failed to create order:", err);
       setError(err.message || "Failed to place order. Please try again.");
+      // Reset Turnstile on error
+      if (window.turnstile && turnstileWidgetId.current) {
+        window.turnstile.reset(turnstileWidgetId.current);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -679,6 +720,12 @@ const Checkout = () => {
           </TotalRow>
 
           {error && <ErrorMessage>{error}</ErrorMessage>}
+
+          {/* Cloudflare Turnstile widget */}
+          <div
+            ref={turnstileRef}
+            style={{ margin: "16px 0", display: "flex", justifyContent: "center" }}
+          ></div>
 
           <PlaceOrderButton
             onClick={handleSubmit}
