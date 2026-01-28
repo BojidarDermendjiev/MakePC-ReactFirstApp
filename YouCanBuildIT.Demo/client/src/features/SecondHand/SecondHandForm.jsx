@@ -1,201 +1,16 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import { getAllCategories } from "../../api/categoryService";
 import { getAllBrands } from "../../api/brandService";
+import styles from "../../assets/styles/secondHandForm.module.css";
 
-const Form = styled.form`
-  background: #fff;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-`;
-
-const FormTitle = styled.h2`
-  margin: 0 0 24px 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: #1f2937;
-`;
-
-const FormGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const FormGroup = styled.div`
-  ${(props) => props.$fullWidth && "grid-column: 1 / -1;"}
-`;
-
-const Label = styled.label`
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 8px;
-
-  span {
-    color: #dc2626;
-  }
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid ${(props) => (props.$error ? "#fecaca" : "#e5e7eb")};
-  border-radius: 10px;
-  font-size: 15px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border-color: ${(props) => (props.$error ? "#dc2626" : "#c7f022")};
-    box-shadow: 0 0 0 3px
-      ${(props) => (props.$error ? "rgba(220, 38, 38, 0.1)" : "rgba(199, 240, 34, 0.2)")};
-  }
-
-  &::placeholder {
-    color: #9ca3af;
-  }
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid ${(props) => (props.$error ? "#fecaca" : "#e5e7eb")};
-  border-radius: 10px;
-  font-size: 15px;
-  background: #fff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: ${(props) => (props.$error ? "#dc2626" : "#c7f022")};
-    box-shadow: 0 0 0 3px
-      ${(props) => (props.$error ? "rgba(220, 38, 38, 0.1)" : "rgba(199, 240, 34, 0.2)")};
-  }
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid ${(props) => (props.$error ? "#fecaca" : "#e5e7eb")};
-  border-radius: 10px;
-  font-size: 15px;
-  min-height: 150px;
-  resize: vertical;
-  font-family: inherit;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border-color: ${(props) => (props.$error ? "#dc2626" : "#c7f022")};
-    box-shadow: 0 0 0 3px
-      ${(props) => (props.$error ? "rgba(220, 38, 38, 0.1)" : "rgba(199, 240, 34, 0.2)")};
-  }
-
-  &::placeholder {
-    color: #9ca3af;
-  }
-`;
-
-const ErrorText = styled.span`
-  display: block;
-  color: #dc2626;
-  font-size: 13px;
-  margin-top: 6px;
-`;
-
-const HelpText = styled.span`
-  display: block;
-  color: #6b7280;
-  font-size: 13px;
-  margin-top: 6px;
-`;
-
-const CheckboxGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const Checkbox = styled.input`
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: #c7f022;
-`;
-
-const CheckboxLabel = styled.label`
-  font-size: 15px;
-  color: #374151;
-  cursor: pointer;
-`;
-
-const PriceRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  gap: 16px;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
-`;
-
-const SubmitButton = styled.button`
-  flex: 1;
-  padding: 16px 32px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  background: linear-gradient(135deg, #c7f022 0%, #a8d810 100%);
-  color: #1f2937;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(199, 240, 34, 0.4);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-`;
-
-const CancelButton = styled.button`
-  padding: 16px 32px;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  background: #fff;
-  color: #6b7280;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #c7f022;
-    color: #1f2937;
-  }
-`;
-
-const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = false }) => {
+const SecondHandForm = ({
+  initialData,
+  onSubmit,
+  onCancel,
+  loading,
+  isEdit = false,
+}) => {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [errors, setErrors] = useState({});
@@ -237,7 +52,6 @@ const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = fal
       [name]: type === "checkbox" ? checked : value,
     }));
 
-    // Clear error when field is modified
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
     }
@@ -284,59 +98,71 @@ const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = fal
     const submitData = {
       ...formData,
       price: parseFloat(formData.price),
-      originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
+      originalPrice: formData.originalPrice
+        ? parseFloat(formData.originalPrice)
+        : null,
       categoryId: parseInt(formData.categoryId, 10),
       brandId: formData.brandId ? parseInt(formData.brandId, 10) : null,
-      shippingCost: formData.shippingCost ? parseFloat(formData.shippingCost) : null,
+      shippingCost: formData.shippingCost
+        ? parseFloat(formData.shippingCost)
+        : null,
     };
 
     onSubmit(submitData);
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormTitle>{isEdit ? "Edit Listing" : "Create New Listing"}</FormTitle>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <h2 className={styles.formTitle}>
+        {isEdit ? "Edit Listing" : "Create New Listing"}
+      </h2>
 
-      <FormGrid>
-        <FormGroup $fullWidth>
-          <Label>
+      <div className={styles.formGrid}>
+        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+          <label className={styles.label}>
             Title <span>*</span>
-          </Label>
-          <Input
+          </label>
+          <input
+            className={`${styles.input} ${errors.title ? styles.inputError : ""}`}
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
             placeholder="e.g., NVIDIA GeForce RTX 3080 - Excellent Condition"
-            $error={errors.title}
           />
-          {errors.title && <ErrorText>{errors.title}</ErrorText>}
-        </FormGroup>
+          {errors.title && (
+            <span className={styles.errorText}>{errors.title}</span>
+          )}
+        </div>
 
-        <FormGroup $fullWidth>
-          <Label>
+        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+          <label className={styles.label}>
             Description <span>*</span>
-          </Label>
-          <Textarea
+          </label>
+          <textarea
+            className={`${styles.textarea} ${errors.description ? styles.textareaError : ""}`}
             name="description"
             value={formData.description}
             onChange={handleChange}
             placeholder="Describe your item in detail. Include condition, reason for selling, any defects, etc."
-            $error={errors.description}
           />
-          {errors.description && <ErrorText>{errors.description}</ErrorText>}
-          <HelpText>{formData.description.length}/2000 characters</HelpText>
-        </FormGroup>
+          {errors.description && (
+            <span className={styles.errorText}>{errors.description}</span>
+          )}
+          <span className={styles.helpText}>
+            {formData.description.length}/2000 characters
+          </span>
+        </div>
 
-        <FormGroup>
-          <Label>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>
             Category <span>*</span>
-          </Label>
-          <Select
+          </label>
+          <select
+            className={`${styles.select} ${errors.categoryId ? styles.selectError : ""}`}
             name="categoryId"
             value={formData.categoryId}
             onChange={handleChange}
-            $error={errors.categoryId}
           >
             <option value="">Select a category</option>
             {categories.map((cat) => (
@@ -344,29 +170,37 @@ const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = fal
                 {cat.name?.value || cat.name}
               </option>
             ))}
-          </Select>
-          {errors.categoryId && <ErrorText>{errors.categoryId}</ErrorText>}
-        </FormGroup>
+          </select>
+          {errors.categoryId && (
+            <span className={styles.errorText}>{errors.categoryId}</span>
+          )}
+        </div>
 
-        <FormGroup>
-          <Label>Brand</Label>
-          <Select name="brandId" value={formData.brandId} onChange={handleChange}>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Brand</label>
+          <select
+            className={styles.select}
+            name="brandId"
+            value={formData.brandId}
+            onChange={handleChange}
+          >
             <option value="">Select a brand (optional)</option>
             {brands.map((brand) => (
               <option key={brand.id} value={brand.id}>
                 {brand.name?.value || brand.name}
               </option>
             ))}
-          </Select>
-        </FormGroup>
+          </select>
+        </div>
 
-        <FormGroup $fullWidth>
-          <PriceRow>
+        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+          <div className={styles.priceRow}>
             <div>
-              <Label>
+              <label className={styles.label}>
                 Price (BGN) <span>*</span>
-              </Label>
-              <Input
+              </label>
+              <input
+                className={`${styles.input} ${errors.price ? styles.inputError : ""}`}
                 type="number"
                 name="price"
                 value={formData.price}
@@ -374,13 +208,15 @@ const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = fal
                 placeholder="0.00"
                 min="0.01"
                 step="0.01"
-                $error={errors.price}
               />
-              {errors.price && <ErrorText>{errors.price}</ErrorText>}
+              {errors.price && (
+                <span className={styles.errorText}>{errors.price}</span>
+              )}
             </div>
             <div>
-              <Label>Original Price (BGN)</Label>
-              <Input
+              <label className={styles.label}>Original Price (BGN)</label>
+              <input
+                className={styles.input}
                 type="number"
                 name="originalPrice"
                 value={formData.originalPrice}
@@ -389,67 +225,77 @@ const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = fal
                 min="0"
                 step="0.01"
               />
-              <HelpText>Show buyers the savings</HelpText>
+              <span className={styles.helpText}>Show buyers the savings</span>
             </div>
-          </PriceRow>
-        </FormGroup>
+          </div>
+        </div>
 
-        <FormGroup $fullWidth>
-          <Label>
+        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+          <label className={styles.label}>
             Image URL <span>*</span>
-          </Label>
-          <Input
+          </label>
+          <input
+            className={`${styles.input} ${errors.imageUrl ? styles.inputError : ""}`}
             type="url"
             name="imageUrl"
             value={formData.imageUrl}
             onChange={handleChange}
             placeholder="https://example.com/image.jpg"
-            $error={errors.imageUrl}
           />
-          {errors.imageUrl && <ErrorText>{errors.imageUrl}</ErrorText>}
-        </FormGroup>
+          {errors.imageUrl && (
+            <span className={styles.errorText}>{errors.imageUrl}</span>
+          )}
+        </div>
 
-        <FormGroup $fullWidth>
-          <Label>Additional Image URLs</Label>
-          <Input
+        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+          <label className={styles.label}>Additional Image URLs</label>
+          <input
+            className={styles.input}
             type="text"
             name="additionalImageUrls"
             value={formData.additionalImageUrls}
             onChange={handleChange}
             placeholder="https://url1.jpg, https://url2.jpg (comma-separated)"
           />
-          <HelpText>Add multiple images separated by commas</HelpText>
-        </FormGroup>
+          <span className={styles.helpText}>
+            Add multiple images separated by commas
+          </span>
+        </div>
 
-        <FormGroup>
-          <Label>Location</Label>
-          <Input
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Location</label>
+          <input
+            className={styles.input}
             type="text"
             name="location"
             value={formData.location}
             onChange={handleChange}
             placeholder="e.g., Sofia, Bulgaria"
           />
-        </FormGroup>
+        </div>
 
-        <FormGroup>
-          <Label>Shipping</Label>
-          <CheckboxGroup>
-            <Checkbox
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Shipping</label>
+          <div className={styles.checkboxGroup}>
+            <input
+              className={styles.checkbox}
               type="checkbox"
               id="offersShipping"
               name="offersShipping"
               checked={formData.offersShipping}
               onChange={handleChange}
             />
-            <CheckboxLabel htmlFor="offersShipping">I offer shipping</CheckboxLabel>
-          </CheckboxGroup>
-        </FormGroup>
+            <label className={styles.checkboxLabel} htmlFor="offersShipping">
+              I offer shipping
+            </label>
+          </div>
+        </div>
 
         {formData.offersShipping && (
-          <FormGroup>
-            <Label>Shipping Cost (BGN)</Label>
-            <Input
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Shipping Cost (BGN)</label>
+            <input
+              className={styles.input}
               type="number"
               name="shippingCost"
               value={formData.shippingCost}
@@ -458,19 +304,27 @@ const SecondHandForm = ({ initialData, onSubmit, onCancel, loading, isEdit = fal
               min="0"
               step="0.01"
             />
-          </FormGroup>
+          </div>
         )}
-      </FormGrid>
+      </div>
 
-      <ButtonRow>
-        <CancelButton type="button" onClick={onCancel}>
+      <div className={styles.buttonRow}>
+        <button
+          type="button"
+          className={styles.cancelButton}
+          onClick={onCancel}
+        >
           Cancel
-        </CancelButton>
-        <SubmitButton type="submit" disabled={loading}>
+        </button>
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={loading}
+        >
           {loading ? "Saving..." : isEdit ? "Update Listing" : "Create Listing"}
-        </SubmitButton>
-      </ButtonRow>
-    </Form>
+        </button>
+      </div>
+    </form>
   );
 };
 

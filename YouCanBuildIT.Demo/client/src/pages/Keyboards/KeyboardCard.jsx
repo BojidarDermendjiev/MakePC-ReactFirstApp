@@ -1,166 +1,6 @@
 import { Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
-
-const fadeInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const Card = styled(Link)`
-  display: block;
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  animation: ${fadeInUp} 0.4s ease forwards;
-  animation-delay: ${(props) => props.$index * 0.05}s;
-  opacity: 0;
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const ImageContainer = styled.div`
-  position: relative;
-  padding-top: 66%;
-  background: #f3f4f6;
-  overflow: hidden;
-`;
-
-const Image = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-  padding: 16px;
-
-  ${Card}:hover & {
-    transform: scale(1.05);
-  }
-`;
-
-const BadgeRow = styled.div`
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-`;
-
-const Badge = styled.span`
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  background: ${(props) => props.$bg || "#f3f4f6"};
-  color: ${(props) => props.$color || "#374151"};
-`;
-
-const StockBadge = styled(Badge)`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: ${(props) => (props.$inStock ? "#ecfdf5" : "#fef2f2")};
-  color: ${(props) => (props.$inStock ? "#059669" : "#dc2626")};
-`;
-
-const Content = styled.div`
-  padding: 16px;
-`;
-
-const Brand = styled.span`
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-`;
-
-const Title = styled.h3`
-  margin: 0 0 8px 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: #1f2937;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
-
-const SpecsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px 12px;
-  margin-bottom: 12px;
-`;
-
-const SpecItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: #6b7280;
-
-  svg {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-  }
-`;
-
-const PriceRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px solid #f3f4f6;
-`;
-
-const Price = styled.span`
-  font-size: 20px;
-  font-weight: 700;
-  color: #1f2937;
-`;
-
-const Currency = styled.span`
-  font-size: 14px;
-  color: #6b7280;
-  margin-left: 4px;
-`;
-
-const FeatureBadges = styled.div`
-  display: flex;
-  gap: 4px;
-`;
-
-const FeatureBadge = styled.span`
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 500;
-  background: #f0fdf4;
-  color: #15803d;
-`;
+import styles from "../../assets/styles/keyboardCard.module.css";
 
 const SwitchIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -189,69 +29,91 @@ const LightIcon = () => (
 export const KeyboardCard = ({ keyboard, index = 0 }) => {
   const specs = keyboard.specs;
 
+  const stockClass = keyboard.stock > 0 ? styles.inStock : styles.outOfStock;
+
   return (
-    <Card to={`/keyboards/${keyboard.id}`} $index={index}>
-      <ImageContainer>
-        <Image
+    <Link
+      to={`/keyboards/${keyboard.id}`}
+      className={styles.card}
+      style={{ animationDelay: `${index * 0.05}s` }}
+    >
+      <div className={styles.imageContainer}>
+        <img
+          className={styles.image}
           src={keyboard.imageUrl || "/placeholder-keyboard.png"}
           alt={keyboard.name}
           onError={(e) => {
             e.target.src = "/placeholder-product.png";
           }}
         />
-        <BadgeRow>
+        <div className={styles.badgeRow}>
           {specs?.size && (
-            <Badge $bg="#e0e7ff" $color="#3730a3">
+            <span
+              className={styles.badge}
+              style={{ background: "#e0e7ff", color: "#3730a3" }}
+            >
               {specs.size}
-            </Badge>
+            </span>
           )}
           {specs?.switchCharacteristic && (
-            <Badge $bg="#fef3c7" $color="#92400e">
+            <span
+              className={styles.badge}
+              style={{ background: "#fef3c7", color: "#92400e" }}
+            >
               {specs.switchCharacteristic}
-            </Badge>
+            </span>
           )}
-        </BadgeRow>
-        <StockBadge $inStock={keyboard.stock > 0}>
+        </div>
+        <span className={`${styles.stockBadge} ${stockClass}`}>
           {keyboard.stock > 0 ? "In Stock" : "Out of Stock"}
-        </StockBadge>
-      </ImageContainer>
-      <Content>
-        {keyboard.brandName && <Brand>{keyboard.brandName}</Brand>}
-        <Title>{keyboard.name}</Title>
+        </span>
+      </div>
+
+      <div className={styles.content}>
+        {keyboard.brandName && (
+          <span className={styles.brand}>{keyboard.brandName}</span>
+        )}
+        <h3 className={styles.title}>{keyboard.name}</h3>
+
         {specs && (
-          <SpecsGrid>
-            <SpecItem>
+          <div className={styles.specsGrid}>
+            <div className={styles.specItem}>
               <SwitchIcon />
               <span>{specs.switchType}</span>
-            </SpecItem>
-            <SpecItem>
+            </div>
+            <div className={styles.specItem}>
               <KeyboardIcon />
               <span>{specs.layout}</span>
-            </SpecItem>
-            <SpecItem>
+            </div>
+            <div className={styles.specItem}>
               <WifiIcon />
               <span>{specs.connectivity}</span>
-            </SpecItem>
+            </div>
             {specs.hasBacklight && (
-              <SpecItem>
+              <div className={styles.specItem}>
                 <LightIcon />
                 <span>{specs.backlightType || "Backlit"}</span>
-              </SpecItem>
+              </div>
             )}
-          </SpecsGrid>
-        )}
-        <PriceRow>
-          <div>
-            <Price>{keyboard.price?.toFixed(2)}</Price>
-            <Currency>BGN</Currency>
           </div>
-          <FeatureBadges>
-            {specs?.isHotswap && <FeatureBadge>Hot-swap</FeatureBadge>}
-            {specs?.hasNkro && <FeatureBadge>NKRO</FeatureBadge>}
-          </FeatureBadges>
-        </PriceRow>
-      </Content>
-    </Card>
+        )}
+
+        <div className={styles.priceRow}>
+          <div className={styles.priceGroup}>
+            <span className={styles.price}>{keyboard.price?.toFixed(2)}</span>
+            <span className={styles.currency}>BGN</span>
+          </div>
+          <div className={styles.featureBadges}>
+            {specs?.isHotswap && (
+              <span className={styles.featureBadge}>Hot-swap</span>
+            )}
+            {specs?.hasNkro && (
+              <span className={styles.featureBadge}>NKRO</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
 

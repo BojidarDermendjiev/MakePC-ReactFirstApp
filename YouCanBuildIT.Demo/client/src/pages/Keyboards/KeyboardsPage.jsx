@@ -1,256 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
 import KeyboardCard from "./KeyboardCard";
 import KeyboardFilters from "./KeyboardFilters";
 import { getKeyboards } from "../../api/keyboardService";
-
-const shimmer = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-`;
-
-const PageContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  padding: 24px;
-`;
-
-const Container = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
-`;
-
-const Header = styled.div`
-  margin-bottom: 32px;
-`;
-
-const Breadcrumb = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  font-size: 14px;
-  color: #6b7280;
-
-  a {
-    color: #6b7280;
-    text-decoration: none;
-    &:hover {
-      color: #1f2937;
-    }
-  }
-`;
-
-const TitleRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-`;
-
-const Title = styled.h1`
-  margin: 0;
-  font-size: 32px;
-  font-weight: 700;
-  color: #1f2937;
-`;
-
-const QuickLinks = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-
-const QuickLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  text-decoration: none;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #c7f022;
-    background: #f7fee7;
-  }
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
-`;
-
-const MainContent = styled.div`
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 24px;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const FiltersColumn = styled.div`
-  @media (max-width: 1024px) {
-    display: none;
-  }
-`;
-
-const ProductsColumn = styled.div``;
-
-const TopBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 12px;
-`;
-
-const ResultsCount = styled.span`
-  font-size: 14px;
-  color: #6b7280;
-`;
-
-const SortRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const SortLabel = styled.span`
-  font-size: 14px;
-  color: #6b7280;
-`;
-
-const SortSelect = styled.select`
-  padding: 8px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #1f2937;
-  background: #fff;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    border-color: #c7f022;
-  }
-`;
-
-const SearchInput = styled.input`
-  padding: 10px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  font-size: 14px;
-  width: 280px;
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: #c7f022;
-  }
-
-  &::placeholder {
-    color: #9ca3af;
-  }
-`;
-
-const ProductsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-`;
-
-const EmptyState = styled.div`
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 60px 20px;
-  background: #fff;
-  border-radius: 16px;
-`;
-
-const EmptyIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: 16px;
-`;
-
-const EmptyText = styled.p`
-  margin: 0 0 8px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-`;
-
-const EmptySubtext = styled.p`
-  margin: 0;
-  font-size: 14px;
-  color: #6b7280;
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 32px;
-`;
-
-const PageButton = styled.button`
-  padding: 8px 14px;
-  border: 1px solid ${(props) => (props.$active ? "#c7f022" : "#e5e7eb")};
-  border-radius: 8px;
-  background: ${(props) => (props.$active ? "#c7f022" : "#fff")};
-  font-size: 14px;
-  font-weight: ${(props) => (props.$active ? "600" : "400")};
-  color: #1f2937;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    border-color: #c7f022;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`;
-
-const SkeletonCard = styled.div`
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-`;
-
-const SkeletonImage = styled.div`
-  padding-top: 66%;
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
-  background-size: 200% 100%;
-  animation: ${shimmer} 1.5s infinite;
-`;
-
-const SkeletonContent = styled.div`
-  padding: 16px;
-`;
-
-const SkeletonText = styled.div`
-  height: ${(props) => props.$height || "14px"};
-  width: ${(props) => props.$width || "100%"};
-  border-radius: 4px;
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
-  background-size: 200% 100%;
-  animation: ${shimmer} 1.5s infinite;
-  margin-bottom: ${(props) => props.$mb || "0"};
-`;
+import styles from "../../assets/styles/keyboardsPage.module.css";
 
 const GuideIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -274,9 +27,10 @@ const KeyboardsPage = () => {
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || "",
+  );
 
-  // Parse filters from URL
   const getFiltersFromParams = useCallback(() => {
     const filters = {};
     const boolParams = ["hasBacklight", "isHotswap", "hasNkro", "inStock"];
@@ -321,11 +75,15 @@ const KeyboardsPage = () => {
     fetchKeyboards();
   }, [fetchKeyboards]);
 
-  // Update URL when filters change
   useEffect(() => {
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "" && value !== false) {
+      if (
+        value !== undefined &&
+        value !== null &&
+        value !== "" &&
+        value !== false
+      ) {
         params.set(key, String(value));
       }
     });
@@ -362,52 +120,55 @@ const KeyboardsPage = () => {
   };
 
   return (
-    <PageContainer>
-      <Container>
-        <Header>
-          <Breadcrumb>
+    <div className={styles.pageContainer}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.breadcrumb}>
             <Link to="/">Home</Link>
             <span>/</span>
             <span>Keyboards</span>
-          </Breadcrumb>
-          <TitleRow>
-            <Title>Mechanical Keyboards</Title>
-            <QuickLinks>
-              <QuickLink to="/keyboards/switch-guide">
+          </div>
+
+          <div className={styles.titleRow}>
+            <h1 className={styles.title}>Mechanical Keyboards</h1>
+            <div className={styles.quickLinks}>
+              <Link className={styles.quickLink} to="/keyboards/switch-guide">
                 <GuideIcon />
                 Switch Guide
-              </QuickLink>
-              <QuickLink to="/keyboards/size-guide">
+              </Link>
+              <Link className={styles.quickLink} to="/keyboards/size-guide">
                 <SizeIcon />
                 Size Guide
-              </QuickLink>
-            </QuickLinks>
-          </TitleRow>
-        </Header>
+              </Link>
+            </div>
+          </div>
+        </div>
 
-        <MainContent>
-          <FiltersColumn>
+        <div className={styles.mainContent}>
+          <div className={styles.filtersColumn}>
             <KeyboardFilters
               filters={filters}
               onFilterChange={handleFilterChange}
               onClear={handleClearFilters}
             />
-          </FiltersColumn>
+          </div>
 
-          <ProductsColumn>
-            <TopBar>
-              <ResultsCount>
+          <div className={styles.productsColumn}>
+            <div className={styles.topBar}>
+              <span className={styles.resultsCount}>
                 {loading ? "Loading..." : `${totalCount} keyboards found`}
-              </ResultsCount>
-              <SortRow>
-                <SearchInput
+              </span>
+              <div className={styles.sortRow}>
+                <input
+                  className={styles.searchInput}
                   type="text"
                   placeholder="Search keyboards..."
                   value={searchTerm}
                   onChange={handleSearch}
                 />
-                <SortLabel>Sort by:</SortLabel>
-                <SortSelect
+                <span className={styles.sortLabel}>Sort by:</span>
+                <select
+                  className={styles.sortSelect}
                   value={`${filters.sortBy || "name"}-${filters.sortDescending ? "desc" : "asc"}`}
                   onChange={handleSort}
                 >
@@ -416,45 +177,83 @@ const KeyboardsPage = () => {
                   <option value="price-asc">Price (Low to High)</option>
                   <option value="price-desc">Price (High to Low)</option>
                   <option value="brand-asc">Brand (A-Z)</option>
-                </SortSelect>
-              </SortRow>
-            </TopBar>
+                </select>
+              </div>
+            </div>
 
-            <ProductsGrid>
+            <div className={styles.productsGrid}>
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (
-                  <SkeletonCard key={i}>
-                    <SkeletonImage />
-                    <SkeletonContent>
-                      <SkeletonText $width="60px" $height="12px" $mb="8px" />
-                      <SkeletonText $width="90%" $height="18px" $mb="12px" />
-                      <SkeletonText $width="100%" $height="14px" $mb="6px" />
-                      <SkeletonText $width="80%" $height="14px" $mb="12px" />
-                      <SkeletonText $width="40%" $height="24px" />
-                    </SkeletonContent>
-                  </SkeletonCard>
+                  <div key={i} className={styles.skeletonCard}>
+                    <div className={styles.skeletonImage} />
+                    <div className={styles.skeletonContent}>
+                      <div
+                        className={styles.skeletonText}
+                        style={{
+                          width: "60px",
+                          height: "12px",
+                          marginBottom: "8px",
+                        }}
+                      />
+                      <div
+                        className={styles.skeletonText}
+                        style={{
+                          width: "90%",
+                          height: "18px",
+                          marginBottom: "12px",
+                        }}
+                      />
+                      <div
+                        className={styles.skeletonText}
+                        style={{
+                          width: "100%",
+                          height: "14px",
+                          marginBottom: "6px",
+                        }}
+                      />
+                      <div
+                        className={styles.skeletonText}
+                        style={{
+                          width: "80%",
+                          height: "14px",
+                          marginBottom: "12px",
+                        }}
+                      />
+                      <div
+                        className={styles.skeletonText}
+                        style={{ width: "40%", height: "24px" }}
+                      />
+                    </div>
+                  </div>
                 ))
               ) : keyboards.length === 0 ? (
-                <EmptyState>
-                  <EmptyIcon>⌨️</EmptyIcon>
-                  <EmptyText>No keyboards found</EmptyText>
-                  <EmptySubtext>Try adjusting your filters or search term</EmptySubtext>
-                </EmptyState>
+                <div className={styles.emptyState}>
+                  <div className={styles.emptyIcon}>⌨️</div>
+                  <p className={styles.emptyText}>No keyboards found</p>
+                  <p className={styles.emptySubtext}>
+                    Try adjusting your filters or search term
+                  </p>
+                </div>
               ) : (
                 keyboards.map((keyboard, index) => (
-                  <KeyboardCard key={keyboard.id} keyboard={keyboard} index={index} />
+                  <KeyboardCard
+                    key={keyboard.id}
+                    keyboard={keyboard}
+                    index={index}
+                  />
                 ))
               )}
-            </ProductsGrid>
+            </div>
 
             {!loading && totalPages > 1 && (
-              <Pagination>
-                <PageButton
+              <div className={styles.pagination}>
+                <button
+                  className={styles.pageButton}
                   onClick={() => handlePageChange(filters.page - 1)}
                   disabled={filters.page <= 1}
                 >
                   Previous
-                </PageButton>
+                </button>
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                   let pageNum;
                   if (totalPages <= 5) {
@@ -467,27 +266,28 @@ const KeyboardsPage = () => {
                     pageNum = filters.page - 2 + i;
                   }
                   return (
-                    <PageButton
+                    <button
                       key={pageNum}
-                      $active={filters.page === pageNum}
+                      className={`${styles.pageButton} ${filters.page === pageNum ? styles.pageButtonActive : ""}`}
                       onClick={() => handlePageChange(pageNum)}
                     >
                       {pageNum}
-                    </PageButton>
+                    </button>
                   );
                 })}
-                <PageButton
+                <button
+                  className={styles.pageButton}
                   onClick={() => handlePageChange(filters.page + 1)}
                   disabled={filters.page >= totalPages}
                 >
                   Next
-                </PageButton>
-              </Pagination>
+                </button>
+              </div>
             )}
-          </ProductsColumn>
-        </MainContent>
-      </Container>
-    </PageContainer>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

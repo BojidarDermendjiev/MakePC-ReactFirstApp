@@ -1,263 +1,8 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useParams, Link } from "react-router-dom";
 import orderService from "../../api/orderService.js";
 import { navigation } from "../../common/navigations";
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 48px 24px;
-  text-align: center;
-`;
-
-const SuccessIcon = styled.div`
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 24px;
-  background: #4CAF50;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    width: 40px;
-    height: 40px;
-    stroke: white;
-    stroke-width: 3;
-  }
-`;
-
-const Title = styled.h1`
-  margin: 0 0 8px 0;
-  font-size: 32px;
-  color: #333;
-`;
-
-const Subtitle = styled.p`
-  margin: 0 0 32px 0;
-  font-size: 16px;
-  color: #666;
-`;
-
-const OrderCard = styled.div`
-  background: #fff;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 24px;
-  text-align: left;
-`;
-
-const OrderHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #eee;
-`;
-
-const OrderNumber = styled.div`
-  h3 {
-    margin: 0 0 4px 0;
-    font-size: 18px;
-    color: #333;
-  }
-
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-  }
-`;
-
-const OrderStatus = styled.span`
-  padding: 8px 16px;
-  background: ${(props) => {
-    switch (props.$status?.toLowerCase()) {
-      case "completed":
-        return "#e8f5e9";
-      case "pending":
-        return "#fff3e0";
-      case "cancelled":
-        return "#ffebee";
-      default:
-        return "#e3f2fd";
-    }
-  }};
-  color: ${(props) => {
-    switch (props.$status?.toLowerCase()) {
-      case "completed":
-        return "#2e7d32";
-      case "pending":
-        return "#ef6c00";
-      case "cancelled":
-        return "#c62828";
-      default:
-        return "#1565c0";
-    }
-  }};
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-`;
-
-const Section = styled.div`
-  margin-bottom: 24px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-
-const SectionTitle = styled.h4`
-  margin: 0 0 12px 0;
-  font-size: 14px;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`;
-
-const ItemsList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const OrderItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: #f9f9f9;
-  border-radius: 8px;
-`;
-
-const ItemInfo = styled.div`
-  h5 {
-    margin: 0 0 4px 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-  }
-
-  p {
-    margin: 0;
-    font-size: 12px;
-    color: #666;
-  }
-`;
-
-const ItemPrice = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1976d2;
-`;
-
-const SummaryGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-`;
-
-const SummaryItem = styled.div`
-  p {
-    margin: 0 0 4px 0;
-    font-size: 12px;
-    color: #666;
-  }
-
-  span {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-  }
-`;
-
-const TotalSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 16px;
-  border-top: 2px solid #eee;
-  margin-top: 16px;
-`;
-
-const TotalLabel = styled.span`
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-`;
-
-const TotalAmount = styled.span`
-  font-size: 24px;
-  font-weight: 700;
-  color: #1976d2;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-`;
-
-const PrimaryButton = styled(Link)`
-  display: inline-block;
-  padding: 14px 28px;
-  background: #1976d2;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background 0.2s;
-
-  &:hover {
-    background: #1565c0;
-  }
-`;
-
-const SecondaryButton = styled(Link)`
-  display: inline-block;
-  padding: 14px 28px;
-  background: #f5f5f5;
-  color: #333;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background 0.2s;
-
-  &:hover {
-    background: #e0e0e0;
-  }
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
-  font-size: 18px;
-  color: #666;
-`;
-
-const ErrorContainer = styled.div`
-  text-align: center;
-  padding: 48px;
-
-  h2 {
-    margin-bottom: 8px;
-    color: #333;
-  }
-
-  p {
-    color: #666;
-    margin-bottom: 24px;
-  }
-`;
+import styles from "../../assets/styles/orderSuccess.module.css";
 
 const OrderSuccess = () => {
   const { orderId } = useParams();
@@ -285,21 +30,23 @@ const OrderSuccess = () => {
 
   if (loading) {
     return (
-      <Container>
-        <LoadingContainer>Loading order details...</LoadingContainer>
-      </Container>
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>Loading order details...</div>
+      </div>
     );
   }
 
   if (error || !order) {
     return (
-      <Container>
-        <ErrorContainer>
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
           <h2>Order Not Found</h2>
           <p>We could not find the order you are looking for.</p>
-          <PrimaryButton to={navigation.getOrdersUrl()}>View All Orders</PrimaryButton>
-        </ErrorContainer>
-      </Container>
+          <Link className={styles.primaryButton} to={navigation.getOrdersUrl()}>
+            View All Orders
+          </Link>
+        </div>
+      </div>
     );
   }
 
@@ -313,70 +60,89 @@ const OrderSuccess = () => {
     });
   };
 
+  const statusClass = (() => {
+    const s = (order.paymentStatus || "").toLowerCase();
+    if (s.includes("completed")) return styles.orderStatusCompleted;
+    if (s.includes("pending")) return styles.orderStatusPending;
+    if (s.includes("cancel")) return styles.orderStatusCancelled;
+    return styles.orderStatusDefault;
+  })();
+
   return (
-    <Container>
-      <SuccessIcon>
+    <div className={styles.container}>
+      <div className={styles.successIcon}>
         <svg viewBox="0 0 24 24" fill="none">
           <polyline points="20 6 9 17 4 12" />
         </svg>
-      </SuccessIcon>
+      </div>
 
-      <Title>Order Placed Successfully!</Title>
-      <Subtitle>
-        Thank you for your purchase. A confirmation email has been sent to your email address.
-      </Subtitle>
+      <h1 className={styles.title}>Order Placed Successfully!</h1>
+      <p className={styles.subtitle}>
+        Thank you for your purchase. A confirmation email has been sent to your
+        email address.
+      </p>
 
-      <OrderCard>
-        <OrderHeader>
-          <OrderNumber>
+      <div className={styles.orderCard}>
+        <div className={styles.orderHeader}>
+          <div className={styles.orderNumber}>
             <h3>Order #{order.id}</h3>
             <p>Placed on {formatDate(order.orderDate)}</p>
-          </OrderNumber>
-          <OrderStatus $status={order.paymentStatus}>
+          </div>
+          <span className={`${styles.orderStatus} ${statusClass}`}>
             {order.paymentStatus}
-          </OrderStatus>
-        </OrderHeader>
+          </span>
+        </div>
 
-        <Section>
-          <SectionTitle>Items Ordered</SectionTitle>
-          <ItemsList>
+        <div className={styles.section}>
+          <h4 className={styles.sectionTitle}>Items Ordered</h4>
+          <div className={styles.itemsList}>
             {order.items?.map((item) => (
-              <OrderItem key={item.id}>
-                <ItemInfo>
+              <div className={styles.orderItem} key={item.id}>
+                <div className={styles.itemInfo}>
                   <h5>{item.productName}</h5>
-                  <p>Qty: {item.quantity} x ${item.unitPrice?.toFixed(2)}</p>
-                </ItemInfo>
-                <ItemPrice>${(item.quantity * item.unitPrice).toFixed(2)}</ItemPrice>
-              </OrderItem>
+                  <p>
+                    Qty: {item.quantity} x ${item.unitPrice?.toFixed(2)}
+                  </p>
+                </div>
+                <span className={styles.itemPrice}>
+                  ${(item.quantity * item.unitPrice).toFixed(2)}
+                </span>
+              </div>
             ))}
-          </ItemsList>
-        </Section>
+          </div>
+        </div>
 
-        <Section>
-          <SectionTitle>Delivery Details</SectionTitle>
-          <SummaryGrid>
-            <SummaryItem>
+        <div className={styles.section}>
+          <h4 className={styles.sectionTitle}>Delivery Details</h4>
+          <div className={styles.summaryGrid}>
+            <div className={styles.summaryItem}>
               <p>Shipping Address</p>
               <span>{order.shippingAddress}</span>
-            </SummaryItem>
-            <SummaryItem>
+            </div>
+            <div className={styles.summaryItem}>
               <p>Payment Method</p>
               <span>{order.paymentStatus}</span>
-            </SummaryItem>
-          </SummaryGrid>
-        </Section>
+            </div>
+          </div>
+        </div>
 
-        <TotalSection>
-          <TotalLabel>Total Amount</TotalLabel>
-          <TotalAmount>${order.totalPrice?.toFixed(2)}</TotalAmount>
-        </TotalSection>
-      </OrderCard>
+        <div className={styles.totalSection}>
+          <span className={styles.totalLabel}>Total Amount</span>
+          <span className={styles.totalAmount}>
+            ${order.totalPrice?.toFixed(2)}
+          </span>
+        </div>
+      </div>
 
-      <ButtonsContainer>
-        <SecondaryButton to={navigation.getOrdersUrl()}>View All Orders</SecondaryButton>
-        <PrimaryButton to={navigation.getProductsUrl()}>Continue Shopping</PrimaryButton>
-      </ButtonsContainer>
-    </Container>
+      <div className={styles.buttonsContainer}>
+        <Link className={styles.secondaryButton} to={navigation.getOrdersUrl()}>
+          View All Orders
+        </Link>
+        <Link className={styles.primaryButton} to={navigation.getProductsUrl()}>
+          Continue Shopping
+        </Link>
+      </div>
+    </div>
   );
 };
 

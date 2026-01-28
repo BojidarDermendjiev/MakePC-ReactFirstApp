@@ -1,0 +1,244 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  background: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.successIcon svg {
+  width: 40px;
+  height: 40px;
+  stroke: #ffffff;
+  stroke-width: 3;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 32px;
+  color: #333;
+}
+
+.subtitle {
+  margin: 0 0 32px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.orderCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.orderNumber h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.orderNumber p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.orderStatus {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.orderStatusCompleted {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.orderStatusPending {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.orderStatusCancelled {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.orderStatusDefault {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.itemInfo h5 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.itemInfo p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.itemPrice {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.summaryItem p {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.summaryItem span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.totalSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 2px solid #eee;
+  margin-top: 16px;
+}
+
+.totalLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.totalAmount {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1976d2;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.primaryButton {
+  display: inline-block;
+  padding: 14px 28px;
+  background: #1976d2;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.2s ease-in-out;
+}
+
+.primaryButton:hover {
+  background: #1565c0;
+}
+
+.secondaryButton {
+  display: inline-block;
+  padding: 14px 28px;
+  background: #f5f5f5;
+  color: #333;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.2s ease-in-out;
+}
+
+.secondaryButton:hover {
+  background: #e0e0e0;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  font-size: 18px;
+  color: #666;
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 48px;
+}
+
+.errorContainer h2 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.errorContainer p {
+  color: #666;
+  margin-bottom: 24px;
+}

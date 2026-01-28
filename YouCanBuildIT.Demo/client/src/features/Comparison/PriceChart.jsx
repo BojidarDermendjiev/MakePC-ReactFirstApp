@@ -1,112 +1,7 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import * as priceComparisonService from "../../api/priceComparisonService";
-
-const Container = styled.div`
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-`;
-
-const Title = styled.h3`
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const ChartContainer = styled.div`
-  height: 200px;
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  padding: 1rem 0;
-  border-bottom: 2px solid #e5e7eb;
-`;
-
-const ChartBar = styled.div`
-  flex: 1;
-  background: ${(props) => (props.$isLowest ? "#10b981" : "#2563eb")};
-  border-radius: 4px 4px 0 0;
-  min-height: 10px;
-  transition: height 0.3s ease;
-  position: relative;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const Tooltip = styled.div`
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: white;
-  padding: 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  z-index: 10;
-  display: none;
-
-  ${ChartBar}:hover & {
-    display: block;
-  }
-`;
-
-const StatsRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-`;
-
-const StatItem = styled.div`
-  text-align: center;
-`;
-
-const StatValue = styled.div`
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: ${(props) => props.$color || "#333"};
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.75rem;
-  color: #666;
-`;
-
-const NoData = styled.div`
-  text-align: center;
-  padding: 2rem;
-  color: #666;
-`;
-
-const TimeRange = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-`;
-
-const RangeButton = styled.button`
-  padding: 0.25rem 0.75rem;
-  border: 1px solid ${(props) => (props.$active ? "#2563eb" : "#d1d5db")};
-  background: ${(props) => (props.$active ? "#eff6ff" : "white")};
-  color: ${(props) => (props.$active ? "#2563eb" : "#666")};
-  border-radius: 4px;
-  font-size: 0.8rem;
-  cursor: pointer;
-
-  &:hover {
-    border-color: #2563eb;
-  }
-`;
+import styles from "../../assets/styles/priceChart.module.css";
 
 export default function PriceChart({ productId, productName }) {
   const { t } = useTranslation();
@@ -118,12 +13,16 @@ export default function PriceChart({ productId, productName }) {
     if (productId) {
       fetchPriceHistory();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId, days]);
 
   const fetchPriceHistory = async () => {
     try {
       setLoading(true);
-      const data = await priceComparisonService.getPriceHistory(productId, days);
+      const data = await priceComparisonService.getPriceHistory(
+        productId,
+        days,
+      );
       setPriceHistory(data);
     } catch (error) {
       console.error("Error fetching price history:", error);
@@ -134,21 +33,32 @@ export default function PriceChart({ productId, productName }) {
 
   if (loading) {
     return (
-      <Container>
-        <Title>📈 {t("comparison.priceHistory", "Price History")}</Title>
-        <NoData>{t("loading", "Loading...")}</NoData>
-      </Container>
+      <div className={styles.container}>
+        <h3 className={styles.title}>
+          📈 {t("comparison.priceHistory", "Price History")}
+        </h3>
+        <div className={styles.noData}>{t("loading", "Loading...")}</div>
+      </div>
     );
   }
 
-  if (!priceHistory || !priceHistory.history || priceHistory.history.length === 0) {
+  if (
+    !priceHistory ||
+    !priceHistory.history ||
+    priceHistory.history.length === 0
+  ) {
     return (
-      <Container>
-        <Title>📈 {t("comparison.priceHistory", "Price History")}</Title>
-        <NoData>
-          {t("comparison.noHistory", "No price history available for this product")}
-        </NoData>
-      </Container>
+      <div className={styles.container}>
+        <h3 className={styles.title}>
+          📈 {t("comparison.priceHistory", "Price History")}
+        </h3>
+        <div className={styles.noData}>
+          {t(
+            "comparison.noHistory",
+            "No price history available for this product",
+          )}
+        </div>
+      </div>
     );
   }
 
@@ -157,58 +67,82 @@ export default function PriceChart({ productId, productName }) {
   const minPrice = Math.min(...history.map((p) => p.priceBgn));
 
   return (
-    <Container>
-      <Title>📈 {productName || t("comparison.priceHistory", "Price History")}</Title>
+    <div className={styles.container}>
+      <h3 className={styles.title}>
+        📈 {productName || t("comparison.priceHistory", "Price History")}
+      </h3>
 
-      <TimeRange>
-        <RangeButton $active={days === 7} onClick={() => setDays(7)}>
+      <div className={styles.timeRange}>
+        <button
+          className={`${styles.rangeButton} ${days === 7 ? styles.rangeButtonActive : ""}`}
+          onClick={() => setDays(7)}
+        >
           7 {t("comparison.days", "days")}
-        </RangeButton>
-        <RangeButton $active={days === 30} onClick={() => setDays(30)}>
+        </button>
+        <button
+          className={`${styles.rangeButton} ${days === 30 ? styles.rangeButtonActive : ""}`}
+          onClick={() => setDays(30)}
+        >
           30 {t("comparison.days", "days")}
-        </RangeButton>
-        <RangeButton $active={days === 90} onClick={() => setDays(90)}>
+        </button>
+        <button
+          className={`${styles.rangeButton} ${days === 90 ? styles.rangeButtonActive : ""}`}
+          onClick={() => setDays(90)}
+        >
           90 {t("comparison.days", "days")}
-        </RangeButton>
-      </TimeRange>
+        </button>
+      </div>
 
-      <ChartContainer>
-        {history.slice(-30).map((point, index) => {
-          const height = ((point.priceBgn - minPrice) / (maxPrice - minPrice || 1)) * 100;
+      <div className={styles.chartContainer}>
+        {history.slice(-days).map((point, index) => {
+          const height =
+            ((point.priceBgn - minPrice) / (maxPrice - minPrice || 1)) * 100;
           const isLowest = point.priceBgn === minPrice;
 
           return (
-            <ChartBar
+            <div
               key={index}
-              $isLowest={isLowest}
+              className={`${styles.chartBar} ${isLowest ? styles.chartBarLowest : ""}`}
               style={{ height: `${Math.max(height, 5)}%` }}
             >
-              <Tooltip>
+              <div className={styles.tooltip}>
                 {point.priceBgn.toFixed(2)} лв.
                 <br />
                 {point.vendorName}
                 <br />
                 {new Date(point.date).toLocaleDateString()}
-              </Tooltip>
-            </ChartBar>
+              </div>
+            </div>
           );
         })}
-      </ChartContainer>
+      </div>
 
-      <StatsRow>
-        <StatItem>
-          <StatValue $color="#10b981">{currentLowest.toFixed(2)} лв.</StatValue>
-          <StatLabel>{t("comparison.currentLowest", "Current Lowest")}</StatLabel>
-        </StatItem>
-        <StatItem>
-          <StatValue $color="#2563eb">{lowestEver.toFixed(2)} лв.</StatValue>
-          <StatLabel>{t("comparison.lowestEver", "Lowest Ever")}</StatLabel>
-        </StatItem>
-        <StatItem>
-          <StatValue $color="#ef4444">{highestEver.toFixed(2)} лв.</StatValue>
-          <StatLabel>{t("comparison.highestEver", "Highest Ever")}</StatLabel>
-        </StatItem>
-      </StatsRow>
-    </Container>
+      <div className={styles.statsRow}>
+        <div className={styles.statItem}>
+          <div className={`${styles.statValue} ${styles.statValueGreen}`}>
+            {currentLowest.toFixed(2)} лв.
+          </div>
+          <div className={styles.statLabel}>
+            {t("comparison.currentLowest", "Current Lowest")}
+          </div>
+        </div>
+        <div className={styles.statItem}>
+          <div className={`${styles.statValue} ${styles.statValueBlue}`}>
+            {lowestEver.toFixed(2)} лв.
+          </div>
+          <div className={styles.statLabel}>
+            {t("comparison.lowestEver", "Lowest Ever")}
+          </div>
+        </div>
+        <div className={styles.statItem}>
+          <div className={`${styles.statValue} ${styles.statValueRed}`}>
+            {highestEver.toFixed(2)} лв.
+          </div>
+          <div className={styles.statLabel}>
+            {t("comparison.highestEver", "Highest Ever")}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

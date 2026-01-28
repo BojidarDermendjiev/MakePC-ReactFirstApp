@@ -1,96 +1,8 @@
 import { useState } from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import ReactionButtons from "./ReactionButtons";
 import CommentForm from "./CommentForm";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${(props) => (props.$isReply ? "12px 0 12px 24px" : "16px 0")};
-  border-bottom: ${(props) => (props.$isReply ? "none" : "1px solid #f3f4f6")};
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-`;
-
-const Avatar = styled.div`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #c7f022 0%, #a8d810 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1f2937;
-  flex-shrink: 0;
-`;
-
-const AuthorInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-`;
-
-const AuthorName = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1f2937;
-`;
-
-const Timestamp = styled.span`
-  font-size: 12px;
-  color: #9ca3af;
-`;
-
-const Body = styled.div`
-  margin-left: 48px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #374151;
-  white-space: pre-wrap;
-  word-break: break-word;
-`;
-
-const Actions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-left: 48px;
-  margin-top: 12px;
-`;
-
-const ActionButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0;
-  border: none;
-  background: none;
-  font-size: 13px;
-  color: #6b7280;
-  cursor: pointer;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: #1f2937;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-`;
+import styles from "../../assets/styles/commentItem.module.css";
 
 const ReplyIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -109,42 +21,6 @@ const DeleteIcon = () => (
     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
   </svg>
 );
-
-const RepliesContainer = styled.div`
-  margin-left: 24px;
-  border-left: 2px solid #f3f4f6;
-`;
-
-const ShowRepliesButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: 48px;
-  margin-top: 8px;
-  padding: 4px 0;
-  border: none;
-  background: none;
-  font-size: 13px;
-  font-weight: 500;
-  color: #6b7280;
-  cursor: pointer;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: #1f2937;
-  }
-`;
-
-const ReplyFormContainer = styled.div`
-  margin-left: 48px;
-  margin-top: 12px;
-`;
-
-const EditedBadge = styled.span`
-  font-size: 11px;
-  color: #9ca3af;
-  margin-left: 8px;
-`;
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -213,23 +89,29 @@ export const CommentItem = ({
     }
   };
 
+  const containerClass = isReply
+    ? `${styles.container} ${styles.containerReply}`
+    : styles.container;
+
   return (
-    <Container $isReply={isReply}>
-      <Header>
-        <Avatar>{getInitials(comment.authorName)}</Avatar>
-        <AuthorInfo>
-          <AuthorName>
+    <div className={containerClass}>
+      <div className={styles.header}>
+        <div className={styles.avatar}>{getInitials(comment.authorName)}</div>
+        <div className={styles.authorInfo}>
+          <span className={styles.authorName}>
             {comment.authorName}
             {comment.updatedAt && comment.updatedAt !== comment.createdAt && (
-              <EditedBadge>(edited)</EditedBadge>
+              <span className={styles.editedBadge}>(edited)</span>
             )}
-          </AuthorName>
-          <Timestamp>{formatDate(comment.createdAt)}</Timestamp>
-        </AuthorInfo>
-      </Header>
+          </span>
+          <span className={styles.timestamp}>
+            {formatDate(comment.createdAt)}
+          </span>
+        </div>
+      </div>
 
       {isEditing ? (
-        <ReplyFormContainer>
+        <div className={styles.replyFormContainer}>
           <CommentForm
             onSubmit={handleEdit}
             onCancel={() => setIsEditing(false)}
@@ -238,13 +120,16 @@ export const CommentItem = ({
             compact
             isAuthenticated
           />
-        </ReplyFormContainer>
+        </div>
       ) : (
-        <Body dangerouslySetInnerHTML={{ __html: comment.bodyHtml }} />
+        <div
+          className={styles.body}
+          dangerouslySetInnerHTML={{ __html: comment.bodyHtml }}
+        />
       )}
 
       {!isEditing && (
-        <Actions>
+        <div className={styles.actions}>
           <ReactionButtons
             likeCount={comment.likeCount}
             dislikeCount={comment.dislikeCount}
@@ -253,28 +138,34 @@ export const CommentItem = ({
             disabled={!isAuthenticated}
           />
           {isAuthenticated && !isReply && (
-            <ActionButton onClick={() => setShowReplyForm(!showReplyForm)}>
+            <button
+              className={styles.actionButton}
+              onClick={() => setShowReplyForm(!showReplyForm)}
+            >
               <ReplyIcon />
               Reply
-            </ActionButton>
+            </button>
           )}
           {isOwner && (
             <>
-              <ActionButton onClick={() => setIsEditing(true)}>
+              <button
+                className={styles.actionButton}
+                onClick={() => setIsEditing(true)}
+              >
                 <EditIcon />
                 Edit
-              </ActionButton>
-              <ActionButton onClick={handleDelete}>
+              </button>
+              <button className={styles.actionButton} onClick={handleDelete}>
                 <DeleteIcon />
                 Delete
-              </ActionButton>
+              </button>
             </>
           )}
-        </Actions>
+        </div>
       )}
 
       {showReplyForm && (
-        <ReplyFormContainer>
+        <div className={styles.replyFormContainer}>
           <CommentForm
             onSubmit={handleReply}
             onCancel={() => setShowReplyForm(false)}
@@ -283,17 +174,20 @@ export const CommentItem = ({
             compact
             isAuthenticated
           />
-        </ReplyFormContainer>
+        </div>
       )}
 
       {hasReplies && (
         <>
-          <ShowRepliesButton onClick={() => setShowReplies(!showReplies)}>
+          <button
+            className={styles.showRepliesButton}
+            onClick={() => setShowReplies(!showReplies)}
+          >
             {showReplies ? "Hide" : "Show"} {comment.replies.length}{" "}
             {comment.replies.length === 1 ? "reply" : "replies"}
-          </ShowRepliesButton>
+          </button>
           {showReplies && (
-            <RepliesContainer>
+            <div className={styles.repliesContainer}>
               {comment.replies.map((reply) => (
                 <CommentItem
                   key={reply.id}
@@ -307,11 +201,11 @@ export const CommentItem = ({
                   isReply
                 />
               ))}
-            </RepliesContainer>
+            </div>
           )}
         </>
       )}
-    </Container>
+    </div>
   );
 };
 

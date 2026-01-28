@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import styles from "./SocialLoginButtons.module.css";
+import styles from "../../assets/styles/socialLoginButtons.module.css";
 import { serverApiUrl } from "../../common/generic";
 
 const SocialLoginButtons = ({ onProviderClick }) => {
@@ -11,7 +11,9 @@ const SocialLoginButtons = ({ onProviderClick }) => {
       onProviderClick(provider);
     }
     // Redirect to backend OAuth endpoint
-    const returnUrl = encodeURIComponent(window.location.origin + "/oauth-callback");
+    const returnUrl = encodeURIComponent(
+      window.location.origin + "/oauth-callback",
+    );
     window.location.href = `${serverApiUrl}/auth/external/start?provider=${provider}&returnUrl=${returnUrl}`;
   };
 

@@ -54,13 +54,8 @@ import {
   CreateThread,
 } from "../pages/Forum";
 import { NewsHome, NewsArticle } from "../pages/News";
-import {
-  BuilderWizard,
-  MyBuilds,
-  PublicBuilds,
-} from "../features/Builder";
+import { BuilderWizard, MyBuilds, PublicBuilds } from "../features/Builder";
 import { ComparisonPage } from "../features/Comparison";
-import OAuthCallback from "../pages/OAuthCallback/OAuthCallback";
 
 export default function Main() {
   return (
@@ -88,7 +83,6 @@ export default function Main() {
         />
         <Route path={navigation.getLoginUrl()} element={<Login />} />
         <Route path={navigation.getRegisterUrl()} element={<Register />} />
-        <Route path="/oauth-callback" element={<OAuthCallback />} />
         <Route
           path={navigation.getUserSettingsUrl()}
           element={<UserSettings />}
@@ -96,6 +90,8 @@ export default function Main() {
         <Route path={navigation.getRegisterUrl()} element={<SignUp />} />
         <Route path={navigation.getLogoutUrl()} element={<Logout />} />
         <Route path={navigation.getCommentFromUrl()} element={<Comment />} />
+
+        {/* Products */}
         <Route path={navigation.getProductsUrl()} element={<ProductList />} />
         <Route
           path={navigation.getProductCreateUrl()}
@@ -109,6 +105,8 @@ export default function Main() {
           path={navigation.getProductDetailsUrl(":id")}
           element={<ProductDetails />}
         />
+
+        {/* Reviews */}
         <Route
           path={navigation.getReviewByIdUrl(":reviewId")}
           element={<ReviewCrudPage />}
@@ -117,13 +115,15 @@ export default function Main() {
           path={navigation.getProductReviewUrl(":id")}
           element={<ReviewCrudPage />}
         />
+
+        {/* Orders */}
         <Route path={navigation.getOrdersUrl()} element={<UserOrders />} />
         <Route path={navigation.getOrderCreateUrl()} element={<OrderForm />} />
         <Route
           path={navigation.getOrderEditUrl(":id")}
           element={<OrderForm isEdit={true} />}
         />
-        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path={navigation.getCartUrl()} element={<ShoppingCart />} />
         <Route path={navigation.getCheckoutUrl()} element={<Checkout />} />
         <Route
           path={navigation.getOrderSuccessUrl(":orderId")}
@@ -150,6 +150,8 @@ export default function Main() {
           path={navigation.getOrderDetailsUrl(":id")}
           element={<OrderDetails />}
         />
+
+        {/* Categories */}
         <Route
           path={navigation.getCategoriesUrl()}
           element={<CategoryList />}
@@ -166,6 +168,8 @@ export default function Main() {
           path={navigation.getCategoryDetailsUrl(":id")}
           element={<CategoryDetails />}
         />
+
+        {/* Brands */}
         <Route path={navigation.getBrandsUrl()} element={<BrandList />} />
         <Route path={navigation.getBrandCreateUrl()} element={<BrandForm />} />
         <Route
@@ -176,30 +180,85 @@ export default function Main() {
           path={navigation.getBrandDetailsUrl(":id")}
           element={<BrandDetails />}
         />
-        {/* Keyboard Section Routes */}
-        <Route path="/keyboards" element={<KeyboardsPage />} />
-        <Route path="/keyboards/switch-guide" element={<SwitchGuide />} />
-        <Route path="/keyboards/size-guide" element={<SizeGuide />} />
-        <Route path="/keyboards/:id" element={<KeyboardDetails />} />
-        {/* SecondHand Marketplace Routes */}
-        <Route path="/secondhand" element={<SecondHandList />} />
-        <Route path="/secondhand/create" element={<SecondHandCreate />} />
-        <Route path="/secondhand/my-listings" element={<MyListings />} />
-        <Route path="/secondhand/edit/:id" element={<SecondHandEdit />} />
-        <Route path="/secondhand/:id" element={<SecondHandDetails />} />
-        {/* Forum Routes */}
-        <Route path="/forum" element={<ForumHome />} />
-        <Route path="/forum/category/:slug" element={<CategoryView />} />
-        <Route path="/forum/thread/:id" element={<ThreadView />} />
-        <Route path="/forum/create" element={<CreateThread />} />
-        {/* News Routes */}
-        <Route path="/news" element={<NewsHome />} />
-        <Route path="/news/:slug" element={<NewsArticle />} />
-        {/* PC Builder Routes */}
-        <Route path="/builder" element={<BuilderWizard />} />
-        <Route path="/builder/my-builds" element={<MyBuilds />} />
-        <Route path="/builder/community" element={<PublicBuilds />} />
-        <Route path="/builder/compare/:buildId" element={<ComparisonPage />} />
+
+        {/* Keyboards (using navigation helpers) */}
+        <Route
+          path={navigation.getKeyboardsUrl()}
+          element={<KeyboardsPage />}
+        />
+        <Route
+          path={navigation.getKeyboardsSwitchGuideUrl()}
+          element={<SwitchGuide />}
+        />
+        <Route
+          path={navigation.getKeyboardsSizeGuideUrl()}
+          element={<SizeGuide />}
+        />
+        <Route
+          path={navigation.getKeyboardDetailsUrl(":id")}
+          element={<KeyboardDetails />}
+        />
+
+        {/* Secondhand (using navigation helpers) */}
+        <Route
+          path={navigation.getSecondhandUrl()}
+          element={<SecondHandList />}
+        />
+        <Route
+          path={navigation.getSecondhandCreateUrl()}
+          element={<SecondHandCreate />}
+        />
+        <Route
+          path={navigation.getSecondhandMyListingsUrl()}
+          element={<MyListings />}
+        />
+        <Route
+          path={navigation.getSecondhandEditUrl(":id")}
+          element={<SecondHandEdit />}
+        />
+        <Route
+          path={navigation.getSecondhandDetailsUrl(":id")}
+          element={<SecondHandDetails />}
+        />
+
+        {/* Forum (using navigation helpers) */}
+        <Route path={navigation.getForumUrl()} element={<ForumHome />} />
+        <Route
+          path={navigation.getForumCategoryUrl(":slug")}
+          element={<CategoryView />}
+        />
+        <Route
+          path={navigation.getForumThreadUrl(":id")}
+          element={<ThreadView />}
+        />
+        <Route
+          path={navigation.getForumCreateUrl()}
+          element={<CreateThread />}
+        />
+
+        {/* News (using navigation helpers) */}
+        <Route path={navigation.getNewsUrl()} element={<NewsHome />} />
+        <Route
+          path={navigation.getNewsArticleUrl(":slug")}
+          element={<NewsArticle />}
+        />
+
+        {/* Builder & Comparison (using navigation helpers) */}
+        <Route
+          path={navigation.getBuilderWizardUrl()}
+          element={<BuilderWizard />}
+        />
+        <Route path={navigation.getMyBuildsUrl()} element={<MyBuilds />} />
+        <Route
+          path={navigation.getPublicBuildsUrl()}
+          element={<PublicBuilds />}
+        />
+        <Route
+          path={navigation.getBuilderCompareUrl(":buildId")}
+          element={<ComparisonPage />}
+        />
+
+        {/* Not Found */}
         <Route path={navigation.getPageNotFoundUrl()} element={<NotFound />} />
       </Routes>
     </main>

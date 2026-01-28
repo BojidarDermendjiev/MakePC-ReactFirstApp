@@ -1,181 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import * as priceComparisonService from "../../api/priceComparisonService";
 import * as buildService from "../../api/buildService";
 import BuildVsPrebuilt from "./BuildVsPrebuilt";
 import PriceChart from "./PriceChart";
 import ValueIndicator from "./ValueIndicator";
-
-const Container = styled.div`
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem;
-`;
-
-const Header = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-`;
-
-const Subtitle = styled.p`
-  color: #666;
-  font-size: 1.1rem;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 2rem;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const MainSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-
-const Sidebar = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
-
-const Card = styled.div`
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-`;
-
-const CardTitle = styled.h2`
-  font-size: 1.25rem;
-  color: #333;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const SummaryGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-`;
-
-const SummaryItem = styled.div`
-  text-align: center;
-  padding: 1rem;
-  background: ${(props) => props.$bg || "#f9fafb"};
-  border-radius: 8px;
-`;
-
-const SummaryValue = styled.div`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: ${(props) => props.$color || "#333"};
-`;
-
-const SummaryLabel = styled.div`
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 0.25rem;
-`;
-
-const ComponentList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-`;
-
-const ComponentRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  background: #f9fafb;
-  border-radius: 8px;
-`;
-
-const ComponentInfo = styled.div`
-  flex: 1;
-`;
-
-const ComponentType = styled.span`
-  font-size: 0.75rem;
-  color: #666;
-  text-transform: uppercase;
-`;
-
-const ComponentName = styled.p`
-  font-size: 0.9rem;
-  color: #333;
-  margin-top: 0.25rem;
-`;
-
-const PriceInfo = styled.div`
-  text-align: right;
-`;
-
-const OriginalPrice = styled.div`
-  font-size: 0.85rem;
-  color: #666;
-  text-decoration: ${(props) => (props.$hasLower ? "line-through" : "none")};
-`;
-
-const LowestPrice = styled.div`
-  font-size: 1rem;
-  font-weight: 600;
-  color: #10b981;
-`;
-
-const OfferCount = styled.span`
-  font-size: 0.75rem;
-  color: #2563eb;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Loading = styled.div`
-  text-align: center;
-  padding: 3rem;
-  color: #666;
-`;
-
-const ErrorMessage = styled.div`
-  text-align: center;
-  padding: 2rem;
-  background: #fef2f2;
-  color: #dc2626;
-  border-radius: 8px;
-`;
-
-const BackLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #2563eb;
-  text-decoration: none;
-  margin-bottom: 1rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import styles from "../../assets/styles/comparisonPage.module.css";
 
 export default function ComparisonPage() {
   const { t } = useTranslation();
@@ -189,6 +20,7 @@ export default function ComparisonPage() {
     if (buildId) {
       fetchComparison();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [buildId]);
 
   const fetchComparison = async () => {
@@ -213,131 +45,163 @@ export default function ComparisonPage() {
 
   if (loading) {
     return (
-      <Container>
-        <Loading>{t("loading", "Loading...")}</Loading>
-      </Container>
+      <div className={styles.container}>
+        <div className={styles.loading}>{t("loading", "Loading...")}</div>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Container>
-        <BackLink to="/builder/my-builds">
+      <div className={styles.container}>
+        <Link to="/builder/my-builds" className={styles.backLink}>
           ← {t("comparison.backToBuilds", "Back to My Builds")}
-        </BackLink>
-        <ErrorMessage>{error}</ErrorMessage>
-      </Container>
+        </Link>
+        <div className={styles.errorMessage}>{error}</div>
+      </div>
     );
   }
 
   if (!comparison) {
     return (
-      <Container>
-        <BackLink to="/builder/my-builds">
+      <div className={styles.container}>
+        <Link to="/builder/my-builds" className={styles.backLink}>
           ← {t("comparison.backToBuilds", "Back to My Builds")}
-        </BackLink>
-        <ErrorMessage>
+        </Link>
+        <div className={styles.errorMessage}>
           {t("comparison.notFound", "Build not found")}
-        </ErrorMessage>
-      </Container>
+        </div>
+      </div>
     );
   }
 
-  return (
-    <Container>
-      <BackLink to="/builder/my-builds">
-        ← {t("comparison.backToBuilds", "Back to My Builds")}
-      </BackLink>
+  const savingsPositive = (comparison.savings || 0) > 0;
 
-      <Header>
-        <Title>{t("comparison.title", "Price Comparison")}</Title>
-        <Subtitle>
+  return (
+    <div className={styles.container}>
+      <Link to="/builder/my-builds" className={styles.backLink}>
+        ← {t("comparison.backToBuilds", "Back to My Builds")}
+      </Link>
+
+      <div className={styles.header}>
+        <h1 className={styles.title}>
+          {t("comparison.title", "Price Comparison")}
+        </h1>
+        <p className={styles.subtitle}>
           {t("comparison.subtitle", "Compare prices for")} "
           {comparison.buildName}"
-        </Subtitle>
-      </Header>
+        </p>
+      </div>
 
-      <Grid>
-        <MainSection>
-          <Card>
-            <CardTitle>
+      <div className={styles.grid}>
+        <div className={styles.mainSection}>
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}>
               💰 {t("comparison.priceBreakdown", "Price Breakdown")}
-            </CardTitle>
+            </h2>
 
-            <SummaryGrid>
-              <SummaryItem $bg="#eff6ff">
-                <SummaryValue $color="#2563eb">
-                  {comparison.totalBuildCost?.toFixed(2)} лв.
-                </SummaryValue>
-                <SummaryLabel>
-                  {t("comparison.yourBuildCost", "Your Build Cost")}
-                </SummaryLabel>
-              </SummaryItem>
-
-              <SummaryItem $bg="#ecfdf5">
-                <SummaryValue $color="#10b981">
-                  {comparison.lowestComponentsCost?.toFixed(2)} лв.
-                </SummaryValue>
-                <SummaryLabel>
-                  {t("comparison.lowestPossible", "Lowest Possible")}
-                </SummaryLabel>
-              </SummaryItem>
-
-              <SummaryItem $bg={comparison.savings > 0 ? "#fef3c7" : "#f3f4f6"}>
-                <SummaryValue
-                  $color={comparison.savings > 0 ? "#d97706" : "#666"}
+            <div className={styles.summaryGrid}>
+              <div
+                className={`${styles.summaryItem} ${styles.summaryItemBlue}`}
+              >
+                <div
+                  className={`${styles.summaryValue} ${styles.summaryValueBlue}`}
                 >
-                  {comparison.savings > 0
+                  {comparison.totalBuildCost?.toFixed(2)} лв.
+                </div>
+                <div className={styles.summaryLabel}>
+                  {t("comparison.yourBuildCost", "Your Build Cost")}
+                </div>
+              </div>
+
+              <div
+                className={`${styles.summaryItem} ${styles.summaryItemGreen}`}
+              >
+                <div
+                  className={`${styles.summaryValue} ${styles.summaryValueGreen}`}
+                >
+                  {comparison.lowestComponentsCost?.toFixed(2)} лв.
+                </div>
+                <div className={styles.summaryLabel}>
+                  {t("comparison.lowestPossible", "Lowest Possible")}
+                </div>
+              </div>
+
+              <div
+                className={`${styles.summaryItem} ${
+                  savingsPositive
+                    ? styles.summaryItemAmber
+                    : styles.summaryItemGray
+                }`}
+              >
+                <div
+                  className={`${styles.summaryValue} ${
+                    savingsPositive
+                      ? styles.summaryValueAmber
+                      : styles.summaryValueGray
+                  }`}
+                >
+                  {savingsPositive
                     ? `${comparison.savings.toFixed(2)} лв.`
                     : "-"}
-                </SummaryValue>
-                <SummaryLabel>
+                </div>
+                <div className={styles.summaryLabel}>
                   {t("comparison.potentialSavings", "Potential Savings")}
-                </SummaryLabel>
-              </SummaryItem>
-            </SummaryGrid>
+                </div>
+              </div>
+            </div>
 
-            <ComponentList>
-              {comparison.components?.map((component) => (
-                <ComponentRow key={component.productId}>
-                  <ComponentInfo>
-                    <ComponentType>{component.componentType}</ComponentType>
-                    <ComponentName>{component.productName}</ComponentName>
-                  </ComponentInfo>
-                  <PriceInfo>
-                    <OriginalPrice
-                      $hasLower={
-                        component.lowestPrice &&
-                        component.lowestPrice < component.originalPrice
-                      }
-                    >
-                      {component.originalPrice.toFixed(2)} лв.
-                    </OriginalPrice>
-                    {component.lowestPrice &&
-                      component.lowestPrice < component.originalPrice && (
-                        <LowestPrice>
+            <div className={styles.componentList}>
+              {comparison.components?.map((component) => {
+                const hasLower =
+                  component.lowestPrice &&
+                  component.lowestPrice < component.originalPrice;
+                return (
+                  <div
+                    className={styles.componentRow}
+                    key={component.productId}
+                  >
+                    <div className={styles.componentInfo}>
+                      <span className={styles.componentType}>
+                        {component.componentType}
+                      </span>
+                      <p className={styles.componentName}>
+                        {component.productName}
+                      </p>
+                    </div>
+                    <div className={styles.priceInfo}>
+                      <div
+                        className={`${styles.originalPrice} ${
+                          hasLower ? styles.originalPriceStriked : ""
+                        }`}
+                      >
+                        {component.originalPrice.toFixed(2)} лв.
+                      </div>
+                      {hasLower && (
+                        <div className={styles.lowestPrice}>
                           {component.lowestPrice.toFixed(2)} лв.
-                        </LowestPrice>
+                        </div>
                       )}
-                    {component.offers?.length > 0 && (
-                      <OfferCount>
-                        {component.offers.length}{" "}
-                        {t("comparison.offers", "offers")}
-                      </OfferCount>
-                    )}
-                  </PriceInfo>
-                </ComponentRow>
-              ))}
-            </ComponentList>
-          </Card>
+                      {component.offers?.length > 0 && (
+                        <span className={styles.offerCount}>
+                          {component.offers.length}{" "}
+                          {t("comparison.offers", "offers")}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
           <BuildVsPrebuilt
             buildPrice={comparison.totalBuildCost}
             prebuilts={comparison.similarPrebuilts}
           />
-        </MainSection>
+        </div>
 
-        <Sidebar>
+        <div className={styles.sidebar}>
           <ValueIndicator
             buildPrice={comparison.totalBuildCost}
             lowestPrice={comparison.lowestComponentsCost}
@@ -345,24 +209,22 @@ export default function ComparisonPage() {
           />
 
           {build && (
-            <Card>
-              <CardTitle>
+            <div className={styles.card}>
+              <h2 className={styles.cardTitle}>
                 🖥️ {t("comparison.buildSummary", "Build Summary")}
-              </CardTitle>
+              </h2>
               <p>
                 <strong>{build.name}</strong>
               </p>
-              <p style={{ color: "#666", marginTop: "0.5rem" }}>
-                {build.purpose}
-              </p>
-              <p style={{ marginTop: "1rem" }}>
+              <p className={styles.buildPurpose}>{build.purpose}</p>
+              <p className={styles.buildComponentsCount}>
                 {build.items?.length || 0}{" "}
                 {t("comparison.components", "components")}
               </p>
-            </Card>
+            </div>
           )}
-        </Sidebar>
-      </Grid>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }

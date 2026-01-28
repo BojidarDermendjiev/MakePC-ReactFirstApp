@@ -1,288 +1,11 @@
 import { useEffect, useState, useContext, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import { getMyListings, deleteListing } from "../../api/secondHandListingService";
+import {
+  getMyListings,
+  deleteListing,
+} from "../../api/secondHandListingService";
 import { AuthContext } from "../../context/AuthContextProvider";
-
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
-
-const PageContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  padding: 24px;
-  animation: ${fadeIn} 0.3s ease;
-`;
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-  gap: 16px;
-`;
-
-const Title = styled.h1`
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: #1f2937;
-`;
-
-const CreateButton = styled(Link)`
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  background: linear-gradient(135deg, #c7f022 0%, #a8d810 100%);
-  color: #1f2937;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(199, 240, 34, 0.4);
-  }
-`;
-
-const ListingsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
-`;
-
-const ListingCard = styled.div`
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const CardImage = styled.div`
-  position: relative;
-  padding-top: 60%;
-  background: #f3f4f6;
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const StatusBadge = styled.span`
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  background: ${(props) => {
-    switch (props.$status) {
-      case "Active":
-        return "linear-gradient(135deg, #c7f022 0%, #a8d810 100%)";
-      case "Sold":
-        return "#dc2626";
-      case "Inactive":
-        return "#6b7280";
-      default:
-        return "#9ca3af";
-    }
-  }};
-  color: ${(props) => (props.$status === "Sold" ? "#fff" : "#1f2937")};
-`;
-
-const CardContent = styled.div`
-  padding: 16px;
-`;
-
-const CardTitle = styled.h3`
-  margin: 0 0 8px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2937;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
-
-const CardPrice = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 12px;
-
-  span {
-    font-size: 14px;
-    color: #6b7280;
-    font-weight: normal;
-  }
-`;
-
-const CardStats = styled.div`
-  display: flex;
-  gap: 16px;
-  padding-top: 12px;
-  border-top: 1px solid #f3f4f6;
-  font-size: 13px;
-  color: #6b7280;
-`;
-
-const StatItem = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
-`;
-
-const CardActions = styled.div`
-  display: flex;
-  gap: 8px;
-  padding: 12px 16px;
-  border-top: 1px solid #f3f4f6;
-  background: #f8fafc;
-`;
-
-const ActionButton = styled.button`
-  flex: 1;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &.primary {
-    background: #1f2937;
-    color: #fff;
-
-    &:hover {
-      background: #374151;
-    }
-  }
-
-  &.secondary {
-    background: #e5e7eb;
-    color: #1f2937;
-
-    &:hover {
-      background: #d1d5db;
-    }
-  }
-
-  &.danger {
-    background: #fee2e2;
-    color: #dc2626;
-
-    &:hover {
-      background: #fecaca;
-    }
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`;
-
-const EmptyState = styled.div`
-  text-align: center;
-  padding: 80px 20px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-
-  svg {
-    width: 80px;
-    height: 80px;
-    color: #9ca3af;
-    margin-bottom: 24px;
-  }
-
-  h2 {
-    margin: 0 0 8px 0;
-    font-size: 20px;
-    color: #1f2937;
-  }
-
-  p {
-    color: #6b7280;
-    margin-bottom: 24px;
-  }
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  font-size: 16px;
-  color: #6b7280;
-`;
-
-const LoginPrompt = styled.div`
-  text-align: center;
-  padding: 60px 20px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-
-  h2 {
-    margin: 0 0 12px;
-    color: #1f2937;
-  }
-
-  p {
-    color: #6b7280;
-    margin-bottom: 24px;
-  }
-`;
-
-const LoginButton = styled(Link)`
-  display: inline-block;
-  padding: 14px 32px;
-  background: linear-gradient(135deg, #c7f022 0%, #a8d810 100%);
-  color: #1f2937;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(199, 240, 34, 0.4);
-  }
-`;
+import styles from "../../assets/styles/myListings.module.css";
 
 const PlusIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -330,7 +53,8 @@ const MyListings = () => {
   }, [isAuthenticated, fetchListings]);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this listing?")) return;
+    if (!window.confirm("Are you sure you want to delete this listing?"))
+      return;
 
     setDeletingId(id);
     try {
@@ -355,63 +79,73 @@ const MyListings = () => {
 
   if (authLoading) {
     return (
-      <PageContainer>
-        <LoadingContainer>Loading...</LoadingContainer>
-      </PageContainer>
+      <div className={styles.pageContainer}>
+        <div className={styles.loadingContainer}>Loading...</div>
+      </div>
     );
   }
 
   if (!isAuthenticated) {
     return (
-      <PageContainer>
-        <Container>
-          <LoginPrompt>
+      <div className={styles.pageContainer}>
+        <div className={styles.container}>
+          <div className={styles.loginPrompt}>
             <h2>Login Required</h2>
             <p>Please login to view your listings.</p>
-            <LoginButton to="/login">Login</LoginButton>
-          </LoginPrompt>
-        </Container>
-      </PageContainer>
+            <Link className={styles.loginButton} to="/login">
+              Login
+            </Link>
+          </div>
+        </div>
+      </div>
     );
   }
 
   if (loading) {
     return (
-      <PageContainer>
-        <LoadingContainer>Loading your listings...</LoadingContainer>
-      </PageContainer>
+      <div className={styles.pageContainer}>
+        <div className={styles.loadingContainer}>Loading your listings...</div>
+      </div>
     );
   }
 
   return (
-    <PageContainer>
-      <Container>
-        <Header>
-          <Title>My Listings</Title>
-          <CreateButton to="/secondhand/create">
+    <div className={styles.pageContainer}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>My Listings</h1>
+          <Link className={styles.createButton} to="/secondhand/create">
             <PlusIcon />
             Create Listing
-          </CreateButton>
-        </Header>
+          </Link>
+        </div>
 
         {listings.length === 0 ? (
-          <EmptyState>
+          <div className={styles.emptyState}>
             <BoxIcon />
             <h2>No Listings Yet</h2>
             <p>Start selling your used hardware today!</p>
-            <CreateButton to="/secondhand/create">
+            <Link className={styles.createButton} to="/secondhand/create">
               <PlusIcon />
               Create Your First Listing
-            </CreateButton>
-          </EmptyState>
+            </Link>
+          </div>
         ) : (
-          <ListingsGrid>
+          <div className={styles.listingsGrid}>
             {listings.map((listing) => {
               const status = statusLabels[listing.status] || "Active";
+              const badgeClass =
+                status === "Sold"
+                  ? styles.statusSold
+                  : status === "Inactive"
+                    ? styles.statusInactive
+                    : status === "Active"
+                      ? styles.statusActive
+                      : styles.statusDefault;
 
               return (
-                <ListingCard key={listing.id}>
-                  <CardImage>
+                <div className={styles.listingCard} key={listing.id}>
+                  <div className={styles.cardImage}>
                     <img
                       src={listing.imageUrl || "/placeholder-product.png"}
                       alt={listing.title}
@@ -419,51 +153,62 @@ const MyListings = () => {
                         e.target.src = "/placeholder-product.png";
                       }}
                     />
-                    <StatusBadge $status={status}>{status}</StatusBadge>
-                  </CardImage>
+                    <span className={`${styles.statusBadge} ${badgeClass}`}>
+                      {status}
+                    </span>
+                  </div>
 
-                  <CardContent>
-                    <CardTitle>{listing.title}</CardTitle>
-                    <CardPrice>
+                  <div className={styles.cardContent}>
+                    <h3 className={styles.cardTitle}>{listing.title}</h3>
+                    <div className={styles.cardPrice}>
                       {listing.price?.toFixed(2)} <span>BGN</span>
-                    </CardPrice>
-                    <CardStats>
-                      <StatItem>
+                    </div>
+                    <div className={styles.cardStats}>
+                      <span className={styles.statItem}>
                         <EyeIcon />
                         {listing.viewCount || 0} views
-                      </StatItem>
-                      <StatItem>
+                      </span>
+                      <span className={styles.statItem}>
                         Created{" "}
-                        {new Date(listing.createdAt).toLocaleDateString("bg-BG", {
-                          day: "numeric",
-                          month: "short",
-                        })}
-                      </StatItem>
-                    </CardStats>
-                  </CardContent>
+                        {new Date(listing.createdAt).toLocaleDateString(
+                          "bg-BG",
+                          {
+                            day: "numeric",
+                            month: "short",
+                          },
+                        )}
+                      </span>
+                    </div>
+                  </div>
 
-                  <CardActions>
-                    <ActionButton className="primary" onClick={() => navigate(`/secondhand/${listing.id}`)}>
+                  <div className={styles.cardActions}>
+                    <button
+                      className={`${styles.actionButton} ${styles.primary}`}
+                      onClick={() => navigate(`/secondhand/${listing.id}`)}
+                    >
                       View
-                    </ActionButton>
-                    <ActionButton className="secondary" onClick={() => navigate(`/secondhand/edit/${listing.id}`)}>
+                    </button>
+                    <button
+                      className={`${styles.actionButton} ${styles.secondary}`}
+                      onClick={() => navigate(`/secondhand/edit/${listing.id}`)}
+                    >
                       Edit
-                    </ActionButton>
-                    <ActionButton
-                      className="danger"
+                    </button>
+                    <button
+                      className={`${styles.actionButton} ${styles.danger}`}
                       onClick={() => handleDelete(listing.id)}
                       disabled={deletingId === listing.id}
                     >
                       {deletingId === listing.id ? "..." : "Delete"}
-                    </ActionButton>
-                  </CardActions>
-                </ListingCard>
+                    </button>
+                  </div>
+                </div>
               );
             })}
-          </ListingsGrid>
+          </div>
         )}
-      </Container>
-    </PageContainer>
+      </div>
+    </div>
   );
 };
 

@@ -1,180 +1,31 @@
 import { useState, useEffect, useCallback } from "react";
-import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import CommentItem from "./CommentItem";
 import CommentForm from "./CommentForm";
 import commentService from "../../api/commentService";
-
-const shimmer = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-`;
-
-const Container = styled.div`
-  background: #fff;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f3f4f6;
-`;
-
-const Title = styled.h3`
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const Count = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-  color: #6b7280;
-  background: #f3f4f6;
-  padding: 4px 10px;
-  border-radius: 12px;
-`;
-
-const SortSelect = styled.select`
-  padding: 8px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #374151;
-  background: #fff;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    border-color: #c7f022;
-  }
-`;
-
-const FormContainer = styled.div`
-  margin-bottom: 24px;
-`;
-
-const CommentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const EmptyState = styled.div`
-  text-align: center;
-  padding: 48px 24px;
-  color: #9ca3af;
-`;
-
-const EmptyIcon = styled.div`
-  font-size: 48px;
-  margin-bottom: 16px;
-`;
-
-const EmptyText = styled.p`
-  margin: 0;
-  font-size: 16px;
-`;
-
-const LoadMoreButton = styled.button`
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-top: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background: #f9fafb;
-    border-color: #c7f022;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-`;
-
-const ErrorMessage = styled.div`
-  padding: 16px;
-  background: #fef2f2;
-  border-radius: 8px;
-  color: #dc2626;
-  font-size: 14px;
-  margin-bottom: 16px;
-`;
-
-const SkeletonComment = styled.div`
-  padding: 16px 0;
-  border-bottom: 1px solid #f3f4f6;
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const SkeletonHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-`;
-
-const SkeletonAvatar = styled.div`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
-  background-size: 200% 100%;
-  animation: ${shimmer} 1.5s infinite;
-`;
-
-const SkeletonText = styled.div`
-  height: ${(props) => props.$height || "14px"};
-  width: ${(props) => props.$width || "100%"};
-  border-radius: 4px;
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
-  background-size: 200% 100%;
-  animation: ${shimmer} 1.5s infinite;
-`;
-
-const SkeletonBody = styled.div`
-  margin-left: 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
+import styles from "../../assets/styles/commentList.module.css";
 
 const CommentSkeleton = () => (
-  <SkeletonComment>
-    <SkeletonHeader>
-      <SkeletonAvatar />
+  <div className={styles.skeletonComment}>
+    <div className={styles.skeletonHeader}>
+      <div className={styles.skeletonAvatar} />
       <div>
-        <SkeletonText $width="120px" $height="14px" style={{ marginBottom: "4px" }} />
-        <SkeletonText $width="80px" $height="12px" />
+        <div
+          className={styles.skeletonText}
+          style={{ width: "120px", height: "14px", marginBottom: "4px" }}
+        />
+        <div
+          className={styles.skeletonText}
+          style={{ width: "80px", height: "12px" }}
+        />
       </div>
-    </SkeletonHeader>
-    <SkeletonBody>
-      <SkeletonText $width="100%" />
-      <SkeletonText $width="80%" />
-      <SkeletonText $width="60%" />
-    </SkeletonBody>
-  </SkeletonComment>
+    </div>
+    <div className={styles.skeletonBody}>
+      <div className={styles.skeletonText} />
+      <div className={styles.skeletonText} style={{ width: "80%" }} />
+      <div className={styles.skeletonText} style={{ width: "60%" }} />
+    </div>
+  </div>
 );
 
 export const CommentList = ({
@@ -191,38 +42,41 @@ export const CommentList = ({
   const [totalCount, setTotalCount] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const fetchComments = useCallback(async (pageNum = 1, append = false) => {
-    try {
-      if (pageNum === 1) {
-        setLoading(true);
-      } else {
-        setLoadingMore(true);
-      }
-      setError(null);
+  const fetchComments = useCallback(
+    async (pageNum = 1, append = false) => {
+      try {
+        if (pageNum === 1) {
+          setLoading(true);
+        } else {
+          setLoadingMore(true);
+        }
+        setError(null);
 
-      const response = await commentService.getCommentsByEntity(
-        entityType,
-        entityId,
-        pageNum,
-        20
-      );
+        const response = await commentService.getCommentsByEntity(
+          entityType,
+          entityId,
+          pageNum,
+          20,
+        );
 
-      if (append) {
-        setComments((prev) => [...prev, ...response.comments]);
-      } else {
-        setComments(response.comments);
+        if (append) {
+          setComments((prev) => [...prev, ...response.comments]);
+        } else {
+          setComments(response.comments);
+        }
+        setTotalPages(response.totalPages);
+        setTotalCount(response.totalCount);
+        setPage(pageNum);
+      } catch (err) {
+        setError("Failed to load comments. Please try again.");
+        console.error("Error fetching comments:", err);
+      } finally {
+        setLoading(false);
+        setLoadingMore(false);
       }
-      setTotalPages(response.totalPages);
-      setTotalCount(response.totalCount);
-      setPage(pageNum);
-    } catch (err) {
-      setError("Failed to load comments. Please try again.");
-      console.error("Error fetching comments:", err);
-    } finally {
-      setLoading(false);
-      setLoadingMore(false);
-    }
-  }, [entityType, entityId]);
+    },
+    [entityType, entityId],
+  );
 
   useEffect(() => {
     fetchComments(1);
@@ -267,7 +121,7 @@ export const CommentList = ({
             };
           }
           return comment;
-        })
+        }),
       );
     } catch (err) {
       setError("Failed to post reply. Please try again.");
@@ -281,8 +135,8 @@ export const CommentList = ({
         bodyHtml: content,
       });
 
-      const updateComment = (comments) =>
-        comments.map((comment) => {
+      const updateComment = (list) =>
+        list.map((comment) => {
           if (comment.id === commentId) {
             return { ...comment, ...updated };
           }
@@ -303,8 +157,8 @@ export const CommentList = ({
     try {
       await commentService.deleteComment(commentId);
 
-      const removeComment = (comments) =>
-        comments
+      const removeComment = (list) =>
+        list
           .filter((comment) => comment.id !== commentId)
           .map((comment) => ({
             ...comment,
@@ -321,10 +175,13 @@ export const CommentList = ({
 
   const handleReact = async (commentId, reactionType) => {
     try {
-      const updated = await commentService.reactToComment(commentId, reactionType);
+      const updated = await commentService.reactToComment(
+        commentId,
+        reactionType,
+      );
 
-      const updateReaction = (comments) =>
-        comments.map((comment) => {
+      const updateReaction = (list) =>
+        list.map((comment) => {
           if (comment.id === commentId) {
             return {
               ...comment,
@@ -348,42 +205,44 @@ export const CommentList = ({
 
   if (loading) {
     return (
-      <Container>
-        <Header>
-          <Title>Comments</Title>
-        </Header>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h3 className={styles.title}>Comments</h3>
+        </div>
         {[1, 2, 3].map((i) => (
           <CommentSkeleton key={i} />
         ))}
-      </Container>
+      </div>
     );
   }
 
   return (
-    <Container>
-      <Header>
-        <Title>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>
           Comments
-          {totalCount > 0 && <Count>{totalCount}</Count>}
-        </Title>
-      </Header>
+          {totalCount > 0 && <span className={styles.count}>{totalCount}</span>}
+        </h3>
+      </div>
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <div className={styles.errorMessage}>{error}</div>}
 
-      <FormContainer>
+      <div className={styles.formContainer}>
         <CommentForm
           onSubmit={handleCreate}
           placeholder="Share your thoughts..."
           isAuthenticated={isAuthenticated}
         />
-      </FormContainer>
+      </div>
 
-      <CommentsContainer>
+      <div className={styles.commentsContainer}>
         {comments.length === 0 ? (
-          <EmptyState>
-            <EmptyIcon>💬</EmptyIcon>
-            <EmptyText>No comments yet. Be the first to share your thoughts!</EmptyText>
-          </EmptyState>
+          <div className={styles.emptyState}>
+            <div className={styles.emptyIcon}>💬</div>
+            <p className={styles.emptyText}>
+              No comments yet. Be the first to share your thoughts!
+            </p>
+          </div>
         ) : (
           comments.map((comment) => (
             <CommentItem
@@ -398,14 +257,20 @@ export const CommentList = ({
             />
           ))
         )}
-      </CommentsContainer>
+      </div>
 
       {page < totalPages && (
-        <LoadMoreButton onClick={handleLoadMore} disabled={loadingMore}>
-          {loadingMore ? "Loading..." : `Load more comments (${totalCount - comments.length} remaining)`}
-        </LoadMoreButton>
+        <button
+          className={styles.loadMoreButton}
+          onClick={handleLoadMore}
+          disabled={loadingMore}
+        >
+          {loadingMore
+            ? "Loading..."
+            : `Load more comments (${totalCount - comments.length} remaining)`}
+        </button>
       )}
-    </Container>
+    </div>
   );
 };
 

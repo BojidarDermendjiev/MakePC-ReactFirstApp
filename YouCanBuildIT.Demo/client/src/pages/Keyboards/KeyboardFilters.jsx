@@ -1,188 +1,7 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import { getFilterOptions } from "../../api/keyboardService";
-
-const FiltersContainer = styled.div`
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-`;
-
-const FilterHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f3f4f6;
-`;
-
-const Title = styled.h3`
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-`;
-
-const ClearButton = styled.button`
-  padding: 6px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 13px;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #c7f022;
-    color: #1f2937;
-  }
-`;
-
-const FilterSection = styled.div`
-  margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-
-const FilterLabel = styled.label`
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 8px;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #1f2937;
-  background: #fff;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: #c7f022;
-  }
-`;
-
-const CheckboxGroup = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
-const CheckboxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border: 1px solid ${(props) => (props.$checked ? "#c7f022" : "#e5e7eb")};
-  border-radius: 8px;
-  font-size: 13px;
-  color: ${(props) => (props.$checked ? "#1f2937" : "#6b7280")};
-  background: ${(props) => (props.$checked ? "#f7fee7" : "#fff")};
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #c7f022;
-  }
-
-  input {
-    display: none;
-  }
-`;
-
-const PriceRange = styled.div`
-  display: flex;
-  gap: 12px;
-  align-items: center;
-`;
-
-const PriceInput = styled.input`
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #1f2937;
-
-  &:focus {
-    outline: none;
-    border-color: #c7f022;
-  }
-
-  &::placeholder {
-    color: #9ca3af;
-  }
-`;
-
-const PriceSeparator = styled.span`
-  color: #9ca3af;
-  font-size: 14px;
-`;
-
-const ToggleGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const Toggle = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #c7f022;
-  }
-`;
-
-const ToggleText = styled.span`
-  font-size: 13px;
-  color: #374151;
-`;
-
-const ToggleSwitch = styled.div`
-  width: 40px;
-  height: 22px;
-  border-radius: 11px;
-  background: ${(props) => (props.$checked ? "#c7f022" : "#e5e7eb")};
-  position: relative;
-  transition: background 0.2s ease;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: ${(props) => (props.$checked ? "20px" : "2px")};
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: left 0.2s ease;
-  }
-
-  input {
-    display: none;
-  }
-`;
+import styles from "../../assets/styles/keyboardFilters.module.css";
 
 export const KeyboardFilters = ({ filters, onFilterChange, onClear }) => {
   const [options, setOptions] = useState({
@@ -202,7 +21,7 @@ export const KeyboardFilters = ({ filters, onFilterChange, onClear }) => {
     const fetchOptions = async () => {
       try {
         const data = await getFilterOptions();
-        setOptions(data);
+        setOptions(data || {});
       } catch (err) {
         console.error("Failed to fetch filter options:", err);
       }
@@ -222,177 +41,205 @@ export const KeyboardFilters = ({ filters, onFilterChange, onClear }) => {
   };
 
   return (
-    <FiltersContainer>
-      <FilterHeader>
-        <Title>Filters</Title>
-        <ClearButton onClick={onClear}>Clear All</ClearButton>
-      </FilterHeader>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>Filters</h3>
+        <button className={styles.clearButton} onClick={onClear}>
+          Clear All
+        </button>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Switch Characteristic</FilterLabel>
-        <CheckboxGroup>
-          {["Linear", "Tactile", "Clicky"].map((char) => (
-            <CheckboxLabel
-              key={char}
-              $checked={filters.switchCharacteristic === char}
-            >
-              <input
-                type="radio"
-                name="switchCharacteristic"
-                checked={filters.switchCharacteristic === char}
-                onChange={() =>
-                  handleChange(
-                    "switchCharacteristic",
-                    filters.switchCharacteristic === char ? "" : char
-                  )
-                }
-              />
-              {char}
-            </CheckboxLabel>
-          ))}
-        </CheckboxGroup>
-      </FilterSection>
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Switch Characteristic</label>
+        <div className={styles.checkboxGroup}>
+          {["Linear", "Tactile", "Clicky"].map((char) => {
+            const checked = filters.switchCharacteristic === char;
+            return (
+              <label
+                key={char}
+                className={`${styles.checkboxLabel} ${checked ? styles.checkboxLabelChecked : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="switchCharacteristic"
+                  checked={checked}
+                  onChange={() =>
+                    handleChange("switchCharacteristic", checked ? "" : char)
+                  }
+                />
+                {char}
+              </label>
+            );
+          })}
+        </div>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Size</FilterLabel>
-        <Select
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Size</label>
+        <select
+          className={styles.select}
           value={filters.size || ""}
           onChange={(e) => handleChange("size", e.target.value)}
         >
           <option value="">All Sizes</option>
-          {options.sizes.map((size) => (
+          {(options.sizes || []).map((size) => (
             <option key={size} value={size}>
               {size}
             </option>
           ))}
-        </Select>
-      </FilterSection>
+        </select>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Switch Type</FilterLabel>
-        <Select
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Switch Type</label>
+        <select
+          className={styles.select}
           value={filters.switchType || ""}
           onChange={(e) => handleChange("switchType", e.target.value)}
         >
           <option value="">All Switch Types</option>
-          {options.switchTypes.map((type) => (
+          {(options.switchTypes || []).map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
           ))}
-        </Select>
-      </FilterSection>
+        </select>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Layout</FilterLabel>
-        <Select
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Layout</label>
+        <select
+          className={styles.select}
           value={filters.layout || ""}
           onChange={(e) => handleChange("layout", e.target.value)}
         >
           <option value="">All Layouts</option>
-          {options.layouts.map((layout) => (
+          {(options.layouts || []).map((layout) => (
             <option key={layout} value={layout}>
               {layout}
             </option>
           ))}
-        </Select>
-      </FilterSection>
+        </select>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Connectivity</FilterLabel>
-        <Select
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Connectivity</label>
+        <select
+          className={styles.select}
           value={filters.connectivity || ""}
           onChange={(e) => handleChange("connectivity", e.target.value)}
         >
           <option value="">All Types</option>
-          {options.connectivityTypes.map((type) => (
+          {(options.connectivityTypes || []).map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
           ))}
-        </Select>
-      </FilterSection>
+        </select>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Brand</FilterLabel>
-        <Select
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Brand</label>
+        <select
+          className={styles.select}
           value={filters.brandName || ""}
           onChange={(e) => handleChange("brandName", e.target.value)}
         >
           <option value="">All Brands</option>
-          {options.brands.map((brand) => (
+          {(options.brands || []).map((brand) => (
             <option key={brand} value={brand}>
               {brand}
             </option>
           ))}
-        </Select>
-      </FilterSection>
+        </select>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Price Range (BGN)</FilterLabel>
-        <PriceRange>
-          <PriceInput
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Price Range (BGN)</label>
+        <div className={styles.priceRange}>
+          <input
+            className={styles.priceInput}
             type="number"
-            placeholder={`Min (${options.minPrice})`}
+            placeholder={`Min (${options.minPrice ?? 0})`}
             value={filters.minPrice || ""}
             onChange={(e) => handleChange("minPrice", e.target.value)}
           />
-          <PriceSeparator>-</PriceSeparator>
-          <PriceInput
+          <span className={styles.priceSeparator}>-</span>
+          <input
+            className={styles.priceInput}
             type="number"
-            placeholder={`Max (${options.maxPrice})`}
+            placeholder={`Max (${options.maxPrice ?? 1000})`}
             value={filters.maxPrice || ""}
             onChange={(e) => handleChange("maxPrice", e.target.value)}
           />
-        </PriceRange>
-      </FilterSection>
+        </div>
+      </div>
 
-      <FilterSection>
-        <FilterLabel>Features</FilterLabel>
-        <ToggleGroup>
-          <Toggle>
-            <ToggleText>Hot-swappable</ToggleText>
-            <ToggleSwitch $checked={filters.isHotswap === true}>
+      <div className={styles.filterSection}>
+        <label className={styles.filterLabel}>Features</label>
+        <div className={styles.toggleGroup}>
+          <label className={styles.toggle}>
+            <span className={styles.toggleText}>Hot-swappable</span>
+            <span
+              className={`${styles.toggleSwitch} ${
+                filters.isHotswap === true ? styles.toggleSwitchChecked : ""
+              }`}
+            >
               <input
                 type="checkbox"
                 checked={filters.isHotswap === true}
                 onChange={() => handleToggle("isHotswap")}
               />
-            </ToggleSwitch>
-          </Toggle>
-          <Toggle>
-            <ToggleText>Backlight</ToggleText>
-            <ToggleSwitch $checked={filters.hasBacklight === true}>
+            </span>
+          </label>
+
+          <label className={styles.toggle}>
+            <span className={styles.toggleText}>Backlight</span>
+            <span
+              className={`${styles.toggleSwitch} ${
+                filters.hasBacklight === true ? styles.toggleSwitchChecked : ""
+              }`}
+            >
               <input
                 type="checkbox"
                 checked={filters.hasBacklight === true}
                 onChange={() => handleToggle("hasBacklight")}
               />
-            </ToggleSwitch>
-          </Toggle>
-          <Toggle>
-            <ToggleText>N-Key Rollover</ToggleText>
-            <ToggleSwitch $checked={filters.hasNkro === true}>
+            </span>
+          </label>
+
+          <label className={styles.toggle}>
+            <span className={styles.toggleText}>N-Key Rollover</span>
+            <span
+              className={`${styles.toggleSwitch} ${
+                filters.hasNkro === true ? styles.toggleSwitchChecked : ""
+              }`}
+            >
               <input
                 type="checkbox"
                 checked={filters.hasNkro === true}
                 onChange={() => handleToggle("hasNkro")}
               />
-            </ToggleSwitch>
-          </Toggle>
-          <Toggle>
-            <ToggleText>In Stock Only</ToggleText>
-            <ToggleSwitch $checked={filters.inStock === true}>
+            </span>
+          </label>
+
+          <label className={styles.toggle}>
+            <span className={styles.toggleText}>In Stock Only</span>
+            <span
+              className={`${styles.toggleSwitch} ${
+                filters.inStock === true ? styles.toggleSwitchChecked : ""
+              }`}
+            >
               <input
                 type="checkbox"
                 checked={filters.inStock === true}
                 onChange={() => handleToggle("inStock")}
               />
-            </ToggleSwitch>
-          </Toggle>
-        </ToggleGroup>
-      </FilterSection>
-    </FiltersContainer>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
   );
 };
 

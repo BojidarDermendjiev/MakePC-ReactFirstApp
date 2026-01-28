@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.like {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.like:hover:not(:disabled) {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.dislike {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.dislike:hover:not(:disabled) {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.activeLike {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.activeDislike {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.count {
+  min-width: 16px;
+  text-align: center;
+}

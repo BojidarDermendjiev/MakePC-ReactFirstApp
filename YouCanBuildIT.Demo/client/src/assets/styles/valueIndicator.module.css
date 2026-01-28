@@ -1,0 +1,100 @@
+.container {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.valueMeter {
+  position: relative;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.meterCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.meterInner {
+  width: 70px;
+  height: 70px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.meterValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.meterLabel {
+  font-size: 0.65rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.valueDescription {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.valueRating {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.valueExplanation {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.recommendationList {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.recommendationTitle {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.recommendationItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.recommendationItem:last-child {
+  margin-bottom: 0;
+}
+
+.recommendationIcon {
+  flex-shrink: 0;
+}

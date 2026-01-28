@@ -1,56 +1,6 @@
 import { useState } from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: ${(props) => {
-    if (props.$active && props.$type === "like") return "#ecfdf5";
-    if (props.$active && props.$type === "dislike") return "#fef2f2";
-    return "#f3f4f6";
-  }};
-  color: ${(props) => {
-    if (props.$active && props.$type === "like") return "#059669";
-    if (props.$active && props.$type === "dislike") return "#dc2626";
-    return "#6b7280";
-  }};
-
-  &:hover:not(:disabled) {
-    background: ${(props) => {
-      if (props.$type === "like") return "#ecfdf5";
-      return "#fef2f2";
-    }};
-    color: ${(props) => {
-      if (props.$type === "like") return "#059669";
-      return "#dc2626";
-    }};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-`;
-
-const Count = styled.span`
-  min-width: 16px;
-  text-align: center;
-`;
+import styles from "../../assets/styles/reactionButtons.module.css";
 
 const ThumbUpIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -75,7 +25,6 @@ export const ReactionButtons = ({
 
   const handleReact = async (type) => {
     if (loading || disabled) return;
-
     setLoading(true);
     try {
       const newReaction = currentUserReaction === type ? null : type;
@@ -88,29 +37,40 @@ export const ReactionButtons = ({
   const isLiked = currentUserReaction === "Like";
   const isDisliked = currentUserReaction === "Dislike";
 
+  const likeBtnClass = [
+    styles.button,
+    styles.like,
+    isLiked ? styles.activeLike : "",
+  ].join(" ");
+
+  const dislikeBtnClass = [
+    styles.button,
+    styles.dislike,
+    isDisliked ? styles.activeDislike : "",
+  ].join(" ");
+
   return (
-    <Container>
-      <Button
-        $type="like"
-        $active={isLiked}
+    <div className={styles.container}>
+      <button
+        className={likeBtnClass}
         onClick={() => handleReact("Like")}
         disabled={loading || disabled}
         title={isLiked ? "Remove like" : "Like"}
       >
         <ThumbUpIcon />
-        <Count>{likeCount}</Count>
-      </Button>
-      <Button
-        $type="dislike"
-        $active={isDisliked}
+        <span className={styles.count}>{likeCount}</span>
+      </button>
+
+      <button
+        className={dislikeBtnClass}
         onClick={() => handleReact("Dislike")}
         disabled={loading || disabled}
         title={isDisliked ? "Remove dislike" : "Dislike"}
       >
         <ThumbDownIcon />
-        <Count>{dislikeCount}</Count>
-      </Button>
-    </Container>
+        <span className={styles.count}>{dislikeCount}</span>
+      </button>
+    </div>
   );
 };
 

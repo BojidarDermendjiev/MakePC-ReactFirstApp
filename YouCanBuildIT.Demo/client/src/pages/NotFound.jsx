@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../assets/styles/notfound.module.css";
 
 export default function NotFound() {

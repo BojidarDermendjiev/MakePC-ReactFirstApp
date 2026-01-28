@@ -1,6 +1,7 @@
 export const navigation = {
   baseUrl: "http://localhost:5173/api",
 
+  // Core
   getHomeUrl() {
     return "/";
   },
@@ -17,11 +18,13 @@ export const navigation = {
     return "/feedback";
   },
   getPageNotFoundUrl() {
-    return "/*";
+    return "/*"; // react-router v6 catch-all: "*" is typical; keep as provided
   },
   getHardwareBlogUrl() {
     return "/hardware-blog";
   },
+
+  // Auth
   getLoginUrl() {
     return "/login";
   },
@@ -34,26 +37,31 @@ export const navigation = {
   getLogoutUrl() {
     return "/logout";
   },
+
+  // Payments
   getPaymentCardUrl() {
     return "/payment-card";
   },
+
+  // Basket/Cart
   getShopBasketUrl() {
     return "/shop-basket";
   },
+  getCartUrl() {
+    return "/cart";
+  },
+
+  // Comments/Feedback
   getCommentFromUrl() {
     return "/comment";
   },
+
+  // Products
   getProductsUrl() {
     return "/products";
   },
   getNewHardwareUrl() {
     return "/products";
-  },
-  getKeyboardsUrl() {
-    return "/keyboards";
-  },
-  getSecondhandUrl() {
-    return "/secondhand";
   },
   getProductCreateUrl() {
     return "/products/create";
@@ -64,12 +72,16 @@ export const navigation = {
   getProductDetailsUrl(id) {
     return `/products/${id}`;
   },
+
+  // Reviews
   getReviewByIdUrl(id) {
     return `/review/${id}`;
   },
   getProductReviewUrl(productId) {
     return `/products/${productId}/review`;
   },
+
+  // Checkout/Orders
   getCheckoutUrl() {
     return "/checkout";
   },
@@ -88,9 +100,8 @@ export const navigation = {
   getOrderDetailsUrl(id) {
     return `/order/${id}`;
   },
-  getCartUrl() {
-    return "/cart";
-  },
+
+  // Baskets
   getBasketsUrl() {
     return "/baskets";
   },
@@ -103,6 +114,8 @@ export const navigation = {
   getBasketDetailsUrl(id) {
     return `/basket/${id}`;
   },
+
+  // Categories
   getCategoriesUrl() {
     return "/categories";
   },
@@ -115,6 +128,8 @@ export const navigation = {
   getCategoryEditUrl(id) {
     return `/category/edit/${id}`;
   },
+
+  // Brands
   getBrandsUrl() {
     return "/brands";
   },
@@ -127,6 +142,75 @@ export const navigation = {
   getBrandEditUrl(id) {
     return `/brand/edit/${id}`;
   },
+
+  // Keyboards (added)
+  getKeyboardsUrl() {
+    return "/keyboards";
+  },
+  getKeyboardsSwitchGuideUrl() {
+    return "/keyboards/switch-guide";
+  },
+  getKeyboardsSizeGuideUrl() {
+    return "/keyboards/size-guide";
+  },
+  getKeyboardDetailsUrl(id) {
+    return `/keyboards/${id}`;
+  },
+
+  // Secondhand (added)
+  getSecondhandUrl() {
+    return "/secondhand";
+  },
+  getSecondhandCreateUrl() {
+    return "/secondhand/create";
+  },
+  getSecondhandMyListingsUrl() {
+    return "/secondhand/my-listings";
+  },
+  getSecondhandEditUrl(id) {
+    return `/secondhand/edit/${id}`;
+  },
+  getSecondhandDetailsUrl(id) {
+    return `/secondhand/${id}`;
+  },
+
+  // Forum (added)
+  getForumUrl() {
+    return "/forum";
+  },
+  getForumCategoryUrl(slug) {
+    return `/forum/category/${slug}`;
+  },
+  getForumThreadUrl(id) {
+    return `/forum/thread/${id}`;
+  },
+  getForumCreateUrl() {
+    return "/forum/create";
+  },
+
+  // News (added)
+  getNewsUrl() {
+    return "/news";
+  },
+  getNewsArticleUrl(slug) {
+    return `/news/${slug}`;
+  },
+
+  // Builder & Comparison (added)
+  getBuilderWizardUrl() {
+    return "/builder";
+  },
+  getMyBuildsUrl() {
+    return "/builder/my-builds";
+  },
+  getPublicBuildsUrl() {
+    return "/builder/community";
+  },
+  getBuilderCompareUrl(buildId) {
+    return `/builder/compare/${buildId}`;
+  },
+
+  // External links
   getInvidiaUrl() {
     return "https://www.nvidia.com/";
   },

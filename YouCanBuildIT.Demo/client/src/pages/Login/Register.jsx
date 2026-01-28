@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,14 +24,21 @@ const Register = () => {
   // Load Turnstile script and render widget
   useEffect(() => {
     const loadTurnstile = () => {
-      if (window.turnstile && turnstileRef.current && !turnstileWidgetId.current) {
-        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
-          sitekey: TURNSTILE_SITE_KEY,
-          theme: TURNSTILE_THEME,
-          callback: (token) => setTurnstileToken(token),
-          "expired-callback": () => setTurnstileToken(""),
-          "error-callback": () => setTurnstileToken(""),
-        });
+      if (
+        window.turnstile &&
+        turnstileRef.current &&
+        !turnstileWidgetId.current
+      ) {
+        turnstileWidgetId.current = window.turnstile.render(
+          turnstileRef.current,
+          {
+            sitekey: TURNSTILE_SITE_KEY,
+            theme: TURNSTILE_THEME,
+            callback: (token) => setTurnstileToken(token),
+            "expired-callback": () => setTurnstileToken(""),
+            "error-callback": () => setTurnstileToken(""),
+          },
+        );
       }
     };
 
@@ -71,7 +78,7 @@ const Register = () => {
           ConfirmPassword: values.ConfirmPassword,
           TurnstileToken: turnstileToken,
         },
-        setUser
+        setUser,
       );
       navigate(navigation.getHomeUrl());
     } catch (error) {
@@ -114,7 +121,11 @@ const Register = () => {
             {/* Cloudflare Turnstile widget */}
             <div
               ref={turnstileRef}
-              style={{ margin: "16px 0", display: "flex", justifyContent: "center" }}
+              style={{
+                margin: "16px 0",
+                display: "flex",
+                justifyContent: "center",
+              }}
             ></div>
             <SignUp
               handleSubmit={handleSubmit}

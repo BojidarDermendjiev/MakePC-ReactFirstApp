@@ -1,364 +1,11 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import shoppingCartService from "../../api/shoppingCartService.js";
 import orderService from "../../api/orderService.js";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { navigation } from "../../common/navigations";
 import { TURNSTILE_SITE_KEY, TURNSTILE_THEME } from "../../config/turnstile";
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-`;
-
-const Header = styled.div`
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #eee;
-`;
-
-const Title = styled.h1`
-  margin: 0;
-  font-size: 28px;
-  color: #333;
-`;
-
-const Subtitle = styled.p`
-  margin: 8px 0 0 0;
-  color: #666;
-  font-size: 14px;
-`;
-
-const CheckoutLayout = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 24px;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Section = styled.div`
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 24px;
-`;
-
-const SectionTitle = styled.h2`
-  margin: 0 0 16px 0;
-  font-size: 18px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: #1976d2;
-    color: white;
-    border-radius: 50%;
-    font-size: 14px;
-  }
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-`;
-
-const Input = styled.input`
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: #1976d2;
-  }
-
-  &:disabled {
-    background: #f5f5f5;
-    cursor: not-allowed;
-  }
-`;
-
-const TextArea = styled.textarea`
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  min-height: 100px;
-  resize: vertical;
-  transition: border-color 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: #1976d2;
-  }
-`;
-
-const Row = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-`;
-
-const OrderSummary = styled.div`
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  height: fit-content;
-  position: sticky;
-  top: 24px;
-`;
-
-const SummaryTitle = styled.h2`
-  margin: 0 0 16px 0;
-  font-size: 20px;
-  color: #333;
-`;
-
-const CartItems = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
-  max-height: 300px;
-  overflow-y: auto;
-`;
-
-const CartItem = styled.div`
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  background: #f9f9f9;
-  border-radius: 8px;
-`;
-
-const ItemImage = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #eee;
-  flex-shrink: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ItemDetails = styled.div`
-  flex: 1;
-  min-width: 0;
-`;
-
-const ItemName = styled.h4`
-  margin: 0 0 4px 0;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const ItemInfo = styled.span`
-  font-size: 12px;
-  color: #666;
-`;
-
-const ItemPrice = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1976d2;
-`;
-
-const Divider = styled.hr`
-  border: none;
-  border-top: 1px solid #eee;
-  margin: 16px 0;
-`;
-
-const SummaryRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  font-size: 14px;
-  color: ${(props) => (props.$bold ? "#333" : "#666")};
-  font-weight: ${(props) => (props.$bold ? "600" : "400")};
-`;
-
-const TotalRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 0;
-  margin-top: 8px;
-  border-top: 2px solid #eee;
-  font-size: 20px;
-  font-weight: 700;
-  color: #333;
-`;
-
-const TotalAmount = styled.span`
-  color: #1976d2;
-`;
-
-const PlaceOrderButton = styled.button`
-  width: 100%;
-  padding: 16px;
-  margin-top: 16px;
-  border: none;
-  border-radius: 8px;
-  background: #1976d2;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-
-  &:hover:not(:disabled) {
-    background: #1565c0;
-  }
-
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-`;
-
-const BackToCartLink = styled(Link)`
-  display: block;
-  text-align: center;
-  margin-top: 12px;
-  color: #1976d2;
-  text-decoration: none;
-  font-size: 14px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
-  font-size: 18px;
-  color: #666;
-`;
-
-const EmptyCart = styled.div`
-  text-align: center;
-  padding: 60px 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-  h2 {
-    margin-bottom: 8px;
-    color: #333;
-  }
-
-  p {
-    color: #666;
-    margin-bottom: 24px;
-  }
-`;
-
-const ShopButton = styled(Link)`
-  display: inline-block;
-  padding: 12px 24px;
-  background: #1976d2;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: background 0.2s;
-
-  &:hover {
-    background: #1565c0;
-  }
-`;
-
-const ErrorMessage = styled.div`
-  padding: 12px;
-  background: #ffebee;
-  border-radius: 8px;
-  color: #c62828;
-  font-size: 14px;
-  margin-bottom: 16px;
-`;
-
-const PaymentOptions = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const PaymentOption = styled.label`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  border: 2px solid ${(props) => (props.$selected ? "#1976d2" : "#ddd")};
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    border-color: #1976d2;
-  }
-
-  input {
-    width: 18px;
-    height: 18px;
-  }
-`;
-
-const PaymentLabel = styled.div`
-  flex: 1;
-
-  h4 {
-    margin: 0 0 4px 0;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  p {
-    margin: 0;
-    font-size: 12px;
-    color: #666;
-  }
-`;
+import styles from "../../assets/styles/checkout.module.css";
 
 const Checkout = () => {
   const { user } = useContext(AuthContext);
@@ -414,14 +61,21 @@ const Checkout = () => {
   // Load Turnstile script and render widget
   useEffect(() => {
     const loadTurnstile = () => {
-      if (window.turnstile && turnstileRef.current && !turnstileWidgetId.current) {
-        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
-          sitekey: TURNSTILE_SITE_KEY,
-          theme: TURNSTILE_THEME,
-          callback: (token) => setTurnstileToken(token),
-          "expired-callback": () => setTurnstileToken(""),
-          "error-callback": () => setTurnstileToken(""),
-        });
+      if (
+        window.turnstile &&
+        turnstileRef.current &&
+        !turnstileWidgetId.current
+      ) {
+        turnstileWidgetId.current = window.turnstile.render(
+          turnstileRef.current,
+          {
+            sitekey: TURNSTILE_SITE_KEY,
+            theme: TURNSTILE_THEME,
+            callback: (token) => setTurnstileToken(token),
+            "expired-callback": () => setTurnstileToken(""),
+            "error-callback": () => setTurnstileToken(""),
+          },
+        );
       }
     };
 
@@ -472,7 +126,10 @@ const Checkout = () => {
 
     try {
       const items = cart.items || [];
-      const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const subtotal = items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0,
+      );
       const shipping = subtotal > 100 ? 0 : 9.99;
       const total = subtotal + shipping;
 
@@ -481,7 +138,10 @@ const Checkout = () => {
       const orderData = {
         userId: user.id,
         shippingAddress: fullAddress,
-        paymentStatus: paymentMethod === "card" ? "Card Payment Pending" : "Cash on Delivery",
+        paymentStatus:
+          paymentMethod === "card"
+            ? "Card Payment Pending"
+            : "Cash on Delivery",
         totalPrice: total,
         items: items.map((item) => ({
           productId: item.productId,
@@ -512,9 +172,9 @@ const Checkout = () => {
 
   if (loading) {
     return (
-      <Container>
-        <LoadingContainer>Loading checkout...</LoadingContainer>
-      </Container>
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>Loading checkout...</div>
+      </div>
     );
   }
 
@@ -522,41 +182,49 @@ const Checkout = () => {
 
   if (items.length === 0) {
     return (
-      <Container>
-        <Header>
-          <Title>Checkout</Title>
-        </Header>
-        <EmptyCart>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Checkout</h1>
+        </div>
+        <div className={styles.emptyCart}>
           <h2>Your cart is empty</h2>
           <p>Add some items to your cart before proceeding to checkout.</p>
-          <ShopButton to="/products">Browse Products</ShopButton>
-        </EmptyCart>
-      </Container>
+          <Link className={styles.shopButton} to="/products">
+            Browse Products
+          </Link>
+        </div>
+      </div>
     );
   }
 
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
   const shipping = subtotal > 100 ? 0 : 9.99;
   const total = subtotal + shipping;
 
   return (
-    <Container>
-      <Header>
-        <Title>Checkout</Title>
-        <Subtitle>Complete your order by filling in the details below</Subtitle>
-      </Header>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Checkout</h1>
+        <p className={styles.subtitle}>
+          Complete your order by filling in the details below
+        </p>
+      </div>
 
-      <CheckoutLayout>
+      <div className={styles.checkoutLayout}>
         <div>
-          <Section>
-            <SectionTitle>
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>
               <span>1</span> Shipping Information
-            </SectionTitle>
-            <Form onSubmit={handleSubmit}>
-              <FormGroup>
-                <Label>Full Name *</Label>
-                <Input
+            </h2>
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Full Name *</label>
+                <input
+                  className={styles.input}
                   type="text"
                   name="fullName"
                   value={shippingInfo.fullName}
@@ -564,46 +232,50 @@ const Checkout = () => {
                   placeholder="John Doe"
                   required
                 />
-              </FormGroup>
+              </div>
 
-              <Row>
-                <FormGroup>
-                  <Label>Email</Label>
-                  <Input
+              <div className={styles.row}>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Email</label>
+                  <input
+                    className={styles.input}
                     type="email"
                     name="email"
                     value={shippingInfo.email}
                     onChange={handleInputChange}
                     placeholder="john@example.com"
                   />
-                </FormGroup>
-                <FormGroup>
-                  <Label>Phone</Label>
-                  <Input
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Phone</label>
+                  <input
+                    className={styles.input}
                     type="tel"
                     name="phone"
                     value={shippingInfo.phone}
                     onChange={handleInputChange}
                     placeholder="+1 234 567 8900"
                   />
-                </FormGroup>
-              </Row>
+                </div>
+              </div>
 
-              <FormGroup>
-                <Label>Address *</Label>
-                <TextArea
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Address *</label>
+                <textarea
+                  className={styles.textArea}
                   name="address"
                   value={shippingInfo.address}
                   onChange={handleInputChange}
                   placeholder="Street address, apartment, suite, etc."
                   required
                 />
-              </FormGroup>
+              </div>
 
-              <Row>
-                <FormGroup>
-                  <Label>City *</Label>
-                  <Input
+              <div className={styles.row}>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>City *</label>
+                  <input
+                    className={styles.input}
                     type="text"
                     name="city"
                     value={shippingInfo.city}
@@ -611,10 +283,11 @@ const Checkout = () => {
                     placeholder="New York"
                     required
                   />
-                </FormGroup>
-                <FormGroup>
-                  <Label>Postal Code *</Label>
-                  <Input
+                </div>
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Postal Code *</label>
+                  <input
+                    className={styles.input}
                     type="text"
                     name="postalCode"
                     value={shippingInfo.postalCode}
@@ -622,12 +295,13 @@ const Checkout = () => {
                     placeholder="10001"
                     required
                   />
-                </FormGroup>
-              </Row>
+                </div>
+              </div>
 
-              <FormGroup>
-                <Label>Country *</Label>
-                <Input
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Country *</label>
+                <input
+                  className={styles.input}
                   type="text"
                   name="country"
                   value={shippingInfo.country}
@@ -635,16 +309,20 @@ const Checkout = () => {
                   placeholder="United States"
                   required
                 />
-              </FormGroup>
-            </Form>
-          </Section>
+              </div>
+            </form>
+          </div>
 
-          <Section>
-            <SectionTitle>
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>
               <span>2</span> Payment Method
-            </SectionTitle>
-            <PaymentOptions>
-              <PaymentOption $selected={paymentMethod === "card"}>
+            </h2>
+            <div className={styles.paymentOptions}>
+              <label
+                className={`${styles.paymentOption} ${
+                  paymentMethod === "card" ? styles.paymentOptionSelected : ""
+                }`}
+              >
                 <input
                   type="radio"
                   name="paymentMethod"
@@ -652,12 +330,16 @@ const Checkout = () => {
                   checked={paymentMethod === "card"}
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-                <PaymentLabel>
+                <div className={styles.paymentLabel}>
                   <h4>Credit/Debit Card</h4>
                   <p>Pay securely with your card</p>
-                </PaymentLabel>
-              </PaymentOption>
-              <PaymentOption $selected={paymentMethod === "cod"}>
+                </div>
+              </label>
+              <label
+                className={`${styles.paymentOption} ${
+                  paymentMethod === "cod" ? styles.paymentOptionSelected : ""
+                }`}
+              >
                 <input
                   type="radio"
                   name="paymentMethod"
@@ -665,22 +347,22 @@ const Checkout = () => {
                   checked={paymentMethod === "cod"}
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-                <PaymentLabel>
+                <div className={styles.paymentLabel}>
                   <h4>Cash on Delivery</h4>
                   <p>Pay when you receive your order</p>
-                </PaymentLabel>
-              </PaymentOption>
-            </PaymentOptions>
-          </Section>
+                </div>
+              </label>
+            </div>
+          </div>
         </div>
 
-        <OrderSummary>
-          <SummaryTitle>Order Summary</SummaryTitle>
+        <div className={styles.orderSummary}>
+          <h2 className={styles.summaryTitle}>Order Summary</h2>
 
-          <CartItems>
+          <div className={styles.cartItems}>
             {items.map((item) => (
-              <CartItem key={item.productId}>
-                <ItemImage>
+              <div className={styles.cartItem} key={item.productId}>
+                <div className={styles.itemImage}>
                   <img
                     src={item.imageUrl || "/placeholder-product.png"}
                     alt={item.productName}
@@ -688,56 +370,60 @@ const Checkout = () => {
                       e.target.src = "/placeholder-product.png";
                     }}
                   />
-                </ItemImage>
-                <ItemDetails>
-                  <ItemName title={item.productName}>{item.productName}</ItemName>
-                  <ItemInfo>Qty: {item.quantity}</ItemInfo>
-                </ItemDetails>
-                <ItemPrice>${(item.price * item.quantity).toFixed(2)}</ItemPrice>
-              </CartItem>
+                </div>
+                <div className={styles.itemDetails}>
+                  <h4 className={styles.itemName} title={item.productName}>
+                    {item.productName}
+                  </h4>
+                  <span className={styles.itemInfo}>Qty: {item.quantity}</span>
+                </div>
+                <span className={styles.itemPrice}>
+                  ${(item.price * item.quantity).toFixed(2)}
+                </span>
+              </div>
             ))}
-          </CartItems>
+          </div>
 
-          <Divider />
+          <hr className={styles.divider} />
 
-          <SummaryRow>
+          <div className={styles.summaryRow}>
             <span>Subtotal ({itemCount} items)</span>
             <span>${subtotal.toFixed(2)}</span>
-          </SummaryRow>
-          <SummaryRow>
+          </div>
+          <div className={styles.summaryRow}>
             <span>Shipping</span>
             <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
-          </SummaryRow>
+          </div>
           {shipping === 0 && (
-            <SummaryRow style={{ color: "#4CAF50", fontSize: "12px" }}>
+            <div className={`${styles.summaryRow} ${styles.freeShippingNote}`}>
               <span>Free shipping applied!</span>
-            </SummaryRow>
+            </div>
           )}
 
-          <TotalRow>
+          <div className={styles.totalRow}>
             <span>Total</span>
-            <TotalAmount>${total.toFixed(2)}</TotalAmount>
-          </TotalRow>
+            <span className={styles.totalAmount}>${total.toFixed(2)}</span>
+          </div>
 
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {error && <div className={styles.errorMessage}>{error}</div>}
 
           {/* Cloudflare Turnstile widget */}
-          <div
-            ref={turnstileRef}
-            style={{ margin: "16px 0", display: "flex", justifyContent: "center" }}
-          ></div>
+          <div className={styles.turnstileContainer} ref={turnstileRef}></div>
 
-          <PlaceOrderButton
+          <button
+            className={styles.placeOrderButton}
             onClick={handleSubmit}
             disabled={submitting}
           >
             {submitting ? "Processing..." : "Place Order"}
-          </PlaceOrderButton>
+          </button>
 
-          <BackToCartLink to="/cart">Back to Cart</BackToCartLink>
-        </OrderSummary>
-      </CheckoutLayout>
-    </Container>
+          <Link className={styles.backToCartLink} to="/cart">
+            Back to Cart
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
